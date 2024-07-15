@@ -38,7 +38,8 @@ def main():
 
     for transaction_type in unique_transaction_types:
         print(
-            f"Performing train-val-test split for transaction type '{transaction_type}'."
+            f"Performing train-val-test split for transaction type '{transaction_type}'"
+            "."
         )
         transaction_data = data.query(f"type == '{transaction_type}'")
         # NOTE: We reset the index after filtering on transaction type!
