@@ -36,19 +36,24 @@ def main():
         X_pca_transformed = PCA(n_components=2).fit_transform(X)
         pca_df = pd.DataFrame(
             data=X_pca_transformed,
-            columns=["PC1", "PC2"],
+            columns=["PC 1", "PC 2"],
             index=transfer_type_data.index,
         )
         pca_df["label"] = transfer_type_data["is_fraud"]
         pca_df["label"] = pca_df["label"].map(
-            {0: "Non-fraud transaction", 1: "Fraud transaction"}
+            {0: "Non-fraudulent transaction", 1: "Fraudulent transaction"}
         )
 
-        fig, ax = plt.subplots(figsize=(10, 10))
-        sns.scatterplot(data=pca_df, x="PC1", y="PC2", hue="label", ax=ax)
-        ax.set_title(f"PCA for type: {transfer_type}")
-        fig.tight_layout()
-        fig.savefig(FIGURE_DIR / f"pca_{transfer_type}.png")
+        def visualize_and_save_pca():
+            fig, ax = plt.subplots(figsize=(6, 6))
+            sns.scatterplot(
+                data=pca_df, x="PC 1", y="PC 2", hue="label", ax=ax, alpha=0.5
+            )
+            ax.set_title(f"PCA for {transfer_type} transactions")
+            fig.tight_layout()
+            fig.savefig(FIGURE_DIR / f"pca_{transfer_type}.png")
+
+        visualize_and_save_pca()
 
 
 if __name__ == "__main__":
