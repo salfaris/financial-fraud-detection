@@ -8,6 +8,16 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.svm import LinearSVC
 from sklearn.metrics import precision_recall_fscore_support
 
+from absl import app, flags, logging
+
+flags.DEFINE_enum(
+    "model_name",
+    "logreg",
+    ["logreg", "svc_linear", "svc_rbf"],
+    "Model name to train; one of ['logreg', 'svc_linear', 'svc_rbf'].",
+)
+FLAG = flags.FLAGS
+
 # I only use `np.random.RandomState` over `np.random.default_rng` because sklearn does
 # not support the latter yet.
 RNG = np.random.RandomState(10062930)
@@ -25,6 +35,17 @@ FEATURE_NAMES = [
     "new_balance_Destination",
 ]
 TARGET_NAME = "is_fraud"
+
+MODEL_FUNCTIONS = {
+    "logreg": lambda cw: LogisticRegression(class_weight=cw, random_state=RNG),
+    "svc_linear": lambda cw: LinearSVC(
+        class_weight=cw,
+        tol=1e-5,
+        max_iter=1000,
+        dual=False,
+        random_state=RNG,
+    ),
+}
 
 
 def train(model_name: str, model_fn: callable):
@@ -60,8 +81,6 @@ def train(model_name: str, model_fn: callable):
     fraud_class_weights = range(1, max_class_weight + 1)
 
     for fraud_weight in fraud_class_weights:
-        print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}]", end=" ")
-        print(f"Training+validating {fraud_weight = }")
         class_weight = {0: 1, 1: fraud_weight}
 
         # Model training
@@ -79,20 +98,19 @@ def train(model_name: str, model_fn: callable):
         metrics["recall"].append(recall)
         metrics["f1-score"].append(f1_score)
 
+        logging.info(
+            f"class_weight: {fraud_weight}, precision: {precision:.5f}, "
+            f"recall: {recall:.5f}, F1-score: {f1_score:.5f}"
+        )
+
     metrics_df = pd.DataFrame(metrics)
     metrics_df.insert(0, "class_weight", list(fraud_class_weights))
     metrics_df.to_csv(RESULT_DIR / f"result_{model_name}.csv", index=False)
 
 
+def main(_):
+    train(model_name=FLAG.model_name, model_fn=MODEL_FUNCTIONS[FLAG.model_name])
+
+
 if __name__ == "__main__":
-    model_fns = {
-        "logreg": lambda cw: LogisticRegression(class_weight=cw, random_state=RNG),
-        "svc_linear": lambda cw: LinearSVC(
-            class_weight=cw,
-            tol=1e-5,
-            max_iter=1000,
-            dual=False,
-            random_state=RNG,
-        ),
-    }
-    train(model_name="logreg", model_fn=model_fns["logreg"])
+    app.run(main)
