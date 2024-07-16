@@ -107,7 +107,8 @@ def train(model_name: str, model_fn: callable):
     metrics_df = pd.DataFrame(metrics)
     metrics_df.insert(0, "class_weight", list(fraud_class_weights))
     metrics_df.to_csv(
-        RESULT_DIR / f"result_{transaction_type}_{model_name}.csv", index=False
+        RESULT_DIR / f"result_{transaction_type.upper()}_{model_name}.csv",
+        index=False,
     )
 
 
