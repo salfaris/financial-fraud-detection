@@ -14,7 +14,10 @@ flags.DEFINE_enum(
     "model_name",
     "logreg",
     ["logreg", "svc_linear", "svc_rbf"],
-    "Model name to train; one of ['logreg', 'svc_linear', 'svc_rbf'].",
+    "Model name to train and perform validation.",
+)
+flags.DEFINE_enum(
+    "transaction_type", "TRANSFER", ["TRANSFER", "CASH_OUT"], "Transaction type."
 )
 FLAG = flags.FLAGS
 
@@ -63,9 +66,8 @@ def train(model_name: str, model_fn: callable):
             index_col=0,
         )
 
-    # NOTE :- Do for `TRANSFER` only atm.
-    train = transaction_types["TRANSFER"]["train"]
-    val = transaction_types["TRANSFER"]["val"]
+    train = transaction_types[FLAG.transaction_type]["train"]
+    val = transaction_types[FLAG.transaction_type]["val"]
 
     X_train, y_train = train.loc[:, FEATURE_NAMES], train.loc[:, [TARGET_NAME]]
     X_val, y_val = val.loc[:, FEATURE_NAMES], val.loc[:, [TARGET_NAME]]
@@ -105,7 +107,9 @@ def train(model_name: str, model_fn: callable):
 
     metrics_df = pd.DataFrame(metrics)
     metrics_df.insert(0, "class_weight", list(fraud_class_weights))
-    metrics_df.to_csv(RESULT_DIR / f"result_{model_name}.csv", index=False)
+    metrics_df.to_csv(
+        RESULT_DIR / f"result_{transaction_type}_{model_name}.csv", index=False
+    )
 
 
 def main(_):
