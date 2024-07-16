@@ -27,7 +27,7 @@ FEATURE_NAMES = [
 TARGET_NAME = "is_fraud"
 
 
-def train(model_name, model_fn):
+def train(model_name: str, model_fn: callable):
     transaction_types = {
         "CASH_OUT": {},
         "TRANSFER": {},
@@ -41,25 +41,15 @@ def train(model_name, model_fn):
             DATASET_DIR / "03_features" / f"{transaction_type}_val.csv",
             index_col=0,
         )
-        transaction_types[transaction_type]["test"] = pd.read_csv(
-            DATASET_DIR / "03_features" / f"{transaction_type}_test.csv",
-            index_col=0,
-        )
 
     # NOTE :- Do for `TRANSFER` only atm.
     train = transaction_types["TRANSFER"]["train"]
     val = transaction_types["TRANSFER"]["val"]
-    test = transaction_types["TRANSFER"]["test"]
 
     X_train, y_train = train.loc[:, FEATURE_NAMES], train.loc[:, [TARGET_NAME]]
     X_val, y_val = val.loc[:, FEATURE_NAMES], val.loc[:, [TARGET_NAME]]
-    X_test, y_test = test.loc[:, FEATURE_NAMES], test.loc[:, [TARGET_NAME]]
 
-    y_train, y_val, y_test = (
-        y_train.values.ravel(),
-        y_val.values.ravel(),
-        y_test.values.ravel(),
-    )
+    y_train, y_val = y_train.values.ravel(), y_val.values.ravel()
 
     metrics = {
         "precision": [],
@@ -91,7 +81,7 @@ def train(model_name, model_fn):
 
     metrics_df = pd.DataFrame(metrics)
     metrics_df.insert(0, "class_weight", list(fraud_class_weights))
-    metrics_df.to_csv(RESULT_DIR / "result_{model_name}.csv", index=False)
+    metrics_df.to_csv(RESULT_DIR / f"result_{model_name}.csv", index=False)
 
 
 if __name__ == "__main__":
@@ -105,4 +95,4 @@ if __name__ == "__main__":
             random_state=RNG,
         ),
     }
-    train(model_fns["logreg"])
+    train(model_name="logreg", model_fn=model_fns["logreg"])
