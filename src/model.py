@@ -1,11 +1,16 @@
 from pathlib import Path
 from datetime import datetime
 
+import numpy as np
 import pandas as pd
 
 from sklearn.linear_model import LogisticRegression
 from sklearn.svm import LinearSVC
 from sklearn.metrics import precision_recall_fscore_support
+
+# I only use `np.random.RandomState` over `np.random.default_rng` because sklearn does
+# not support the latter yet.
+RNG = np.random.RandomState(10062930)
 
 ROOT_DIR = Path(__file__).parents[1]
 DATASET_DIR = ROOT_DIR / "datasets"
@@ -91,12 +96,13 @@ def train(model_name, model_fn):
 
 if __name__ == "__main__":
     model_fns = {
-        "logreg": lambda cw: LogisticRegression(class_weight=cw),
+        "logreg": lambda cw: LogisticRegression(class_weight=cw, random_state=RNG),
         "svc_linear": lambda cw: LinearSVC(
             class_weight=cw,
             tol=1e-5,
             max_iter=1000,
             dual=False,
+            random_state=RNG,
         ),
     }
     train(model_fns["logreg"])
