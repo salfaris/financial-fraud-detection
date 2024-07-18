@@ -3,13 +3,11 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-from sklearn.linear_model import LogisticRegression
-from sklearn.svm import LinearSVC, SVC
 from sklearn.metrics import precision_recall_fscore_support, recall_score
 
 from absl import app, flags, logging
 
-from config import FEATURE_NAMES, TARGET_NAME
+from model_config import MODEL_FUNCTIONS, FEATURE_NAMES, TARGET_NAME
 
 flags.DEFINE_enum(
     "model_name",
@@ -30,24 +28,6 @@ ROOT_DIR = Path(__file__).parents[1]
 DATASET_DIR = ROOT_DIR / "datasets"
 RESULT_DIR = ROOT_DIR / "output" / "result"
 RESULT_DIR.mkdir(exist_ok=True, parents=True)
-
-MODEL_FUNCTIONS = {
-    "logreg": lambda cw: LogisticRegression(class_weight=cw, random_state=RNG),
-    "svc_linear": lambda cw: LinearSVC(
-        class_weight=cw,
-        tol=1e-5,
-        max_iter=1000,
-        dual=False,
-        random_state=RNG,
-    ),
-    "svc_rbf": lambda cw: SVC(
-        class_weight=cw,
-        kernel="rbf",  # Default kernel but want to emphasize.
-        tol=1e-3,
-        cache_size=1000,
-        random_state=RNG,
-    ),
-}
 
 
 def train(model_name: str, model_fn: callable):
