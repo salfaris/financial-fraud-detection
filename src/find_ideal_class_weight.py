@@ -31,10 +31,11 @@ RESULT_FIG_DIR.mkdir(exist_ok=True, parents=True)
 
 
 def main(_):
-    result_path = (
-        RESULT_DIR / f"result_{FLAG.transaction_type.upper()}_{FLAG.model_name}.csv"
-    )
-    print(result_path)
+    transaction_type: str = FLAG.transaction_type.upper()
+    model_name: str = FLAG.model_name
+
+    result_path = RESULT_DIR / f"result_{transaction_type}_{model_name}.csv"
+
     if not result_path.exists():
         raise FileNotFoundError(f"Cannot find result @ {result_path}")
     result = pd.read_csv(result_path)
@@ -49,8 +50,32 @@ def main(_):
     #
     # Maximize RECALL since we've maintained low <1% FPR, now we want to catch all the
     # possible fraud.
-    ideal = fpr_less_1_pct.iloc[fpr_less_1_pct["recall"].argmax()]
-    logging.info(ideal)
+    ideal_rowset = fpr_less_1_pct.iloc[fpr_less_1_pct["recall"].argmax()]
+    logging.info(ideal_rowset)
+
+    # Ideal class weight data for pair (`model_name`, `transaction_type`).
+    ideal_cw_data = pd.DataFrame(ideal_rowset).T.reset_index(drop=True)
+    ideal_cw_data["class_weight"] = ideal_cw_data["class_weight"].astype(int)
+    ideal_cw_data.insert(0, "transaction_type", [transaction_type])
+    ideal_cw_data.insert(0, "model_name", [model_name])
+
+    full_ideal_cw_data_path = RESULT_DIR / "result_ideal_class_weight.csv"
+    if not full_ideal_cw_data_path.exists():
+        full_ideal_cw_data = ideal_cw_data
+    else:
+        full_ideal_cw_data = pd.read_csv(full_ideal_cw_data_path)
+
+        sub_cw_df = full_ideal_cw_data.query(
+            f"model_name == '{model_name}'"
+            f"and transaction_type == '{transaction_type}'"
+        )
+        if sub_cw_df.empty:
+            full_ideal_cw_data = pd.concat([full_ideal_cw_data, ideal_cw_data])
+        elif sub_cw_df.shape[0] > 1:
+            raise ValueError("Ideal class weight not meant to shape like this.")
+        else:
+            full_ideal_cw_data.iloc[sub_cw_df.index[0]] = ideal_cw_data.squeeze(axis=0)
+    full_ideal_cw_data.to_csv(full_ideal_cw_data_path, index=False)
 
     def viz():
         fig, ax = plt.subplots(figsize=(10, 6))
@@ -65,10 +90,10 @@ def main(_):
             color="orange",
         )
         ax.axvline(
-            ideal.class_weight,
+            ideal_rowset.class_weight,
             linestyle="--",
             color="gray",
-            label=f"Ideal class weight = {ideal.class_weight:.0f}",
+            label=f"Ideal class weight = {ideal_rowset.class_weight:.0f}",
         )
 
         ax.set_xlabel("Class weights for fraudulent transactions", fontweight="light")
@@ -80,16 +105,13 @@ def main(_):
         }
         ax.set_title(
             f"Metrics on validation set for {FLAG.transaction_type} transactions "
-            f"- {title_name_map[FLAG.model_name]}",
+            f"- {title_name_map[model_name]}",
             # fontweight="bold",
         )
 
         ax.legend()
 
-        fig.savefig(
-            RESULT_FIG_DIR
-            / f"result_{FLAG.transaction_type.upper()}_{FLAG.model_name}.png"
-        )
+        fig.savefig(RESULT_FIG_DIR / f"result_{transaction_type}_{model_name}.png")
 
     viz()
 
