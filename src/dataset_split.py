@@ -4,19 +4,12 @@ import numpy as np
 import pandas as pd
 from sklearn.model_selection import train_test_split
 
+from config import FEATURE_NAMES, TARGET_NAME
+
 SRC_DIR = Path(__file__).parents[1]
 DATASET_DIR = SRC_DIR / "datasets"
 FEATURE_DATASET_DIR = DATASET_DIR / "03_features"
 FEATURE_DATASET_DIR.mkdir(exist_ok=True, parents=True)
-
-FEATURE_NAMES = [
-    "amount",
-    "old_balance_Source",
-    "new_balance_Source",
-    "old_balance_Destination",
-    "new_balance_Destination",
-]
-TARGET_NAME = "is_fraud"
 
 # I only use `np.random.RandomState` over `np.random.default_rng` because sklearn does
 # not support the latter yet.
