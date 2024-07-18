@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 from sklearn.model_selection import train_test_split
 
-from config import FEATURE_NAMES, TARGET_NAME
+from model_config import FEATURE_NAMES, TARGET_NAME
 
 SRC_DIR = Path(__file__).parents[1]
 DATASET_DIR = SRC_DIR / "datasets"
