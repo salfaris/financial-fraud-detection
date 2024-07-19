@@ -1,3 +1,4 @@
+from joblib import Parallel, delayed
 from pathlib import Path
 
 import numpy as np
@@ -62,12 +63,27 @@ def train(model_name: str, model_fn: callable):
     max_class_weight = 512
     fraud_class_weights = range(1, max_class_weight + 1)
 
+    # Model training
+    def train_model(X, y, class_weight):
+        model = model_fn(class_weight)
+        model.fit(X, y)
+        print(
+            f"RUN: Training model `{model_name}` for "
+            f"class weight = {class_weight[1]}"
+        )
+        return model, class_weight
+
+    delayed_train_models = []
     for fraud_weight in fraud_class_weights:
         class_weight = {0: 1, 1: fraud_weight}
+        delayed_train_model = delayed(train_model)(X_train, y_train, class_weight)
+        delayed_train_models.append(delayed_train_model)
+    trained_models = Parallel(n_jobs=4)(delayed_train_models)
 
-        # Model training
-        model = model_fn(class_weight)
-        model.fit(X_train, y_train)
+    logging.info("DONE: Training models in parallel. Ready to compute metrics.")
+
+    for model, class_weight in trained_models:
+        fraud_weight = class_weight[1]
 
         y_pred = model.predict(X_val)
         (
@@ -93,7 +109,8 @@ def train(model_name: str, model_fn: callable):
     metrics_df = pd.DataFrame(metrics)
     metrics_df.insert(0, "class_weight", list(fraud_class_weights))
     metrics_df.to_csv(
-        RESULT_DIR / f"result_{FLAG.transaction_type.upper()}_{model_name}.csv",
+        RESULT_DIR
+        / f"result_{FLAG.transaction_type.upper()}_{model_name}.csv",
         index=False,
     )
 
