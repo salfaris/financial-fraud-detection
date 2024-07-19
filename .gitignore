@@ -1,3 +1,5 @@
+.DS_Store
+
 # Project specific
 /datasets/01_raw/paysim.csv
 /datasets/02_staged/processed_paysim.csv
