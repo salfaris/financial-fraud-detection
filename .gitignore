@@ -1,8 +1,11 @@
 .DS_Store
 
 # Project specific
-/datasets/01_raw/paysim.csv
-/datasets/02_staged/processed_paysim.csv
+**/datasets/01_raw/paysim.csv
+**/datasets/02_staged/processed_paysim.csv
+**/datasets/03_features/train.csv
+**/datasets/03_features/val.csv
+**/datasets/03_features/test.csv
 
 # VSCode
 ./vscode
