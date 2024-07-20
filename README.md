@@ -64,6 +64,7 @@ To visualize this process, I built a web app using Streamlit. The app is Dockeri
 
 The deployed web app can be found here: https://fraud-web-app-qmjqqzknzq-ew.a.run.app/.
 
+![app-landing-page](./docs/app.png)
 
 ## What was not covered
 
