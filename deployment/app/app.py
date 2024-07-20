@@ -11,7 +11,7 @@ import plotly.graph_objects as go
 
 ROOT_DIR = Path(__file__).parents[1]
 DATA_DIR = ROOT_DIR / "datasets"
-MODEL_DIR = ROOT_DIR / "MODEL"
+MODEL_DIR = ROOT_DIR / "model"
 
 
 st.set_page_config(
