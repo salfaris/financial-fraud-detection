@@ -62,9 +62,15 @@ The idea is that I will be simulating streaming payment transactions using the e
 
 To visualize this process, I built a web app using Streamlit. The app is Dockerize with a Dockerfile and the image is pushed to the Google Artifact Registry. We then grabbed the pushed Docker image and deploy it using Google Cloud Platform (GCP) Cloud Run.
 
+### Deployed web app
+![app-landing-page](./docs/app.png)
+
 The deployed web app can be found here: https://fraud-web-app-qmjqqzknzq-ew.a.run.app/.
 
-![app-landing-page](./docs/app.png)
+### App service architecture
+
+![app-architecture](./docs/payments-fraud-screener-architecture.png)
+
 
 ## What was not covered
 
