@@ -49,8 +49,17 @@ Let's consider the pros and cons...
 
 I would argue this is not scalable for both training and inference. If we have a new transaction type, e.g. `VOUCHER`, this means that we have to rerun the entire analysis and train a new model for the `VOUCHER` transaction type assuming fraudulent transactions occur in this type.
 
+So we choose a double logistic regression for deployment...
+
 ### 2. Deployment
 
+Now that we got a trained model, let's put this model into a working production environment.
+
+The idea is that I will be simulating streaming payment transactions using the entire PaySim dataset and use the trained machine learning model to flag incoming transactions as fraud or not.
+
+To visualize this process, I built a web app using Streamlit. The app is Dockerize with a Dockerfile and the image is pushed to the Google Artifact Registry. We then grabbed the pushed Docker image and deploy it using Google Cloud Platform (GCP) Cloud Run.
+
+The deployed web app can be found here: https://fraud-web-app-qmjqqzknzq-ew.a.run.app/.
 
 
 ## What was not covered
