@@ -7,9 +7,9 @@ import pandas as pd
 from millify import millify
 
 import plotly.express as px
-import plotly.graph_objects as go
 
-ROOT_DIR = Path(__file__).parents[1]
+# ROOT_DIR = Path(__file__).parents[1]
+ROOT_DIR = Path(__file__).parents[0]  # Docker version
 DATA_DIR = ROOT_DIR / "datasets"
 MODEL_DIR = ROOT_DIR / "model"
 
