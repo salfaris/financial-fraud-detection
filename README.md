@@ -3,8 +3,11 @@
 #### Table of Contents
 
 - [Project structure](#project-structure)
-  - [1. Experimentation](#experimentation)
-  - [2. Deployment](#deployment)
+- [1. Experimentation](#1-experimentation)
+  - [1.1. Fraud detection strategy research – paper reproduction.](#11-fraud-detection-strategy-research-paper-reproduction)
+  - [1.2. From research to production model](#12-from-research-to-production-model)
+- [2. Deployment](#2-deployment)
+- [What was not covered](#what-was-not-covered)
 
 
 ## Project structure
@@ -14,9 +17,9 @@ This project consists of two key sections:
 1. Experimentation
 2. Deployment
 
-### 1. Experimentation
+## 1. Experimentation
 
-#### 1.1 Fraud detection strategy research – paper reproduction.
+### 1.1. Fraud detection strategy research – paper reproduction.
 
 In the experimentation phase, my first focus is to reproduce and verify the class weight strategy by Aditya Oza in his preprint ["Fraud Detection using Machine Learning" (Oza, 2018)](https://www.semanticscholar.org/paper/Fraud-Detection-using-Machine-Learning-Oza-aditya/9f2c08d9efaa53cfabdd0ec47afa8015c7ff5bb9).
 
@@ -31,7 +34,7 @@ We can dive deeper into my findings for this reproduction, but the main ones inc
 
 Considering the tradeoffs, we opted for the more lightweight logistic regression model to be used for deployment.
 
-#### 1.2. From research to production model
+### 1.2. From research to production model
 
 Oza's experiment did a granular analysis by training a model for each transaction type where there exists a fraudulent transaction. To recap, there are five transaction types:
 
@@ -51,7 +54,7 @@ I would argue this is not scalable for both training and inference. If we have a
 
 So we choose a double logistic regression for deployment...
 
-### 2. Deployment
+## 2. Deployment
 
 Now that we got a trained model, let's put this model into a working production environment.
 
