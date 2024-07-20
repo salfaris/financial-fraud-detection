@@ -1,4 +1,6 @@
+# Mac specific
 .DS_Store
+**/*.icloud
 
 # Project specific
 **/datasets/01_raw/paysim.csv
