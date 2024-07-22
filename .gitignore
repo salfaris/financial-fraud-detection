@@ -9,6 +9,11 @@
 **/datasets/03_features/val.csv
 **/datasets/03_features/test.csv
 
+# Project specific: deployment
+**/datasets/02_staged/processed_paysim*.csv
+**/datasets/03_features/*_full.csv
+**/datasets/03_features/*_with_dummies.csv
+
 # VSCode
 ./vscode
 
