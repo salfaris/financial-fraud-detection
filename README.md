@@ -86,4 +86,34 @@ The deployed web app can be found here: https://fraud-web-app-qmjqqzknzq-ew.a.ru
 
 Data onboarding was unfortunately not covered. I love data onboarding but unfortunately conjuring my own payments transaction dataset seems meaningless as that would introduce some kind of inherent bias.
 
-## Todo list
+## Development
+
+### TODOs – experimentation
+- [X] Reproduce Oza's analysis results
+  - [X] `TRANSFER` with Logistic regression 
+  - [X] `TRANSFER` with Linear SVM
+  - [X] `TRANSFER` with SVM + RBF kernel
+  - [X] `CASH_OUT` with Logistic regression 
+  - [X] `CASH_OUT` with Linear SVM
+  - [X] `CASH_OUT` with SVM + RBF kernel
+- [X] Experiment with universal model using transaction type as a feature.
+- [ ] Write full report on replication results versus Oza's analysis
+
+### TODOs – deployment
+- [X] Build a simple Streamlit app that works locally
+- [X] Devise an ML inference pipeline that ingests data and spits out prediction
+- [X] Dockerize Streamlit app
+- [X] Push Docker image to Google Artifact Registry
+- [X] Deploy image to GCP Cloud Run
+- [ ] Build Pub/Sub mock data trigger
+- In practice it is triggered via an independent Cloud Function, but my idea is to do a mock call by triggering a Pub/Sub call via the Streamlit web app which then passes it to the Streamlit app itself that is actively listening for the Pub/Sub message.
+- [ ] Build mock BigQuery data warehouse 
+- We don't really need the advantage of BigQuery tables since this is a self-contained app, so we can use something like local SQLite database if we really want to use tables. Or just keep using the CSVs. Obviously in a real-world environment we want to put the data in a data warehouse so that lineage can be guarded and it can be easily accessed by other users and services.
+
+### TODOs – documentation
+- [X] Draw architecture diagram for GCP deployment
+- [X] Draw diagram for inference pipeline
+- [X] Write README
+- [X] Add Streamlit landing page as static image to README
+- [ ] Add Streamlit landing page as GIF to README
+- [ ] Do a blog writeup?
