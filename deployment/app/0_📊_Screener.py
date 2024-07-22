@@ -16,12 +16,12 @@ st.set_page_config(
 # has to be set up before importing it.
 import inference  # noqa
 
-ROOT_DIR = Path(__file__).parents[0]  # Dockerize, use parents[0]; otherwise parents[1]
+ROOT_DIR = Path(__file__).parents[1]  # Dockerize, use parents[0]; otherwise parents[1]
 DATA_DIR = ROOT_DIR / "datasets"
 MODEL_DIR = ROOT_DIR / "model"
 
 # dashboard title
-st.title("Payments Fraud Screener")
+st.markdown("## 🚨 Payments Fraud Screener")
 
 
 # @st.cache_resource
