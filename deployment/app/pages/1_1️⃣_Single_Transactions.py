@@ -188,4 +188,12 @@ with container.container(border=True):
     fire()
 
 st.markdown("### 🚨 Potential fraud activities")
-st.dataframe(st.session_state.fraud_dataframe)
+
+df = st.session_state.fraud_dataframe
+if df.empty:
+    st.write(
+        "No fraud activity detected yet, keep clicking the generate "
+        "random data button above."
+    )
+else:
+    st.dataframe(df)
