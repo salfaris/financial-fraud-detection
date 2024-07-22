@@ -71,8 +71,16 @@ Depending on the type ***T***, this transaction can increase or decrease the bal
 """
 )
 
-generate_choice = lambda: np.random.choice(TRANSACTION_TYPES)
-generate_amount = lambda: np.random.exponential(scale=100000, size=1)[0]
+
+def generate_choice() -> np.ndarray:
+    return np.random.choice(TRANSACTION_TYPES)
+
+
+def generate_amount() -> np.ndarray:
+    sample = np.random.exponential(scale=100000, size=1)
+    return sample[0]  # okay to get 0-index element because `size=1`.
+
+
 min_amount = 0.0
 step_amount = 1000.0
 
