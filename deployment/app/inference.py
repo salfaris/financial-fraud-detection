@@ -2,9 +2,8 @@ from joblib import load
 from pathlib import Path
 from typing import Literal
 
-
-import streamlit as st
 import numpy as np
+import streamlit as st
 
 from model_config import FEATURE_NAMES
 
@@ -14,7 +13,9 @@ def load_model(model_path):
     return load(model_path)
 
 
-ROOT_DIR = Path(__file__).resolve().parents[0]  # Dockerize, use parents[0]
+ROOT_DIR = (
+    Path(__file__).resolve().parents[0]
+)  # Dockerize, use parents[0]; otherwise parents[1]
 MODEL_DIR = ROOT_DIR / "model"
 
 TXN_TYPES_MODEL = {

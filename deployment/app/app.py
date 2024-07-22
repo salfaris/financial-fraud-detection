@@ -1,11 +1,9 @@
 from pathlib import Path
 import time
 
-
+from millify import millify
 import pandas as pd
 import plotly.express as px
-from millify import millify
-
 import streamlit as st
 
 st.set_page_config(
@@ -13,10 +11,12 @@ st.set_page_config(
     page_icon="🚨",
     layout="wide",
 )
+
+# `inference.py` is a module that loads streamlit as well so `set.set_page_config`
+# has to be set up before importing it.
 import inference  # noqa
 
-# ROOT_DIR = Path(__file__).parents[1]
-ROOT_DIR = Path(__file__).parents[0]  # Dockerize, use parents[0]
+ROOT_DIR = Path(__file__).parents[0]  # Dockerize, use parents[0]; otherwise parents[1]
 DATA_DIR = ROOT_DIR / "datasets"
 MODEL_DIR = ROOT_DIR / "model"
 
