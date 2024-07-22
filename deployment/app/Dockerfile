@@ -15,9 +15,16 @@ COPY app/app.py app.py
 COPY app/app.yaml app.yaml
 COPY app/.streamlit .streamlit
 
-# Copy dataset and ML models
-COPY datasets datasets
+# Copy datasets
+# Dataset copies are specific to keep image size small.
+COPY datasets/02_staged/processed_paysim.csv datasets/02_staged/processed_paysim.csv
+
+# Copy models
 COPY model model
+
+# Copy pipelines
+COPY src/model_config.py model_config.py
+COPY app/inference.py inference.py
 
 # Run
 ENTRYPOINT ["streamlit", "run", "app.py", "--server.port=8080", "--server.address=0.0.0.0"]

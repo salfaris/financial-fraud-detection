@@ -1,24 +1,24 @@
 from pathlib import Path
 import time
 
-import streamlit as st
-import pandas as pd
 
+import pandas as pd
+import plotly.express as px
 from millify import millify
 
-import plotly.express as px
-
-# ROOT_DIR = Path(__file__).parents[1]
-ROOT_DIR = Path(__file__).parents[0]  # Docker version
-DATA_DIR = ROOT_DIR / "datasets"
-MODEL_DIR = ROOT_DIR / "model"
-
+import streamlit as st
 
 st.set_page_config(
     page_title="Payments Fraud Screener",
     page_icon="🚨",
     layout="wide",
 )
+import inference  # noqa
+
+# ROOT_DIR = Path(__file__).parents[1]
+ROOT_DIR = Path(__file__).parents[0]  # Dockerize, use parents[0]
+DATA_DIR = ROOT_DIR / "datasets"
+MODEL_DIR = ROOT_DIR / "model"
 
 # dashboard title
 st.title("Payments Fraud Screener")
@@ -33,29 +33,19 @@ def load_data():
     return data
 
 
-@st.cache_resource
-def load_model():
-    from pickle import load
-
-    with open(MODEL_DIR / "icw_logreg.pkl", "rb") as f:
-        MODEL = load(f)
-
-    return MODEL
-
-
 DATA_CHUNK = load_data()
-MODEL = load_model()
+# MODEL = load_model()
 
 
-def data_display_form(data: pd.DataFrame):
-    type_columns = [col for col in data.columns if col.startswith("type_")]
-    display_data = data.copy()
-    consolidated_type_col = pd.from_dummies(
-        display_data[type_columns], sep="type_"
-    ).set_index(display_data.index)
-    display_data.insert(display_data.shape[1] - 1, "type", consolidated_type_col)
-    display_data = display_data.drop(columns=type_columns)
-    return display_data
+# def data_display_form(data: pd.DataFrame):
+#     type_columns = [col for col in data.columns if col.startswith("type_")]
+#     display_data = data.copy()
+#     consolidated_type_col = pd.from_dummies(
+#         display_data[type_columns], sep="type_"
+#     ).set_index(display_data.index)
+#     display_data.insert(display_data.shape[1] - 1, "type", consolidated_type_col)
+#     display_data = display_data.drop(columns=type_columns)
+#     return display_data
 
 
 def logreg_pipeline(data: pd.DataFrame):
@@ -67,8 +57,9 @@ def logreg_pipeline(data: pd.DataFrame):
             "step",
         ]
     )
-    data["flagged_fraud"] = MODEL.predict(model_data)
-    data["confidence"] = MODEL.predict_proba(model_data)[:, 1]
+    data = inference.predict_pipeline(model_data)
+    # data["flagged_fraud"] = inference.predict_pipeline(model_data)
+    # data["confidence"] = MODEL.predict_proba(model_data)[:, 1]
     return data
 
 
@@ -82,7 +73,8 @@ for i in range(1000):
     new_data.drop(columns=["is_fraud"], inplace=True)
 
     new_data = logreg_pipeline(new_data)
-    display_data = data_display_form(new_data)
+    display_data = new_data
+    # display_data = data_display_form(new_data)
 
     full_data.extend([display_data])
     data = pd.concat(full_data)
@@ -210,7 +202,7 @@ for i in range(1000):
         st.markdown("### Fraudulent transactions")
         st.dataframe(data.query("flagged_fraud == 1"))
 
-        time.sleep(1)
+        time.sleep(0.1)
 
         prev_flagged_fraud = flagged_fraud
         prev_fraud_total_amount = fraudulent_total_amount
