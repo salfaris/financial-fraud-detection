@@ -84,4 +84,4 @@ The deployed web app can be found here: https://fraud-web-app-qmjqqzknzq-ew.a.ru
 
 ## What was not covered
 
-Data onboarding was unfortunately not covered. I love data onboarding but unfortunately conjuring my own payments transaction dataset seems meaningless.
+Data onboarding was unfortunately not covered. I love data onboarding but unfortunately conjuring my own payments transaction dataset seems meaningless as that would introduce some kind of inherent bias.
