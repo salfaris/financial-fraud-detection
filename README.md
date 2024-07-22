@@ -79,6 +79,8 @@ The deployed web app can be found here: https://fraud-web-app-qmjqqzknzq-ew.a.ru
 
 ### App service architecture
 
+The envisioned architecture for the service:
+
 ![app-architecture](./docs/payments-fraud-screener-architecture.png)
 
 
