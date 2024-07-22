@@ -14,7 +14,7 @@ def load_model(model_path):
 
 
 ROOT_DIR = (
-    Path(__file__).resolve().parents[0]
+    Path(__file__).resolve().parents[1]
 )  # Dockerize, use parents[0]; otherwise parents[1]
 MODEL_DIR = ROOT_DIR / "model"
 
