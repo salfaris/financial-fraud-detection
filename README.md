@@ -44,15 +44,26 @@ Oza's experiment did a granular analysis by training a model for each transactio
 4. `PAYMENT`: A payment transaction. Increases the balance of receiver and decreases the balance of the payee.
 5. `TRANSFER`: Cash transfers between accounts using the mobile money platform.
 
-In the dataset, fraudulent transactions only occurs through `CASH_OUT` and `TRANSFER` transaction types which means that two separate models (for each model type – logistic regression, linear svm and svm + rbf kernel) were trained.
+In the dataset, fraudulent transactions only occured through `CASH_OUT` and `TRANSFER` transactions which means that two separate models, for each model type – logistic regression, linear SVM and SVM+RBF kernel, were trained in Oza's analysis and our replication. But we did not train a model for the other types – `CASH_IN`, `DEBIT`, `PAYMENT`.
 
-Extending this to a production model, i.e., building models for each transaction type where we historically know we have fraudulent transaction means that we inherently introduce a rule-based system where if the transaction type is not `TRANSFER` or `CASH_OUT`, then we automatically label it as non-fraudulent; otherwise, we run the transaction rowset through the type-specific models.
+Our experimentation phase gave us the best ML model for each transaction type. To extend our experiment results to a single production model, we can introduce a rule-based system where given a transaction data $D$, if the transaction type is not in `TRANSFER` or `CASH_OUT`, then we automatically label it as non-fraudulent; otherwise, we run $D$ into one of our trained models depending on the transaction type. Our inference pipeline thus looks as follows:
 
-Let's consider the pros and cons...
+![inference-pipeline](./docs/inference_pipeline.png)
 
-I would argue this is not scalable for both training and inference. If we have a new transaction type, e.g. `VOUCHER`, this means that we have to rerun the entire analysis and train a new model for the `VOUCHER` transaction type assuming fraudulent transactions occur in this type.
+### Discussion
 
-So we choose a double logistic regression for deployment...
+The inference pipeline is designed to only flag potential fraudulent transactions based on historical fraud: 
+
+- For transaction types where there are historical fraud activities, we trained models that attain less than 1% false positive rate (for positive user experience) whilst maximizing recall (to minimize loss due to fraud). 
+- For transaction types where there are no fraud history, however, the rule-based nature dictates to flag the transaction as not fraudulent... which is not ideal and is a key vulnerability.
+
+_So how do we address this?_
+
+Well you can train a single machine learning model that can use transaction type as a feature. This can be both computationally and monetarily expensive as you are adding $n$ new features where $n$ is the total number of transaction types. We actually did this and training time was not the issue but rather the model just did not perform as well. We saw a huge 20-30% drop in recall which implies that we are accepting more losses due to fraudulent transactions!
+
+Alternatively, we can can train a separate ML model that ignores transaction type and try to flag fraudulent activities simply from the other features like amount of transaction and, balance in SOURCE and DESTINATION account; before and after transaction. This model should run in tandem with the specialized trained models and is used for types that are not known to have historical fraud. In this case, you can still enjoy the good recall values from the specialized transaction type models. However, the drawback is you now have to design, develop and maintain an additional model. This means added latency and monetary cost when putting the final pipeline into production. 
+
+BUT note that maintaining a better recall means that we save monetary costs that we would otherwise have to pay due to not flagging fraud properly. So it really depends on your business case and how you want to optimize the solution.
 
 ## 2. Deployment
 
