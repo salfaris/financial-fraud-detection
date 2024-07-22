@@ -50,7 +50,7 @@ Our experimentation phase gave us the best ML model for each transaction type. T
 
 ![inference-pipeline](./docs/inference_pipeline.png)
 
-### Discussion
+#### Discussion
 
 The inference pipeline is designed to only flag potential fraudulent transactions based on historical fraud: 
 
