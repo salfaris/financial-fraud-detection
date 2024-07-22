@@ -10,7 +10,7 @@ st.set_page_config(
 
 # `inference.py` is a module that loads streamlit as well so `set.set_page_config`
 # has to be set up before importing it.
-import inference
+import inference  # noqa
 
 
 def init_session_state(key, default=None):
