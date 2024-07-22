@@ -52,16 +52,15 @@ Our experimentation phase gave us the best ML model for each transaction type. T
 
 #### Discussion
 
-The inference pipeline is designed to only flag potential fraudulent transactions based on historical fraud: 
+The inference pipeline is designed to only flag potential fraudulent transactions based on historical fraud:
 
-- For transaction types where there are historical fraud activities, we trained models that attain less than 1% false positive rate (for positive user experience) whilst maximizing recall (to minimize loss due to fraud). 
-- For transaction types where there are no fraud history, however, the rule-based nature dictates to flag the transaction as not fraudulent... which is not ideal and is a key vulnerability.
+- For transaction types where there are historical fraud activities, we trained models that attain less than a 1% false positive rate (for positive user experience) while maximizing recall (to minimize loss due to fraud).
+- For transaction types where there is no fraud history, however, the rule-based nature dictates flagging the transaction as not fraudulent... which is not ideal and is a key vulnerability.
+So how do we address this?
 
-_So how do we address this?_
+Well, you can train a single machine learning model that can use transaction type as a feature. This can be both computationally and monetarily expensive as you are adding $n$ new features where $n$ is the total number of transaction types. We actually did this, and training time was not the issue; rather, the model just did not perform as well. We saw a huge 20-30% drop in recall, which implies that we are accepting more losses due to fraudulent transactions!
 
-Well you can train a single machine learning model that can use transaction type as a feature. This can be both computationally and monetarily expensive as you are adding $n$ new features where $n$ is the total number of transaction types. We actually did this and training time was not the issue but rather the model just did not perform as well. We saw a huge 20-30% drop in recall which implies that we are accepting more losses due to fraudulent transactions!
-
-Alternatively, we can can train a separate ML model that ignores transaction type and try to flag fraudulent activities simply from the other features like amount of transaction and, balance in SOURCE and DESTINATION account; before and after transaction. This model should run in tandem with the specialized trained models and is used for types that are not known to have historical fraud. In this case, you can still enjoy the good recall values from the specialized transaction type models. However, the drawback is you now have to design, develop and maintain an additional model. This means added latency and monetary cost when putting the final pipeline into production. 
+Alternatively, we can train a separate ML model that ignores transaction type and tries to flag fraudulent activities simply from the other features like the amount of the transaction and the balance in the SOURCE and DESTINATION accounts, before and after the transaction. This model should run in tandem with the specialized trained models and be used for types that are not known to have historical fraud. In this case, you can still enjoy the good recall values from the specialized transaction type models. However, the drawback is that you now have to design, develop, and maintain an additional model. This means added latency and monetary cost when putting the final pipeline into production.
 
 BUT note that maintaining a better recall means that we save monetary costs that we would otherwise have to pay due to not flagging fraud properly. So it really depends on your business case and how you want to optimize the solution.
 
