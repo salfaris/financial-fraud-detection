@@ -106,9 +106,9 @@ Data onboarding was unfortunately not covered. I love data onboarding but unfort
 - [X] Push Docker image to Google Artifact Registry
 - [X] Deploy image to GCP Cloud Run
 - [ ] Build Pub/Sub mock data trigger
-- In practice it is triggered via an independent Cloud Function, but my idea is to do a mock call by triggering a Pub/Sub call via the Streamlit web app which then passes it to the Streamlit app itself that is actively listening for the Pub/Sub message.
+  - In practice it is triggered via an independent Cloud Function, but my idea is to do a mock call by triggering a Pub/Sub call via the Streamlit web app which then passes it to the Streamlit app itself that is actively listening for the Pub/Sub message.
 - [ ] Build mock BigQuery data warehouse 
-- We don't really need the advantage of BigQuery tables since this is a self-contained app, so we can use something like local SQLite database if we really want to use tables. Or just keep using the CSVs. Obviously in a real-world environment we want to put the data in a data warehouse so that lineage can be guarded and it can be easily accessed by other users and services.
+  - We don't really need the advantage of BigQuery tables since this is a self-contained app, so we can use something like local SQLite database if we really want to use tables. Or just keep using the CSVs. Obviously in a real-world environment we want to put the data in a data warehouse so that lineage can be guarded and it can be easily accessed by other users and services.
 
 ### TODOs – documentation
 - [X] Draw architecture diagram for GCP deployment
