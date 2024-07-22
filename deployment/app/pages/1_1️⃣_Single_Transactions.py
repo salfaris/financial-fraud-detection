@@ -5,6 +5,7 @@ import streamlit as st
 st.set_page_config(
     page_title="Single Streaming Transaction Simulator",
     page_icon="🤖",
+    layout="wide",
 )
 
 # `inference.py` is a module that loads streamlit as well so `set.set_page_config`
@@ -54,14 +55,21 @@ This demo simulates how the service process a single transaction in the backend.
 """
 )
 
-with st.expander("Definition: transaction data"):
-    st.caption(
-        """
-    A transaction of type ***T*** and amount ***A*** flows from a :blue[SOURCE] account to a :red[DESTINATION] account.
-    
-    Depending on the type ***T***, this transaction can increase or decrease the balance of the :blue[SOURCE] account by ***A***; and similarly for the :red[DESTINATION] account.
-    """
+with st.expander("Want to see a full streaming simulator instead?"):
+    st.page_link(
+        "0_🚨_Payments_Fraud_Screener.py",
+        label="Payments Fraud Screener",
+        icon="🚨",
+        use_container_width=True,
     )
+
+# with st.expander("Definition: transaction data"):
+st.caption(
+    """
+Definition. A transaction of type ***T*** and amount ***A*** flows from a :blue[SOURCE] account to a :red[DESTINATION] account.
+Depending on the type ***T***, this transaction can increase or decrease the balance of the :blue[SOURCE] account by ***A***; and similarly for the :red[DESTINATION] account.
+"""
+)
 
 generate_choice = lambda: np.random.choice(TRANSACTION_TYPES)
 generate_amount = lambda: np.random.exponential(scale=100000, size=1)[0]
