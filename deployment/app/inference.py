@@ -5,6 +5,7 @@ from typing import Literal
 import numpy as np
 import streamlit as st
 
+import app_config
 from model_config import FEATURE_NAMES
 
 
@@ -13,14 +14,9 @@ def load_model(model_path):
     return load(model_path)
 
 
-ROOT_DIR = (
-    Path(__file__).resolve().parents[1]
-)  # Dockerize, use parents[0]; otherwise parents[1]
-MODEL_DIR = ROOT_DIR / "model"
-
 TXN_TYPES_MODEL = {
-    "TRANSFER": load_model(MODEL_DIR / "model_TRANSFER_logreg.pkl"),
-    "CASH_OUT": load_model(MODEL_DIR / "model_CASH_OUT_logreg.pkl"),
+    "TRANSFER": load_model(app_config.MODEL_DIR / "model_TRANSFER_logreg.pkl"),
+    "CASH_OUT": load_model(app_config.MODEL_DIR / "model_CASH_OUT_logreg.pkl"),
 }
 
 TRANSACTION_TYPE_COLUMN: str = "type"

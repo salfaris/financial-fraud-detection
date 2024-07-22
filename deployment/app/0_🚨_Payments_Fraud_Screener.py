@@ -1,10 +1,11 @@
-from pathlib import Path
 import time
 
 from millify import millify
 import pandas as pd
 import plotly.express as px
 import streamlit as st
+
+import app_config
 
 st.set_page_config(
     page_title="Payments Fraud Screener",
@@ -15,10 +16,6 @@ st.set_page_config(
 # `inference.py` is a module that loads streamlit as well so `set.set_page_config`
 # has to be set up before importing it.
 import inference  # noqa
-
-ROOT_DIR = Path(__file__).parents[1]  # Dockerize, use parents[0]; otherwise parents[1]
-DATA_DIR = ROOT_DIR / "datasets"
-MODEL_DIR = ROOT_DIR / "model"
 
 # dashboard title
 st.markdown("## 🚨 Payments Fraud Screener")
@@ -35,7 +32,9 @@ with st.expander("Want to see a single transaction streaming sim instead?"):
 # @st.cache_resource
 def load_data():
     data = pd.read_csv(
-        DATA_DIR / "02_staged" / "processed_paysim.csv", index_col=0, chunksize=1000
+        app_config.DATA_DIR / "02_staged" / "processed_paysim.csv",
+        index_col=0,
+        chunksize=1000,
     )
     return data
 
