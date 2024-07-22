@@ -1,5 +1,4 @@
 from joblib import load
-from pathlib import Path
 from typing import Literal
 
 import numpy as np
