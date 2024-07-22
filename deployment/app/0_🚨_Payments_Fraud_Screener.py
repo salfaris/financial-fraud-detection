@@ -23,6 +23,14 @@ MODEL_DIR = ROOT_DIR / "model"
 # dashboard title
 st.markdown("## 🚨 Payments Fraud Screener")
 
+with st.expander("Want to see a single transaction streaming sim instead?"):
+    st.page_link(
+        "pages/1_1️⃣_Single_Transactions.py",
+        label="Single Transactions Simulator",
+        icon="1️⃣",
+        use_container_width=True,
+    )
+
 
 # @st.cache_resource
 def load_data():
