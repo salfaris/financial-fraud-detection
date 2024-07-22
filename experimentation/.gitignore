@@ -1,0 +1,4 @@
+# Ignore large datasets
+**/train_*.csv
+**/val_*.csv
+**/test_*.csv
