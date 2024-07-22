@@ -4,12 +4,11 @@
 
 - [Project structure](#project-structure)
 - [1. Experimentation](#1-experimentation)
-  - [1.1. Fraud detection strategy research – paper reproduction](#11-fraud-detection-strategy-research-paper-reproduction)
+  - [1.1. Fraud detection strategy research – paper reproduction](#11-fraud-detection-strategy-research--paper-reproduction)
   - [1.2. From research to a production model](#12-from-research-to-a-production-model)
     - [Discussion](#discussion)
 - [2. Deployment](#2-deployment)
 - [What was not covered](#what-was-not-covered)
-
 
 ## Project structure
 
@@ -86,3 +85,5 @@ The deployed web app can be found here: https://fraud-web-app-qmjqqzknzq-ew.a.ru
 ## What was not covered
 
 Data onboarding was unfortunately not covered. I love data onboarding but unfortunately conjuring my own payments transaction dataset seems meaningless as that would introduce some kind of inherent bias.
+
+## Todo list
