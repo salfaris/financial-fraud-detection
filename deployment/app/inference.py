@@ -24,7 +24,7 @@ Output = Literal[0, 1]
 
 
 def preprocess(batch):
-    batch = batch[FEATURE_NAMES + [TRANSACTION_TYPE_COLUMN]]
+    batch = batch[FEATURE_NAMES + [TRANSACTION_TYPE_COLUMN]].copy()
     return batch
 
 
@@ -43,5 +43,5 @@ def batch_predict(batch) -> np.ndarray:
 
 def predict_pipeline(batch):
     batch = preprocess(batch)
-    batch["flagged_fraud"] = batch_predict(batch)
+    batch.loc[:, "flagged_fraud"] = batch_predict(batch)
     return batch
