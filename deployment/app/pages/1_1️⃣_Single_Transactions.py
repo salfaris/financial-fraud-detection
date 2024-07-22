@@ -68,7 +68,7 @@ st.caption(
     """
 Definition. A transaction of type ***T*** and amount ***A*** flows from a :blue[SOURCE] account to a :red[DESTINATION] account.
 Depending on the type ***T***, this transaction can increase or decrease the balance of the :blue[SOURCE] account by ***A***; and similarly for the :red[DESTINATION] account.
-"""
+"""  # noqa
 )
 
 
