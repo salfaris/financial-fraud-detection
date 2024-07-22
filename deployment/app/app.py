@@ -29,23 +29,10 @@ def load_data():
     data = pd.read_csv(
         DATA_DIR / "02_staged" / "processed_paysim.csv", index_col=0, chunksize=1000
     )
-    # data = pd.read_csv(DATA_DIR / "03_features" / "TRANSFER_train.csv", index_col=0)
     return data
 
 
 DATA_CHUNK = load_data()
-# MODEL = load_model()
-
-
-# def data_display_form(data: pd.DataFrame):
-#     type_columns = [col for col in data.columns if col.startswith("type_")]
-#     display_data = data.copy()
-#     consolidated_type_col = pd.from_dummies(
-#         display_data[type_columns], sep="type_"
-#     ).set_index(display_data.index)
-#     display_data.insert(display_data.shape[1] - 1, "type", consolidated_type_col)
-#     display_data = display_data.drop(columns=type_columns)
-#     return display_data
 
 
 def logreg_pipeline(data: pd.DataFrame):
