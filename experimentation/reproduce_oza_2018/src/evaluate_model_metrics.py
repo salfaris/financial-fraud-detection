@@ -83,7 +83,7 @@ def train(model_name: str, model_fn: callable):
         save_model(model, model_path)
         return model, class_weight
 
-    model_subdir = MODEL_DIR / model_name
+    model_subdir = MODEL_DIR / model_name / FLAG.transaction_type
     model_subdir.mkdir(exist_ok=True, parents=True)
     logging.info(
         "RUN: Adding training step to queue for all "
