@@ -1,4 +1,4 @@
-# 💷 Payments Fraud Detection 🚨
+# 💷 Financial Transactions Fraud Detection 🚨
 
 #### Table of Contents
 
@@ -68,7 +68,7 @@ BUT note that maintaining a better recall means that we save monetary costs that
 
 Now that we got a trained model, let's put this model into a working production environment.
 
-The idea is that I will be simulating streaming payment transactions using the entire PaySim dataset and use the trained machine learning model to flag incoming transactions as fraud or not.
+The idea is that I will be simulating streaming financial transactions using the entire PaySim dataset and use the trained machine learning model to flag incoming transactions as fraud or not.
 
 To visualize this process, I built a web app using Streamlit. The app is Dockerize with a Dockerfile and the image is pushed to the Google Artifact Registry. We then grabbed the pushed Docker image and deploy it using Google Cloud Platform (GCP) Cloud Run.
 
@@ -86,7 +86,7 @@ The envisioned architecture for the service:
 
 ## What was not covered
 
-Data onboarding was unfortunately not covered. I love data onboarding but unfortunately conjuring my own payments transaction dataset seems meaningless as that would introduce some kind of inherent bias.
+Data onboarding was unfortunately not covered. I love data onboarding but unfortunately conjuring my own financial transactions dataset seems meaningless as that would introduce some kind of inherent bias.
 
 ## Development
 
