@@ -1,3 +1,25 @@
+---
+title: "ML Research Validation"
+subtitle: 'Replication & extension of "_Fraud Detection using Machine Learning (Oza, 2018)_"'
+author: "Salman Faris"
+date: "20 July 2024"
+format:
+    pdf: default
+    html:
+      page-layout: full
+      self-contained: true
+      grid: 
+        margin-width: 350px
+execute: 
+  echo: fenced
+reference-location: margin
+citation-location: margin
+---
+
+# Introduction
+
+_Fraud Detection using Machine Learning (Oza, 2018)_ proposed a class weight strategy to tackle the problem of imbalanced classes in payments fraud detection. The author showed that choosing a suitable class weight in a classifier can be sufficient to flag fraud detections with a reasonably low false positive rate whilst maintaining high accuracy.
+
 # Experimental evaluation
 
 ::: {#tbl-panel layout-ncol=2}
@@ -6,14 +28,16 @@
 | Logistic Regression | 12     | 12        | 12  | 12    |
 | Linear SVM          | 123    | 123       | 123 | 123   |
 | SVM with RBF kernel | 1      | 1         | 1   | 1     |
+| Decision Tree       | 1      | 1         | 1   | 1     |
 
 : Replication results (ours) {#tbl-first}
 
-| Algorithm           | Recall | Precision | F1  | AUPRC |
-| ------------------- | ------ | --------- | --- | ----- |
-| Logistic Regression | 12     | 12        | 12  | 12    |
-| Linear SVM          | 123    | 123       | 123 | 123   |
-| SVM with RBF kernel | 1      | 1         | 1   | 1     |
+| Algorithm           | Recall | Precision | F1     | AUPRC  |
+| ------------------- | ------ | --------- | ------ | ------ |
+| Logistic Regression | 0.9983 | 0.4416    | 0.6123 | 0.9248 |
+| Linear SVM          | 0.9983 | 0.4432    | 0.6139 | 0.9161 |
+| SVM with RBF kernel | 0.9934 | 0.5871    | 0.7381 | 0.9855 |
+| Decision Tree       | N/A    | N/A       | N/A    | N/A    |
 
 : Original results {#tbl-second}
 
@@ -21,19 +45,43 @@ TRANSFER dataset evaluation on validation set
 :::
 
 ::: {#tbl-panel layout-ncol=2}
+| Algorithm           | Recall | Precision | F1  | AUPRC |
+| ------------------- | ------ | --------- | --- | ----- |
+| Logistic Regression | 12     | 12        | 12  | 12    |
+| Linear SVM          | 123    | 123       | 123 | 123   |
+| SVM with RBF kernel | 1      | 1         | 1   | 1     |
+| Decision Tree       | 1      | 1         | 1   | 1     |
+
+: Replication results (ours) {#tbl-first}
+
+| Algorithm           | Recall | Precision | F1     | AUPRC  |
+| ------------------- | ------ | --------- | ------ | ------ |
+| Logistic Regression | 0.9822 | 0.1561    | 0.2692 | 0.7235 |
+| Linear SVM          | 0.9352 | 0.1263    | 0.2226 | 0.6727 |
+| SVM with RBF kernel | 0.9773 | 0.1315    | 0.2318 | 0.7598 |
+| Decision Tree       | N/A    | N/A       | N/A    | N/A    |
+
+: Original results {#tbl-second}
+
+CASH OUT dataset evaluation on validation set
+:::
+
+::: {#tbl-panel layout-ncol=2}
 | Algorithm           | Ideal class weight |
 | ------------------- | :----------------: |
-| Logistic Regression |         12         |
-| Linear SVM          |        123         |
-| SVM with RBF kernel |         1          |
+| Logistic Regression |         14         |
+| Linear SVM          |        12         |
+| SVM with RBF kernel |         11          |
+| Decision Tree |         305          |
 
 : Replication results (ours) {#tbl-first}
 
 | Algorithm           | Ideal class weight |
 | ------------------- | :----------------: |
-| Logistic Regression |         12         |
-| Linear SVM          |        123         |
-| SVM with RBF kernel |         1          |
+| Logistic Regression |         70         |
+| Linear SVM          |         39         |
+| SVM with RBF kernel |         16         |
+| Decision Tree |         N/A         |
 
 : Original results {#tbl-second}
 
@@ -43,19 +91,23 @@ TRANSFER dataset ideal class weights
 ::: {#tbl-panel layout-ncol=2}
 | Algorithm           | Ideal class weight |
 | ------------------- | :----------------: |
-| Logistic Regression |         12         |
-| Linear SVM          |        123         |
-| SVM with RBF kernel |         1          |
+| Logistic Regression |         124         |
+| Linear SVM          |        112        |
+| SVM with RBF kernel |         ?         |
+| Decision Tree |         30          |
 
 : Replication results (ours) {#tbl-first}
 
 | Algorithm           | Ideal class weight |
 | ------------------- | :----------------: |
-| Logistic Regression |         12         |
-| Linear SVM          |        123         |
-| SVM with RBF kernel |         1          |
+| Logistic Regression |        145         |
+| Linear SVM          |        132         |
+| SVM with RBF kernel |        128         |
+| Decision Tree |        N/A         |
 
 : Original results {#tbl-second}
 
 CASH_OUT dataset ideal class weights
 :::
+
+# Conclusion

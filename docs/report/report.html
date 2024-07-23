@@ -2538,11 +2538,11 @@ vertical-align: -.125em;
 
 </head>
 
-<body class="fullcontent">
+<body>
 
-<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-full">
 
-<main class="content" id="quarto-document-content">
+<main class="content column-page" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
@@ -2582,7 +2582,7 @@ vertical-align: -.125em;
 <h1>Experimental evaluation</h1>
 <div id="tbl-panel" class="tbl-parent quarto-layout-panel anchored">
 <div class="panel-caption table-caption">
-<p>Table 1: TRANSFER dataset evaluation on validation set</p>
+<p>Table 1: <span style="color:blue"><strong>TRANSFER</strong></span> dataset evaluation on validation set</p>
 </div>
 <div class="quarto-layout-row quarto-layout-valign-top">
 <div id="tbl-first" class="quarto-layout-cell quarto-layout-cell-subref anchored" data-ref-parent="tbl-panel" style="flex-basis: 50.0%;justify-content: center;">
@@ -2619,12 +2619,70 @@ vertical-align: -.125em;
 <td style="text-align: left;">1</td>
 <td style="text-align: left;">1</td>
 </tr>
+<tr class="even">
+<td style="text-align: left;">Decision Tree</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1</td>
+</tr>
 </tbody>
 </table>
 </div>
 <div id="tbl-second" class="quarto-layout-cell quarto-layout-cell-subref anchored" data-ref-parent="tbl-panel" style="flex-basis: 50.0%;justify-content: center;">
 <table class="table">
 <caption>(b) Original results</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Algorithm</th>
+<th style="text-align: left;">Recall</th>
+<th style="text-align: left;">Precision</th>
+<th style="text-align: left;">F1</th>
+<th style="text-align: left;">AUPRC</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Logistic Regression</td>
+<td style="text-align: left;">0.9983</td>
+<td style="text-align: left;">0.4416</td>
+<td style="text-align: left;">0.6123</td>
+<td style="text-align: left;">0.9248</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Linear SVM</td>
+<td style="text-align: left;">0.9983</td>
+<td style="text-align: left;">0.4432</td>
+<td style="text-align: left;">0.6139</td>
+<td style="text-align: left;">0.9161</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">SVM with RBF kernel</td>
+<td style="text-align: left;">0.9934</td>
+<td style="text-align: left;">0.5871</td>
+<td style="text-align: left;">0.7381</td>
+<td style="text-align: left;">0.9855</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Decision Tree</td>
+<td style="text-align: left;">N/A</td>
+<td style="text-align: left;">N/A</td>
+<td style="text-align: left;">N/A</td>
+<td style="text-align: left;">N/A</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="tbl-panel" class="tbl-parent quarto-layout-panel anchored">
+<div class="panel-caption table-caption">
+<p>Table 2: <span style="color:red"><strong>CASH OUT</strong></span> dataset evaluation on validation set</p>
+</div>
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div id="tbl-first" class="quarto-layout-cell quarto-layout-cell-subref anchored" data-ref-parent="tbl-panel" style="flex-basis: 50.0%;justify-content: center;">
+<table class="table">
+<caption>(a) Replication results (ours)</caption>
 <thead>
 <tr class="header">
 <th style="text-align: left;">Algorithm</th>
@@ -2656,6 +2714,57 @@ vertical-align: -.125em;
 <td style="text-align: left;">1</td>
 <td style="text-align: left;">1</td>
 </tr>
+<tr class="even">
+<td style="text-align: left;">Decision Tree</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="tbl-second" class="quarto-layout-cell quarto-layout-cell-subref anchored" data-ref-parent="tbl-panel" style="flex-basis: 50.0%;justify-content: center;">
+<table class="table">
+<caption>(b) Original results</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Algorithm</th>
+<th style="text-align: left;">Recall</th>
+<th style="text-align: left;">Precision</th>
+<th style="text-align: left;">F1</th>
+<th style="text-align: left;">AUPRC</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Logistic Regression</td>
+<td style="text-align: left;">0.9822</td>
+<td style="text-align: left;">0.1561</td>
+<td style="text-align: left;">0.2692</td>
+<td style="text-align: left;">0.7235</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Linear SVM</td>
+<td style="text-align: left;">0.9352</td>
+<td style="text-align: left;">0.1263</td>
+<td style="text-align: left;">0.2226</td>
+<td style="text-align: left;">0.6727</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">SVM with RBF kernel</td>
+<td style="text-align: left;">0.9773</td>
+<td style="text-align: left;">0.1315</td>
+<td style="text-align: left;">0.2318</td>
+<td style="text-align: left;">0.7598</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Decision Tree</td>
+<td style="text-align: left;">N/A</td>
+<td style="text-align: left;">N/A</td>
+<td style="text-align: left;">N/A</td>
+<td style="text-align: left;">N/A</td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -2663,7 +2772,7 @@ vertical-align: -.125em;
 </div>
 <div id="tbl-panel" class="tbl-parent quarto-layout-panel anchored">
 <div class="panel-caption table-caption">
-<p>Table 2: TRANSFER dataset ideal class weights</p>
+<p>Table 3: <span style="color:blue"><strong>TRANSFER</strong></span> dataset ideal class weights</p>
 </div>
 <div class="quarto-layout-row quarto-layout-valign-top">
 <div id="tbl-first" class="quarto-layout-cell quarto-layout-cell-subref anchored" data-ref-parent="tbl-panel" style="flex-basis: 50.0%;justify-content: center;">
@@ -2678,15 +2787,19 @@ vertical-align: -.125em;
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">Logistic Regression</td>
-<td style="text-align: center;">12</td>
+<td style="text-align: center;">14</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Linear SVM</td>
-<td style="text-align: center;">123</td>
+<td style="text-align: center;">12</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">SVM with RBF kernel</td>
-<td style="text-align: center;">1</td>
+<td style="text-align: center;">11</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Decision Tree</td>
+<td style="text-align: center;">305</td>
 </tr>
 </tbody>
 </table>
@@ -2703,15 +2816,19 @@ vertical-align: -.125em;
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">Logistic Regression</td>
-<td style="text-align: center;">12</td>
+<td style="text-align: center;">70</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Linear SVM</td>
-<td style="text-align: center;">123</td>
+<td style="text-align: center;">39</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">SVM with RBF kernel</td>
-<td style="text-align: center;">1</td>
+<td style="text-align: center;">16</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Decision Tree</td>
+<td style="text-align: center;">N/A</td>
 </tr>
 </tbody>
 </table>
@@ -2720,7 +2837,7 @@ vertical-align: -.125em;
 </div>
 <div id="tbl-panel" class="tbl-parent quarto-layout-panel anchored">
 <div class="panel-caption table-caption">
-<p>Table 3: CASH_OUT dataset ideal class weights</p>
+<p>Table 4: <span style="color:red"><strong>CASH OUT</strong></span> dataset ideal class weights</p>
 </div>
 <div class="quarto-layout-row quarto-layout-valign-top">
 <div id="tbl-first" class="quarto-layout-cell quarto-layout-cell-subref anchored" data-ref-parent="tbl-panel" style="flex-basis: 50.0%;justify-content: center;">
@@ -2735,15 +2852,19 @@ vertical-align: -.125em;
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">Logistic Regression</td>
-<td style="text-align: center;">12</td>
+<td style="text-align: center;">124</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Linear SVM</td>
-<td style="text-align: center;">123</td>
+<td style="text-align: center;">112</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">SVM with RBF kernel</td>
-<td style="text-align: center;">1</td>
+<td style="text-align: center;">?</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Decision Tree</td>
+<td style="text-align: center;">30</td>
 </tr>
 </tbody>
 </table>
@@ -2760,15 +2881,19 @@ vertical-align: -.125em;
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">Logistic Regression</td>
-<td style="text-align: center;">12</td>
+<td style="text-align: center;">145</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Linear SVM</td>
-<td style="text-align: center;">123</td>
+<td style="text-align: center;">132</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">SVM with RBF kernel</td>
-<td style="text-align: center;">1</td>
+<td style="text-align: center;">128</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Decision Tree</td>
+<td style="text-align: center;">N/A</td>
 </tr>
 </tbody>
 </table>
