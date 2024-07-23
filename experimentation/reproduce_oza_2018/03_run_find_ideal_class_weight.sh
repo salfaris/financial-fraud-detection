@@ -1,15 +1,14 @@
 #!/bin/sh
+
 eval "$(conda shell.bash hook)"
 conda activate dev
 
-echo "Running Logistic Regression..."
-python src/evaluate_ideal_class_weight.py --model_name logreg --transaction_type TRANSFER
-python src/evaluate_ideal_class_weight.py --model_name logreg --transaction_type CASH_OUT
+models=("logreg" "svc_linear" "svc_rbf" "decision_tree")
+transaction_types=("TRANSFER" "CASH_OUT")
 
-echo "Running Linear SVC..."
-python src/evaluate_ideal_class_weight.py --model_name svc_linear --transaction_type TRANSFER
-python src/evaluate_ideal_class_weight.py --model_name svc_linear --transaction_type CASH_OUT
-
-echo "Running SVC with RBF kernel..."
-python src/evaluate_ideal_class_weight.py --model_name svc_rbf --transaction_type TRANSFER
-python src/evaluate_ideal_class_weight.py --model_name svc_rbf --transaction_type CASH_OUT
+for model in "${models[@]}"; do
+    echo "Running ${model}..."
+    for transaction_type in "${transaction_types[@]}"; do
+        python src/evaluate_ideal_class_weight.py --model_name "$model" --transaction_type "$transaction_type"
+    done
+done

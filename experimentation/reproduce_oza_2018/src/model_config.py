@@ -1,6 +1,7 @@
 import numpy as np
 from sklearn.linear_model import LogisticRegression
 from sklearn.svm import LinearSVC, SVC
+from sklearn.tree import DecisionTreeClassifier
 
 # I only use `np.random.RandomState` over `np.random.default_rng` because sklearn does
 # not support the latter yet.
@@ -30,6 +31,11 @@ MODEL_FUNCTIONS = {
         kernel="rbf",  # Default kernel but want to emphasize.
         tol=1e-3,
         cache_size=1000,
+        random_state=RNG,
+    ),
+    "decision_tree": lambda cw: DecisionTreeClassifier(
+        class_weight=cw,
+        max_depth=5,  # Avoid overfitting to training set.
         random_state=RNG,
     ),
 }

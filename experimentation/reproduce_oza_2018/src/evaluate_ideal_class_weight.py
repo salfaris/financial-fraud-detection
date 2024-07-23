@@ -6,12 +6,14 @@ import pandas as pd
 
 from absl import app, flags, logging
 
+from model_config import MODEL_FUNCTIONS
+
 plt.style.use("bmh")
 
 flags.DEFINE_enum(
     "model_name",
     "logreg",
-    ["logreg", "svc_linear", "svc_rbf"],
+    list(MODEL_FUNCTIONS.keys()),
     "Model name to train and perform validation.",
 )
 flags.DEFINE_enum(
@@ -102,6 +104,7 @@ def main(_):
             "logreg": "Logistic Regression",
             "svc_linear": "SVM + linear kernel",
             "svc_rbf": "SVM + RBF kernel",
+            "decision_tree": "Decision Tree",
         }
         ax.set_title(
             f"Metrics on validation set for {FLAG.transaction_type} transactions "

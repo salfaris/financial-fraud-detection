@@ -13,7 +13,7 @@ from model_config import MODEL_FUNCTIONS, FEATURE_NAMES, TARGET_NAME
 flags.DEFINE_enum(
     "model_name",
     "logreg",
-    ["logreg", "svc_linear", "svc_rbf"],
+    list(MODEL_FUNCTIONS.keys()),
     "Model name to train and perform validation.",
 )
 flags.DEFINE_enum(

@@ -1,7 +1,18 @@
 #!/bin/sh
+
 eval "$(conda shell.bash hook)"
 conda activate dev
 
-echo "Evaluating between-model performance using PR curve"
-python src/evaluate_between_ideal_model_performance.py --transaction_type TRANSFER
-python src/evaluate_between_ideal_model_performance.py --transaction_type CASH_OUT
+# Define a function to evaluate model performance
+evaluate_performance() {
+    local transaction_type=$1
+    echo "Evaluating between-model performance for transaction type: $transaction_type"
+    python src/evaluate_between_ideal_model_performance.py --transaction_type "$transaction_type"
+}
+
+# Evaluate performance for the specified transaction types
+transaction_types=("TRANSFER" "CASH_OUT")
+for transaction_type in "${transaction_types[@]}";
+do
+    evaluate_performance "$transaction_type"
+done
