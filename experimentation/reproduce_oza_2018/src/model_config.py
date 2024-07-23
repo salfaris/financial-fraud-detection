@@ -2,6 +2,7 @@ import numpy as np
 from sklearn.linear_model import LogisticRegression
 from sklearn.svm import LinearSVC, SVC
 from sklearn.tree import DecisionTreeClassifier
+from sklearn.metrics.pairwise import rbf_kernel
 
 # I only use `np.random.RandomState` over `np.random.default_rng` because sklearn does
 # not support the latter yet.
@@ -28,7 +29,12 @@ MODEL_FUNCTIONS = {
     ),
     "svc_rbf": lambda cw: SVC(
         class_weight=cw,
-        kernel="rbf",  # Default kernel but want to emphasize.
+        # # Apparently using `sklearn.metrics.pairwise.rbf_kernel` utilizes numpy
+        # # and uses all available threads leading to a massive speedup.
+        # # This was reported as bug:
+        # #   https://github.com/scikit-learn/scikit-learn/issues/21410
+        # kernel=rbf_kernel,
+        kernel="rbf",
         tol=1e-3,
         cache_size=1000,
         random_state=RNG,
