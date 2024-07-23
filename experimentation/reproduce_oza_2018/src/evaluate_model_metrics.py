@@ -62,7 +62,7 @@ def train(model_name: str, model_fn: callable):
         "f1-score": [],
         "false_positive_rate": [],
     }
-    max_class_weight = 10
+    max_class_weight = 512
     fraud_class_weights = range(1, max_class_weight + 1)
 
     def load_model(model_path: Path):
