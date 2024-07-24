@@ -88,8 +88,8 @@ def main(_):
         )
         if model_with_type_path.exists():
             logging.info(
-                f"  BUILD: Model already exists. Loading model '{model_name}' from disk "
-                f"@ {model_with_type_path.relative_to(ROOT_DIR)}..."
+                f"  BUILD: Model already exists. Loading model '{model_name}' from "
+                f"disk @ {model_with_type_path.relative_to(ROOT_DIR)}..."
             )
             model = utils.load_model(model_with_type_path)
         else:
@@ -98,39 +98,56 @@ def main(_):
             utils.save_model(model, model_with_type_path)
         fitted_models[model_name] = model
 
-    # def viz():
-    logging.info("RUN: Visualising PRC for model with ideal class weights...")
-    fig, ax = plt.subplots(figsize=(5, 5))
+    def viz(X, y, label: str):
+        fig, ax = plt.subplots(figsize=(5, 5))
 
-    for model_name, fitted_model in fitted_models.items():
-        if fitted_model is None:
-            logging.warning(
-                f"SKIP: skip visualising model_name='{model_name}' as no fitted "
-                "model found."
-            )
-            continue
-        if model_name == "svc_rbf" and FLAG.transaction_type == "CASH_OUT":
-            model_with_type_dir = _get_model_with_type_dir(
-                model_name, FLAG.transaction_type
-            )
-            scaler = utils.load_model(model_with_type_dir / "standard_scaler.pkl")
-            rbf_sampler = utils.load_model(model_with_type_dir / "rbf_sampler.pkl")
-            X_val_transformed = rbf_sampler.transform(scaler.transform(X_val))  # noqa
+        for model_name, fitted_model in fitted_models.items():
+            if fitted_model is None:
+                logging.warning(
+                    f"SKIP: skip visualising model_name='{model_name}' as no fitted "
+                    "model found."
+                )
+                continue
 
-            PrecisionRecallDisplay.from_estimator(
-                fitted_model, X_val_transformed, y_val, pos_label=1, ax=ax
-            )
-        else:
-            PrecisionRecallDisplay.from_estimator(
-                fitted_model, X_val, y_val, pos_label=1, ax=ax
-            )
+            if model_name == "svc_rbf" and FLAG.transaction_type == "CASH_OUT":
+                model_with_type_dir = _get_model_with_type_dir(
+                    model_name, FLAG.transaction_type
+                )
+                scaler = utils.load_model(model_with_type_dir / "standard_scaler.pkl")
+                rbf_sampler = utils.load_model(model_with_type_dir / "rbf_sampler.pkl")
+                X_transformed = rbf_sampler.transform(scaler.transform(X))
 
-    ax.set_title(f"Precision-Recall Curve for {FLAG.transaction_type} transactions")
+                PrecisionRecallDisplay.from_estimator(
+                    fitted_model, X_transformed, y, pos_label=1, ax=ax
+                )
+            else:
+                PrecisionRecallDisplay.from_estimator(
+                    fitted_model, X, y, pos_label=1, ax=ax
+                )
 
-    fig.tight_layout()
-    fig.savefig(RESULT_FIG_DIR / f"model_comparison_{FLAG.transaction_type}.png")
+        ax.set_title(
+            f"Precision-Recall Curve for {FLAG.transaction_type} transactions "
+            f"on {label} set"
+        )
 
-    # viz()
+        fig.tight_layout()
+        fig.savefig(
+            RESULT_FIG_DIR
+            / f"model_comparison_{FLAG.transaction_type}_{label.lower()}.png"
+        )
+
+    logging.info(
+        "RUN: Visualising PRC for model with ideal class weights on TRAINING set..."
+    )
+    viz(X_train, y_train, label="TRAIN")
+    logging.info(
+        "RUN: Visualising PRC for model with ideal class weights on VALIDATION set..."
+    )
+    viz(X_val, y_val, label="VALIDATION")
+    logging.info(
+        "RUN: Visualising PRC for model with ideal class weights on TEST set..."
+    )
+    viz(X_test, y_test, label="TEST")
 
 
 if __name__ == "__main__":
