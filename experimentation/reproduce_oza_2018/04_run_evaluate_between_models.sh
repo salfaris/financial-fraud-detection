@@ -15,4 +15,5 @@ transaction_types=("TRANSFER" "CASH_OUT")
 for transaction_type in "${transaction_types[@]}";
 do
     evaluate_performance "$transaction_type"
+    echo ""
 done
