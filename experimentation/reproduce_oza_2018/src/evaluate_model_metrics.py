@@ -7,9 +7,14 @@ import pandas as pd
 from sklearn.metrics import precision_recall_fscore_support, recall_score
 from sklearn.preprocessing import StandardScaler
 
+# For SVC + RBF approximation
+from sklearn.kernel_approximation import RBFSampler
+from sklearn.linear_model import SGDClassifier
+
 from absl import app, flags, logging
 
 from model_config import MODEL_FUNCTIONS, FEATURE_NAMES, TARGET_NAME
+from utils import load_model, save_model
 
 flags.DEFINE_enum(
     "model_name",
@@ -34,6 +39,9 @@ RESULT_DIR.mkdir(exist_ok=True, parents=True)
 
 
 def train(model_name: str, model_fn: callable):
+    model_subdir = MODEL_DIR / model_name / FLAG.transaction_type
+    model_subdir.mkdir(exist_ok=True, parents=True)
+
     logging.info("Reading experiment datasets...")
     transaction_types = {
         "CASH_OUT": {},
@@ -61,6 +69,18 @@ def train(model_name: str, model_fn: callable):
         scaler = StandardScaler()
         X_train = scaler.fit_transform(X_train)
         X_val = scaler.transform(X_val)
+        save_model(scaler, model_subdir / "standard_scaler.pkl")
+
+        # Perform RBF kernel approximation using the Random Kitchen Sinks method.
+        if FLAG.transaction_type == "CASH_OUT":
+            logging.info(
+                "ADD: RBF kernel approximation step since building SVC + RBF kernel "
+                "for 'CASH_OUT' dataset..."
+            )
+            rbf_feature = RBFSampler(gamma="scale", random_state=RNG)
+            X_train = rbf_feature.fit_transform(X_train)
+            X_val = rbf_feature.transform(X_val)
+            save_model(rbf_feature, model_subdir / "rbf_sampler.pkl")
 
     y_train, y_val = y_train.values.ravel(), y_val.values.ravel()
 
@@ -73,16 +93,14 @@ def train(model_name: str, model_fn: callable):
     max_class_weight = 512
     fraud_class_weights = range(1, max_class_weight + 1)
 
-    def load_model(model_path: Path):
-        return load(model_path)
-
-    def save_model(model, model_path: Path):
-        with open(model_path, "wb") as f:
-            dump(model, f)
-
     # Model training
-    def train_model(X, y, class_weight, model_path):
-        model = model_fn(class_weight)
+    def train_model(X, y, class_weight, transaction_type, model_path):
+        if model_name == "svc_rbf" and transaction_type == "CASH_OUT":
+            # Perform RBF kernel approximation using the Random Kitchen Sinks method.
+            # Expect data to have passed through the Random Kitchen Sinks method.
+            model = SGDClassifier(class_weight=class_weight, random_state=RNG)
+        else:
+            model = model_fn(class_weight)
         model.fit(X, y)
         print(
             f"DONE: Training model `{model_name}` for "
@@ -91,8 +109,6 @@ def train(model_name: str, model_fn: callable):
         save_model(model, model_path)
         return model, class_weight
 
-    model_subdir = MODEL_DIR / model_name / FLAG.transaction_type
-    model_subdir.mkdir(exist_ok=True, parents=True)
     logging.info(
         "RUN: Adding training step to queue for all "
         f"class weights 1...{max_class_weight}"
@@ -115,7 +131,11 @@ def train(model_name: str, model_fn: callable):
             fraud_class_weights_to_train.append(fraud_weight)
         class_weight = {0: 1, 1: fraud_weight}
         delayed_train_model = delayed(train_model)(
-            X_train, y_train, class_weight, model_path
+            X=X_train,
+            y=y_train,
+            class_weight=class_weight,
+            transaction_type=FLAG.transaction_type,
+            model_path=model_path,
         )
         delayed_train_models.append(delayed_train_model)
     logging.info(
