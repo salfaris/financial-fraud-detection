@@ -5,6 +5,7 @@ import numpy as np
 import pandas as pd
 
 from sklearn.metrics import precision_recall_fscore_support, recall_score
+from sklearn.preprocessing import StandardScaler
 
 from absl import app, flags, logging
 
@@ -53,6 +54,13 @@ def train(model_name: str, model_fn: callable):
 
     X_train, y_train = train.loc[:, FEATURE_NAMES], train.loc[:, [TARGET_NAME]]
     X_val, y_val = val.loc[:, FEATURE_NAMES], val.loc[:, [TARGET_NAME]]
+
+    # Special preprocessing step if using SVC RBF (as per Oza's paper)
+    if model_name == "svc_rbf":
+        logging.info("ADD: standard scaling step since building SVC + RBF kernel...")
+        scaler = StandardScaler()
+        X_train = scaler.fit_transform(X_train)
+        X_val = scaler.transform(X_val)
 
     y_train, y_val = y_train.values.ravel(), y_val.values.ravel()
 
