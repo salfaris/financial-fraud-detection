@@ -106,7 +106,8 @@ def train(model_name: str, model_fn: callable):
         )
         if model_path.exists():
             logging.info(
-                f"SKIP: Model `{model_name}` already exists @ {model_path.relative_to(ROOT_DIR)}."
+                f"SKIP: Model `{model_name}` already exists @ "
+                f"{model_path.relative_to(ROOT_DIR)}."
             )
             continue
         else:
