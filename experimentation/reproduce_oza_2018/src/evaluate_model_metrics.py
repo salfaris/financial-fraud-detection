@@ -105,12 +105,6 @@ def train(model_name: str, model_fn: callable):
 
     y_train, y_val = y_train.values.ravel(), y_val.values.ravel()
 
-    metrics = {
-        "precision": [],
-        "recall": [],
-        "f1-score": [],
-        "false_positive_rate": [],
-    }
     max_class_weight = 512
     fraud_class_weights = range(1, max_class_weight + 1)
 
@@ -178,6 +172,12 @@ def train(model_name: str, model_fn: callable):
     ready_models.extend(trained_models)
     ready_models = sorted(ready_models, key=lambda x: x[1][1])
 
+    metrics = {
+        "precision": [],
+        "recall": [],
+        "f1-score": [],
+        "false_positive_rate": [],
+    }
     for model, class_weight in ready_models:
         fraud_weight = class_weight[1]
 
