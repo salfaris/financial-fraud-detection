@@ -95,7 +95,8 @@ def train(model_name: str, model_fn: callable):
         save_model(scaler, model_subdir / "standard_scaler.pkl")
 
         # Perform RBF kernel approximation using the Random Kitchen Sinks method.
-        if FLAG.transaction_type == "CASH_OUT" and model_name == "svc_rbf_sampler":
+        # if FLAG.transaction_type == "CASH_OUT" and model_name == "svc_rbf_sampler":
+        if model_name == "svc_rbf_sampler":
             logging.info(
                 "ADD: RBF kernel approximation step since building "
                 "SVC + RBF kernel sampler for 'CASH_OUT' dataset..."
@@ -112,7 +113,8 @@ def train(model_name: str, model_fn: callable):
 
     # Model training
     def train_model(X, y, class_weight, transaction_type, model_path):
-        if model_name == "svc_rbf_sampler" and transaction_type == "CASH_OUT":
+        # if model_name == "svc_rbf_sampler" and transaction_type == "CASH_OUT":
+        if model_name == "svc_rbf_sampler":
             # Perform RBF kernel approximation using the Random Kitchen Sinks method.
             # Expect data to have passed through the Random Kitchen Sinks method.
             model = SGDClassifier(class_weight=class_weight, random_state=RNG)
