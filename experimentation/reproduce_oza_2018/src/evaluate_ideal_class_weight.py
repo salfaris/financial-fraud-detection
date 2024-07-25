@@ -104,6 +104,7 @@ def main(_):
             "logreg": "Logistic Regression",
             "svc_linear": "SVM + linear kernel",
             "svc_rbf": "SVM + RBF kernel",
+            "svc_rbf_sampler": "SVM + RBF sampler kernel",
             "decision_tree": "Decision Tree",
         }
         ax.set_title(
