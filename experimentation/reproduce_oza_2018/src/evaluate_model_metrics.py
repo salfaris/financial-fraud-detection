@@ -31,6 +31,8 @@ FLAG = flags.FLAGS
 # not support the latter yet.
 RNG = np.random.RandomState(10062930)
 
+NUM_PARALLEL_JOBS = 6
+
 ROOT_DIR = Path(__file__).parents[1]
 DATASET_DIR = ROOT_DIR / "datasets"
 RESULT_DIR = ROOT_DIR / "output" / "result"
@@ -156,7 +158,7 @@ def train(model_name: str, model_fn: callable):
     logging.info(
         f"BEGIN: Training {len(fraud_class_weights_to_train)} models in parallel..."
     )
-    trained_models = Parallel(n_jobs=6)(delayed_train_models)
+    trained_models = Parallel(n_jobs=NUM_PARALLEL_JOBS)(delayed_train_models)
 
     logging.info("DONE: Done training models. Ready to compute metrics.")
 
@@ -199,7 +201,7 @@ def train(model_name: str, model_fn: callable):
         return fraud_weight, metrics
 
     logging.info("BEGIN: Computing model metrics in parallel...")
-    model_metrics = Parallel(n_jobs=6)(
+    model_metrics = Parallel(n_jobs=NUM_PARALLEL_JOBS)(
         delayed(compute_model_metrics)(model, class_weight)
         for model, class_weight in ready_models
     )
