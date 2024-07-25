@@ -178,39 +178,59 @@ def train(model_name: str, model_fn: callable):
     ready_models.extend(trained_models)
     ready_models = sorted(ready_models, key=lambda x: x[1][1])
 
-    metrics = {
-        "precision": [],
-        "recall": [],
-        "f1-score": [],
-        "false_positive_rate": [],
-    }
-    for model, class_weight in ready_models:
+    def compute_model_metrics(model, class_weight):
         fraud_weight = class_weight[1]
-
-        y_pred = model.predict(X_val)
+        y_pred = model.predict(X_val.copy())
         (
             (_, precision),
             (_, recall),
             (_, f1_score),
             (_, _),
         ) = precision_recall_fscore_support(y_true=y_val, y_pred=y_pred, average=None)
-        metrics["precision"].append(precision)
-        metrics["recall"].append(recall)
-        metrics["f1-score"].append(f1_score)
-
-        # FalsePositiveRate = 1 - TrueNegativeRate = 1 - Recall(with 0 as target label)
         false_positive_rate = 1 - recall_score(y_true=y_val, y_pred=y_pred, pos_label=0)
-        metrics["false_positive_rate"].append(false_positive_rate)
 
+        metrics = {
+            "precision": precision,
+            "recall": recall,
+            "f1-score": f1_score,
+            "false_positive_rate": false_positive_rate,
+        }
+        print(f"RUN: Done compute metrics for {fraud_weight = }")
+        return fraud_weight, metrics
+
+    logging.info("BEGIN: Computing model metrics in parallel...")
+    model_metrics = Parallel(n_jobs=6)(
+        delayed(compute_model_metrics)(model, class_weight)
+        for model, class_weight in ready_models
+    )
+
+    report = {
+        "class_weight": [],
+        "precision": [],
+        "recall": [],
+        "f1-score": [],
+        "false_positive_rate": [],
+    }
+    for fraud_weight, weight_metrics in model_metrics:
+        precision = weight_metrics["precision"]
+        recall = weight_metrics["recall"]
+        f1_score = weight_metrics["f1-score"]
+        false_positive_rate = weight_metrics["false_positive_rate"]
+
+        report["class_weight"].append(fraud_weight)
+        report["precision"].append(precision)
+        report["recall"].append(recall)
+        report["f1-score"].append(f1_score)
+        report["false_positive_rate"].append(false_positive_rate)
         logging.info(
             f"class_weight: {fraud_weight}, precision: {precision:.5f}, "
             f"recall: {recall:.5f}, F1-score: {f1_score:.5f}, "
             f"FPR: {false_positive_rate:.5f}"
         )
 
-    metrics_df = pd.DataFrame(metrics)
-    metrics_df.insert(0, "class_weight", list(fraud_class_weights))
-    metrics_df.to_csv(
+    report_df = pd.DataFrame(report)
+    report_df.sort_values(by="class_weight", inplace=True)
+    report_df.to_csv(
         RESULT_DIR / f"result_{FLAG.transaction_type.upper()}_{model_name}.csv",
         index=False,
     )
