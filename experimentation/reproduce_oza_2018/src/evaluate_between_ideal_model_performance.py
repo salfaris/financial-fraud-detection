@@ -82,9 +82,10 @@ def main(_):
             continue
         icw = model_icw_data.iloc[0].class_weight
 
+        path_model_name = "svc_rbf" if model_name == "svc_rbf_sampler" else model_name
         model_with_type_path = (
             _get_model_with_type_dir(model_name, FLAG.transaction_type)
-            / f"{model_name}_{FLAG.transaction_type}_CW{str(icw).zfill(3)}.pkl"
+            / f"{path_model_name}_{FLAG.transaction_type}_CW{str(icw).zfill(3)}.pkl"
         )
         if model_with_type_path.exists():
             logging.info(
@@ -109,7 +110,7 @@ def main(_):
                 )
                 continue
 
-            if model_name == "svc_rbf" and FLAG.transaction_type == "CASH_OUT":
+            if model_name == "svc_rbf_sampler" and FLAG.transaction_type == "CASH_OUT":
                 model_with_type_dir = _get_model_with_type_dir(
                     model_name, FLAG.transaction_type
                 )
