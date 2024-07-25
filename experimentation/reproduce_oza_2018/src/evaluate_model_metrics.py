@@ -160,6 +160,12 @@ def train(model_name: str, model_fn: callable):
 
     logging.info("DONE: Done training models. Ready to compute metrics.")
 
+    # Models that DO NOT EXIST (via path check) are trained in this run and are stored
+    # as a (model, class_weight) tuple in `trained_models`.
+    #
+    # But we want to evaluate model metrics on all models 1...`max_class_weight`,
+    # so we load models that DO EXIST (via path check) into its own 2-tuple list
+    # `ready_models` and extend this list with `trained_models`.
     ready_models = []
     fraud_weights = list(map(lambda x: x[1][1], trained_models))
     for weight in range(1, max_class_weight + 1):
