@@ -155,12 +155,15 @@ def train(model_name: str, model_fn: callable):
             model_path=model_path,
         )
         delayed_train_models.append(delayed_train_model)
-    logging.info(
-        f"BEGIN: Training {len(fraud_class_weights_to_train)} models in parallel..."
-    )
-    trained_models = Parallel(n_jobs=NUM_PARALLEL_JOBS)(delayed_train_models)
 
-    logging.info("DONE: Done training models. Ready to compute metrics.")
+    if len(fraud_class_weights_to_train) > 0:
+        logging.info(
+            f"BEGIN: Training {len(fraud_class_weights_to_train)} models in parallel..."
+        )
+        trained_models = Parallel(n_jobs=NUM_PARALLEL_JOBS)(delayed_train_models)
+        logging.info("DONE: Done training models.")
+    else:
+        logging.info("SKIP: Found no models to train.")
 
     # Models that DO NOT EXIST (via path check) are trained in this run and are stored
     # as a (model, class_weight) tuple in `trained_models`.
@@ -170,6 +173,10 @@ def train(model_name: str, model_fn: callable):
     # `ready_models` and extend this list with `trained_models`.
     ready_models = []
     fraud_weights = list(map(lambda x: x[1][1], trained_models))
+    logging.info(
+        f"RUN: Loading remaining {max_class_weight - len(fraud_class_weights_to_train)}"
+        " models to be joined with trained models for metric evaluation..."
+    )
     for weight in range(1, max_class_weight + 1):
         if weight not in fraud_weights:
             model = load_model(
