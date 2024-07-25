@@ -64,7 +64,28 @@ def train(model_name: str, model_fn: callable):
     X_val, y_val = val.loc[:, FEATURE_NAMES], val.loc[:, [TARGET_NAME]]
 
     # Special preprocessing step if using SVC RBF (as per Oza's paper)
-    if model_name == "svc_rbf":
+    if model_name in ["svc_rbf", "svc_rbf_sampler"]:
+
+        # Downsample before scaling makes more sense in my mind.
+        if FLAG.transaction_type == "CASH_OUT" and model_name == "svc_rbf":
+            train_size = X_train.shape[0]
+            keep_train_rate = 0.2
+            logging.info(
+                "ADD: Perform downsampling step to reduce train size "
+                f"from {train_size:,} to {int(train_size*keep_train_rate):,}..."
+            )
+            from sklearn.model_selection import train_test_split
+
+            X_train, _, y_train, _ = train_test_split(
+                X_train,
+                y_train,
+                stratify=y_train,
+                # Downsample to `keep_train_rate`% of the full 1.5+ million
+                # CASH_OUT train set.
+                train_size=keep_train_rate,
+                random_state=RNG,
+            )
+
         logging.info("ADD: standard scaling step since building SVC + RBF kernel...")
         scaler = StandardScaler()
         X_train = scaler.fit_transform(X_train)
@@ -72,10 +93,10 @@ def train(model_name: str, model_fn: callable):
         save_model(scaler, model_subdir / "standard_scaler.pkl")
 
         # Perform RBF kernel approximation using the Random Kitchen Sinks method.
-        if FLAG.transaction_type == "CASH_OUT":
+        if FLAG.transaction_type == "CASH_OUT" and model_name == "svc_rbf_sampler":
             logging.info(
-                "ADD: RBF kernel approximation step since building SVC + RBF kernel "
-                "for 'CASH_OUT' dataset..."
+                "ADD: RBF kernel approximation step since building "
+                "SVC + RBF kernel sampler for 'CASH_OUT' dataset..."
             )
             rbf_feature = RBFSampler(gamma="scale", random_state=RNG)
             X_train = rbf_feature.fit_transform(X_train)
@@ -95,7 +116,7 @@ def train(model_name: str, model_fn: callable):
 
     # Model training
     def train_model(X, y, class_weight, transaction_type, model_path):
-        if model_name == "svc_rbf" and transaction_type == "CASH_OUT":
+        if model_name == "svc_rbf_sampler" and transaction_type == "CASH_OUT":
             # Perform RBF kernel approximation using the Random Kitchen Sinks method.
             # Expect data to have passed through the Random Kitchen Sinks method.
             model = SGDClassifier(class_weight=class_weight, random_state=RNG)

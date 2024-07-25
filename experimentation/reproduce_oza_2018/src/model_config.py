@@ -26,6 +26,7 @@ MODEL_FUNCTIONS = {
         dual=False,
         random_state=RNG,
     ),
+    "svc_rbf_sampler": None,
     "svc_rbf": lambda cw: SVC(
         class_weight=cw,
         # # Apparently using `sklearn.metrics.pairwise.rbf_kernel` utilizes numpy
