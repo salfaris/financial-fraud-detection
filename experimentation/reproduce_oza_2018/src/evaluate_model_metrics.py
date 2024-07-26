@@ -25,13 +25,12 @@ flags.DEFINE_enum(
 flags.DEFINE_enum(
     "transaction_type", "TRANSFER", ["TRANSFER", "CASH_OUT"], "Transaction type."
 )
+flags.DEFINE_integer("num_workers", 1, "Number of concurrently running workers.")
 FLAG = flags.FLAGS
 
 # I only use `np.random.RandomState` over `np.random.default_rng` because sklearn does
 # not support the latter yet.
 RNG = np.random.RandomState(10062930)
-
-NUM_PARALLEL_JOBS = 6
 
 ROOT_DIR = Path(__file__).parents[1]
 DATASET_DIR = ROOT_DIR / "datasets"
@@ -162,7 +161,7 @@ def train(model_name: str, model_fn: callable):
         logging.info(
             f"BEGIN: Training {len(fraud_class_weights_to_train)} models in parallel..."
         )
-        trained_models = Parallel(n_jobs=NUM_PARALLEL_JOBS)(delayed_train_models)
+        trained_models = Parallel(n_jobs=FLAG.num_workers)(delayed_train_models)
         logging.info("DONE: Done training models.")
     else:
         logging.info("SKIP: Found no models to train.")
@@ -210,7 +209,7 @@ def train(model_name: str, model_fn: callable):
         return fraud_weight, metrics
 
     logging.info("BEGIN: Computing model metrics in parallel...")
-    model_metrics = Parallel(n_jobs=NUM_PARALLEL_JOBS)(
+    model_metrics = Parallel(n_jobs=FLAG.num_workers)(
         delayed(compute_model_metrics)(model, class_weight)
         for model, class_weight in ready_models
     )
