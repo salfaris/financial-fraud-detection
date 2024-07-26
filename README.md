@@ -102,6 +102,7 @@ Data onboarding was unfortunately not covered. I love data onboarding but unfort
   - [X] `CASH_OUT` with SVM + RBF kernel
 - [X] Experiment with universal model using transaction type as a feature.
 - [ ] Write full report on replication results versus Oza's analysis
+- [ ] Add MLflow / Aim / W&B logging
 
 ### TODOs – deployment
 - [X] Build a simple Streamlit app that works locally
