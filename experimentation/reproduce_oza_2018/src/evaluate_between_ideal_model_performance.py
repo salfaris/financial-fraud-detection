@@ -118,9 +118,17 @@ def main(_):
                 model_with_type_dir = _get_model_with_type_dir(
                     model_name, FLAG.transaction_type
                 )
+
+                # Data scaling
                 scaler = utils.load_model(model_with_type_dir / "standard_scaler.pkl")
-                rbf_sampler = utils.load_model(model_with_type_dir / "rbf_sampler.pkl")
-                X_transformed = rbf_sampler.transform(scaler.transform(X))
+                X_transformed = scaler.transform(X)
+
+                # RBF sampling
+                if model_name == "svc_rbf_sampler":
+                    rbf_sampler = utils.load_model(
+                        model_with_type_dir / "rbf_sampler.pkl"
+                    )
+                    X_transformed = rbf_sampler.transform(X_transformed)
 
                 PrecisionRecallDisplay.from_estimator(
                     fitted_model, X_transformed, y, pos_label=1, ax=ax
