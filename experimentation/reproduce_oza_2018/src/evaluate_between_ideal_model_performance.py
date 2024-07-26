@@ -31,27 +31,18 @@ def main(_):
     logging.info("BEGIN: Reading ideal class weight data...")
     icw_data = pd.read_csv(RESULT_DIR / "result_ideal_class_weight.csv")
 
-    transaction_types = {
-        "CASH_OUT": {},
-        "TRANSFER": {},
-    }
-    for transaction_type in transaction_types:
-        logging.info(
-            f"RUN: Loading {transaction_type} train, val, test data into memory..."
-        )
-        transaction_types[transaction_type]["train"] = pd.read_csv(
-            DATASET_DIR / "03_features" / f"{transaction_type}_train.csv", index_col=0
-        )
-        transaction_types[transaction_type]["val"] = pd.read_csv(
-            DATASET_DIR / "03_features" / f"{transaction_type}_val.csv", index_col=0
-        )
-        transaction_types[transaction_type]["test"] = pd.read_csv(
-            DATASET_DIR / "03_features" / f"{transaction_type}_test.csv", index_col=0
-        )
-
-    train = transaction_types[FLAG.transaction_type]["train"]
-    val = transaction_types[FLAG.transaction_type]["val"]
-    test = transaction_types[FLAG.transaction_type]["test"]
+    logging.info(
+        f"RUN: Loading {FLAG.transaction_type} train, val, test data into memory..."
+    )
+    train = pd.read_csv(
+        DATASET_DIR / "03_features" / f"{FLAG.transaction_type}_train.csv", index_col=0
+    )
+    val = pd.read_csv(
+        DATASET_DIR / "03_features" / f"{FLAG.transaction_type}_val.csv", index_col=0
+    )
+    test = pd.read_csv(
+        DATASET_DIR / "03_features" / f"{FLAG.transaction_type}_test.csv", index_col=0
+    )
 
     X_train, y_train = train.loc[:, FEATURE_NAMES], train.loc[:, [TARGET_NAME]]
     X_val, y_val = val.loc[:, FEATURE_NAMES], val.loc[:, [TARGET_NAME]]
