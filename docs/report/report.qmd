@@ -20,15 +20,23 @@ citation-location: margin
 
 _Fraud Detection using Machine Learning (Oza, 2018)_ proposed a class weight strategy to tackle the problem of imbalanced classes in payments fraud detection. The author showed that choosing a suitable class weight in a classifier can be sufficient to flag fraud detections with a reasonably low false positive rate whilst maintaining high accuracy.
 
+
 # Experimental evaluation
 
+We run our experiments on a MacBook Pro M1 Pro with 8 CPU cores and 4 GPU cores. Unfortunately, (Oza, 2018) did not specify the machine they used to train their models.
+
+Some holes in the paper:
+
+- Did not specify hyperparameters where used for each model.
+- Did not specify standard scaling step for SVM + RBF. Found only in code.
+
 ::: {#tbl-panel layout-ncol=2}
-| Algorithm           | Recall | Precision | F1  | AUPRC |
-| ------------------- | ------ | --------- | --- | ----- |
-| Logistic Regression | 12     | 12        | 12  | 12    |
-| Linear SVM          | 123    | 123       | 123 | 123   |
-| SVM with RBF kernel | 1      | 1         | 1   | 1     |
-| Decision Tree       | 1      | 1         | 1   | 1     |
+| Algorithm           | Recall | Precision | F1     | AUPRC |
+| ------------------- | ------ | --------- | ------ | ----- |
+| Logistic Regression | 0.9935 | 0.8243    | 0.9010 |       |
+| Linear SVM          | 0.9935 | 0.7421    | 0.8500 |       |
+| SVM with RBF kernel | 0.9870 | 0.7172    | 0.8307 |       |
+| Decision Tree (*new*)       | 0.9935 | 0.6308    | 0.7717 |       |
 
 : Replication results (ours) {#tbl-first}
 
@@ -37,7 +45,7 @@ _Fraud Detection using Machine Learning (Oza, 2018)_ proposed a class weight str
 | Logistic Regression | 0.9983 | 0.4416    | 0.6123 | 0.9248 |
 | Linear SVM          | 0.9983 | 0.4432    | 0.6139 | 0.9161 |
 | SVM with RBF kernel | 0.9934 | 0.5871    | 0.7381 | 0.9855 |
-| Decision Tree       | N/A    | N/A       | N/A    | N/A    |
+| Decision Tree (*new*)       | N/A    | N/A       | N/A    | N/A    |
 
 : Original results {#tbl-second}
 
@@ -45,12 +53,12 @@ _Fraud Detection using Machine Learning (Oza, 2018)_ proposed a class weight str
 :::
 
 ::: {#tbl-panel layout-ncol=2}
-| Algorithm           | Recall | Precision | F1  | AUPRC |
-| ------------------- | ------ | --------- | --- | ----- |
-| Logistic Regression | 12     | 12        | 12  | 12    |
-| Linear SVM          | 123    | 123       | 123 | 123   |
-| SVM with RBF kernel | 1      | 1         | 1   | 1     |
-| Decision Tree       | 1      | 1         | 1   | 1     |
+| Algorithm           | Recall | Precision | F1     | AUPRC |
+| ------------------- | ------ | --------- | ------ | ----- |
+| Logistic Regression | 0.9870 | 0.1565    | 0.2702 |       |
+| Linear SVM          | 0.9011 | 0.1440    | 0.2483 |       |
+| SVM with RBF kernel | 0.9011 | 0.1483    | 0.2546 |       |
+| Decision Tree (*new*)       | 0.6742 | 0.1906    | 0.2971 |       |
 
 : Replication results (ours) {#tbl-first}
 
@@ -59,7 +67,7 @@ _Fraud Detection using Machine Learning (Oza, 2018)_ proposed a class weight str
 | Logistic Regression | 0.9822 | 0.1561    | 0.2692 | 0.7235 |
 | Linear SVM          | 0.9352 | 0.1263    | 0.2226 | 0.6727 |
 | SVM with RBF kernel | 0.9773 | 0.1315    | 0.2318 | 0.7598 |
-| Decision Tree       | N/A    | N/A       | N/A    | N/A    |
+| Decision Tree (*new*)       | N/A    | N/A       | N/A    | N/A    |
 
 : Original results {#tbl-second}
 
@@ -71,8 +79,8 @@ _Fraud Detection using Machine Learning (Oza, 2018)_ proposed a class weight str
 | ------------------- | :----------------: |
 | Logistic Regression |         14         |
 | Linear SVM          |         12         |
-| SVM with RBF kernel |         11         |
-| Decision Tree       |        305         |
+| SVM with RBF kernel |         13         |
+| Decision Tree (*new*)       |        305         |
 
 : Replication results (ours) {#tbl-first}
 
@@ -81,7 +89,7 @@ _Fraud Detection using Machine Learning (Oza, 2018)_ proposed a class weight str
 | Logistic Regression |         70         |
 | Linear SVM          |         39         |
 | SVM with RBF kernel |         16         |
-| Decision Tree       |        N/A         |
+| Decision Tree (*new*)       |        N/A         |
 
 : Original results {#tbl-second}
 
@@ -93,8 +101,8 @@ _Fraud Detection using Machine Learning (Oza, 2018)_ proposed a class weight str
 | ------------------- | :----------------: |
 | Logistic Regression |        124         |
 | Linear SVM          |        112         |
-| SVM with RBF kernel |         ?          |
-| Decision Tree       |         30         |
+| SVM with RBF kernel |         81         |
+| Decision Tree (*new*)       |         30         |
 
 : Replication results (ours) {#tbl-first}
 
@@ -103,7 +111,7 @@ _Fraud Detection using Machine Learning (Oza, 2018)_ proposed a class weight str
 | Logistic Regression |        145         |
 | Linear SVM          |        132         |
 | SVM with RBF kernel |        128         |
-| Decision Tree       |        N/A         |
+| Decision Tree (*new*)       |        N/A         |
 
 : Original results {#tbl-second}
 
