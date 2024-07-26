@@ -10,7 +10,16 @@ from absl import app, flags, logging
 from model_config import FEATURE_NAMES, TARGET_NAME, MODEL_FUNCTIONS
 import utils
 
-mpl.rcParams["font.family"] = "Arial"
+mpl.rcParams["font.family"] = "serif"
+mpl.rcParams["font.serif"] = "Ubuntu"
+mpl.rcParams["font.monospace"] = "Ubuntu Mono"
+mpl.rcParams["font.size"] = 10
+mpl.rcParams["axes.labelsize"] = 10
+mpl.rcParams["axes.labelweight"] = "bold"
+mpl.rcParams["xtick.labelsize"] = 8
+mpl.rcParams["ytick.labelsize"] = 8
+mpl.rcParams["legend.fontsize"] = 10
+mpl.rcParams["figure.titlesize"] = 12
 
 plt.style.use("bmh")
 
@@ -26,7 +35,10 @@ RESULT_DIR = ROOT_DIR / "output" / "result"
 RESULT_FIG_DIR = ROOT_DIR / "output" / "figures" / "result_model_comparison"
 RESULT_FIG_DIR.mkdir(exist_ok=True, parents=True)
 
-SKIP_MODELS = ["svc_rbf", "svc_rbf_sampler"]
+SKIP_MODELS = [
+    # "svc_rbf",
+    "svc_rbf_sampler",
+]
 
 
 def main(_):
@@ -99,7 +111,7 @@ def main(_):
         fitted_models[model_name] = model
 
     def viz(X, y, label: str):
-        fig, ax = plt.subplots(figsize=(5, 5))
+        fig, ax = plt.subplots(figsize=(6, 6))
 
         for model_name, fitted_model in fitted_models.items():
             if fitted_model is None:
@@ -135,9 +147,11 @@ def main(_):
                 )
 
         ax.set_title(
-            f"Precision-Recall Curve for {FLAG.transaction_type} transactions "
-            f"on {label} set"
+            "Precision-Recall Curve for \n"
+            f"{FLAG.transaction_type} transactions on {label} set"
         )
+        ax.set_ylabel("Precision")
+        ax.set_xlabel("Recall")
 
         fig.tight_layout()
         fig.savefig(
