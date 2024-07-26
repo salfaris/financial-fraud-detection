@@ -44,22 +44,14 @@ def train(model_name: str, model_fn: callable):
     model_subdir.mkdir(exist_ok=True, parents=True)
 
     logging.info("Reading experiment datasets...")
-    transaction_types = {
-        "CASH_OUT": {},
-        "TRANSFER": {},
-    }
-    for transaction_type in transaction_types:
-        transaction_types[transaction_type]["train"] = pd.read_csv(
-            DATASET_DIR / "03_features" / f"{transaction_type}_train.csv",
-            index_col=0,
-        )
-        transaction_types[transaction_type]["val"] = pd.read_csv(
-            DATASET_DIR / "03_features" / f"{transaction_type}_val.csv",
-            index_col=0,
-        )
-
-    train = transaction_types[FLAG.transaction_type]["train"]
-    val = transaction_types[FLAG.transaction_type]["val"]
+    train = pd.read_csv(
+        DATASET_DIR / "03_features" / f"{FLAG.transaction_type}_train.csv",
+        index_col=0,
+    )
+    val = pd.read_csv(
+        DATASET_DIR / "03_features" / f"{FLAG.transaction_type}_val.csv",
+        index_col=0,
+    )
 
     X_train, y_train = train.loc[:, FEATURE_NAMES], train.loc[:, [TARGET_NAME]]
     X_val, y_val = val.loc[:, FEATURE_NAMES], val.loc[:, [TARGET_NAME]]
