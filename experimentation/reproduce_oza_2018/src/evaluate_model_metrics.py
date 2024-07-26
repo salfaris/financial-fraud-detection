@@ -154,8 +154,11 @@ def train(model_name: str, model_fn: callable):
             f"BEGIN: Training {len(fraud_class_weights_to_train)} models in parallel..."
         )
         trained_models = Parallel(n_jobs=FLAG.num_workers)(delayed_train_models)
+        fraud_weights = list(map(lambda x: x[1][1], trained_models))
         logging.info("DONE: Done training models.")
     else:
+        trained_models = []
+        fraud_weights = []
         logging.info("SKIP: Found no models to train.")
 
     # Models that DO NOT EXIST (via path check) are trained in this run and are stored
@@ -165,7 +168,6 @@ def train(model_name: str, model_fn: callable):
     # so we load models that DO EXIST (via path check) into its own 2-tuple list
     # `ready_models` and extend this list with `trained_models`.
     ready_models = []
-    fraud_weights = list(map(lambda x: x[1][1], trained_models))
     logging.info(
         f"RUN: Loading remaining {max_class_weight - len(fraud_class_weights_to_train)}"
         " models to be joined with trained models for metric evaluation..."
