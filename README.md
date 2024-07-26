@@ -101,6 +101,7 @@ Data onboarding was unfortunately not covered. I love data onboarding but unfort
   - [X] `CASH_OUT` with Linear SVM
   - [X] `CASH_OUT` with SVM + RBF kernel
 - [X] Experiment with universal model using transaction type as a feature.
+- [ ] New experiment to compare inference time between models to justify model choice for deployment.
 - [ ] Write full report on replication results versus Oza's analysis
 - [ ] Add MLflow / Aim / W&B logging
 
