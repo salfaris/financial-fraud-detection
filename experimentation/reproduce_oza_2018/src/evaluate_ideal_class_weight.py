@@ -78,7 +78,7 @@ def main(_):
         else:
             full_ideal_cw_data.iloc[sub_cw_df.index[0]] = ideal_cw_data.squeeze(axis=0)
     full_ideal_cw_data = full_ideal_cw_data.sort_values(
-        by=["model_name", "transaction_type"]
+        by=["transaction_type", "model_name"]
     ).reset_index(drop=True)
     full_ideal_cw_data.to_csv(full_ideal_cw_data_path, index=False)
 
