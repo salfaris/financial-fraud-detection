@@ -26,6 +26,8 @@ RESULT_DIR = ROOT_DIR / "output" / "result"
 RESULT_FIG_DIR = ROOT_DIR / "output" / "figures" / "result_model_comparison"
 RESULT_FIG_DIR.mkdir(exist_ok=True, parents=True)
 
+SKIP_MODELS = ["svc_rbf", "svc_rbf_sampler"]
+
 
 def main(_):
     logging.info("BEGIN: Reading ideal class weight data...")
@@ -61,6 +63,8 @@ def main(_):
 
     fitted_models = {model_name: None for model_name in MODEL_FUNCTIONS}
     for model_name, model_fn in MODEL_FUNCTIONS.items():
+        if model_name in SKIP_MODELS:
+            continue
         logging.info(f"BUILD: Building model '{model_name}'...")
         model_icw_data = icw_data.query(
             f"model_name == '{model_name}' and "
@@ -100,7 +104,7 @@ def main(_):
         for model_name, fitted_model in fitted_models.items():
             if fitted_model is None:
                 logging.warning(
-                    f"SKIP: skip visualising model_name='{model_name}' as no fitted "
+                    f"  SKIP: skip visualising model_name='{model_name}' as no fitted "
                     "model found."
                 )
                 continue
@@ -142,11 +146,11 @@ def main(_):
         )
 
     logging.info(
-        "RUN: Visualising PRC for model with ideal class weights on TRAINING set..."
+        "RUN: Visualising PRC for model with ideal class weights on TRAINING set...\n"
     )
     viz(X_train, y_train, label="TRAIN")
     logging.info(
-        "RUN: Visualising PRC for model with ideal class weights on VALIDATION set..."
+        "RUN: Visualising PRC for model with ideal class weights on VALIDATION set...\n"
     )
     viz(X_val, y_val, label="VALIDATION")
     logging.info(
