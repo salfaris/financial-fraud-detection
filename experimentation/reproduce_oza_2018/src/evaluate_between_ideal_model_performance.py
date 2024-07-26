@@ -160,15 +160,15 @@ def main(_):
         )
 
     logging.info(
-        "RUN: Visualising PRC for model with ideal class weights on TRAINING set...\n"
+        "\nRUN: Visualising PRC for model with ideal class weights on TRAINING set..."
     )
     viz(X_train, y_train, label="TRAIN")
     logging.info(
-        "RUN: Visualising PRC for model with ideal class weights on VALIDATION set...\n"
+        "\nRUN: Visualising PRC for model with ideal class weights on VALIDATION set..."
     )
     viz(X_val, y_val, label="VALIDATION")
     logging.info(
-        "RUN: Visualising PRC for model with ideal class weights on TEST set..."
+        "\nRUN: Visualising PRC for model with ideal class weights on TEST set..."
     )
     viz(X_test, y_test, label="TEST")
 
