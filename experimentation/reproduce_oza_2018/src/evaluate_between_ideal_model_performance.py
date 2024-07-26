@@ -114,7 +114,8 @@ def main(_):
                 )
                 continue
 
-            if model_name == "svc_rbf_sampler":
+            logging.info(f"  RUN: Plotting PRC for model_name='{model_name}'...")
+            if model_name in ["svc_rbf", "svc_rbf_sampler"]:
                 model_with_type_dir = _get_model_with_type_dir(
                     model_name, FLAG.transaction_type
                 )
