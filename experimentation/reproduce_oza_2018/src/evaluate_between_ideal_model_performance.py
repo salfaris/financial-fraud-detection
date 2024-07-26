@@ -82,7 +82,11 @@ def main(_):
             continue
         icw = model_icw_data.iloc[0].class_weight
 
-        path_model_name = "svc_rbf" if model_name == "svc_rbf_sampler" else model_name
+        path_model_name = model_name
+        if model_name == "svc_rbf_sampler":
+            path_model_name = (
+                "svc_rbf" if FLAG.transaction_type == "CASH_OUT" else "svc_rbf_sampler"
+            )
         model_with_type_path = (
             _get_model_with_type_dir(model_name, FLAG.transaction_type)
             / f"{path_model_name}_{FLAG.transaction_type}_CW{str(icw).zfill(3)}.pkl"
@@ -110,7 +114,7 @@ def main(_):
                 )
                 continue
 
-            if model_name == "svc_rbf_sampler" and FLAG.transaction_type == "CASH_OUT":
+            if model_name == "svc_rbf_sampler":
                 model_with_type_dir = _get_model_with_type_dir(
                     model_name, FLAG.transaction_type
                 )
