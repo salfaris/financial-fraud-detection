@@ -2,8 +2,9 @@ from pathlib import Path
 
 import matplotlib.pyplot as plt
 import matplotlib as mpl
+import numpy as np
 import pandas as pd
-from sklearn.metrics import PrecisionRecallDisplay
+from sklearn.metrics import precision_recall_curve, auc
 
 from absl import app, flags, logging
 
@@ -110,18 +111,22 @@ def main(_):
             utils.save_model(model, model_with_type_path)
         fitted_models[model_name] = model
 
-    def viz(X, y, label: str):
-        fig, ax = plt.subplots(figsize=(6, 6))
-
+    def compute(X, y, label: str, metrics: dict[str, list] | None = None):
+        model_precision_recall_auprc: list[
+            tuple[str, np.ndarray, np.ndarray, float]
+        ] = []
+        if metrics is None:
+            metrics = {
+                "data_set": [],
+                "model_name": [],
+                "transaction_type": [],
+                "class_weight": [],
+                "AUPRC": [],
+            }
         for model_name, fitted_model in fitted_models.items():
             if fitted_model is None:
-                logging.warning(
-                    f"  SKIP: skip visualising model_name='{model_name}' as no fitted "
-                    "model found."
-                )
                 continue
 
-            logging.info(f"  RUN: Plotting PRC for model_name='{model_name}'...")
             if model_name in ["svc_rbf", "svc_rbf_sampler"]:
                 model_with_type_dir = _get_model_with_type_dir(
                     model_name, FLAG.transaction_type
@@ -129,7 +134,7 @@ def main(_):
 
                 # Data scaling
                 scaler = utils.load_model(model_with_type_dir / "standard_scaler.pkl")
-                X_transformed = scaler.transform(X)
+                X_transformed = scaler.transform(X.copy())
 
                 # RBF sampling
                 if model_name == "svc_rbf_sampler":
@@ -137,40 +142,96 @@ def main(_):
                         model_with_type_dir / "rbf_sampler.pkl"
                     )
                     X_transformed = rbf_sampler.transform(X_transformed)
-
-                PrecisionRecallDisplay.from_estimator(
-                    fitted_model, X_transformed, y, pos_label=1, ax=ax
-                )
             else:
-                PrecisionRecallDisplay.from_estimator(
-                    fitted_model, X, y, pos_label=1, ax=ax
-                )
+                # Id transformation
+                X_transformed = X
+
+            try:
+                y_score = fitted_model.predict_proba(X_transformed)
+                y_score = y_score[:, 1]
+            except AttributeError:
+                y_score = fitted_model.decision_function(X_transformed)
+
+            precision, recall, _ = precision_recall_curve(y, y_score, pos_label=1)
+            auc_precision_recall = auc(recall, precision)
+            model_precision_recall_auprc.append(
+                (model_name, precision, recall, auc_precision_recall)
+            )
+
+            # model | transaction_type | class_weight | AUPRC
+
+            metrics["data_set"].append(label)
+            metrics["model_name"].append(model_name)
+            metrics["transaction_type"].append(FLAG.transaction_type)
+            metrics["class_weight"].append(
+                fitted_model.get_params()["class_weight"][1]
+            )  # class_weight is a dict {0: 1, 1: `fraud_weight`}
+            metrics["AUPRC"].append(auc_precision_recall)
+
+        return metrics, model_precision_recall_auprc
+
+    def viz(model_precision_recall_auprc, dataset_label: str):
+        fig, ax = plt.subplots(figsize=(6, 6))
+
+        title_name_map = {
+            "logreg": "Logistic Regression",
+            "svc_linear": "SVM + linear kernel",
+            "svc_rbf": "SVM + RBF kernel",
+            "svc_rbf_sampler": "SVM + RBF sampler kernel",
+            "decision_tree": "Decision Tree",
+        }
+        for model_name, precision, recall, auprc in model_precision_recall_auprc:
+            ax.plot(
+                recall,
+                precision,
+                label=f"{title_name_map[model_name]} (AUPRC = {auprc:.4f})",
+                linestyle="--",
+            )
 
         ax.set_title(
             "Precision-Recall Curve for \n"
-            f"{FLAG.transaction_type} transactions on {label} set"
+            f"{FLAG.transaction_type} transactions on {dataset_label} set"
         )
         ax.set_ylabel("Precision")
         ax.set_xlabel("Recall")
+        ax.legend()
 
         fig.tight_layout()
         fig.savefig(
             RESULT_FIG_DIR
-            / f"model_comparison_{FLAG.transaction_type}_{label.lower()}.png"
+            / f"model_comparison_{FLAG.transaction_type}_{dataset_label.lower()}.png"
         )
 
     logging.info(
         "\nRUN: Visualising PRC for model with ideal class weights on TRAINING set..."
     )
-    viz(X_train, y_train, label="TRAIN")
+    dataset_label = "TRAIN"
+    metrics, model_precision_recall_auprc = compute(
+        X_train, y_train, label=dataset_label
+    )
+    viz(model_precision_recall_auprc, dataset_label=dataset_label)
+
     logging.info(
         "\nRUN: Visualising PRC for model with ideal class weights on VALIDATION set..."
     )
-    viz(X_val, y_val, label="VALIDATION")
+    dataset_label = "VALIDATION"
+    metrics, model_precision_recall_auprc = compute(
+        X_val, y_val, label=dataset_label, metrics=metrics
+    )
+    viz(model_precision_recall_auprc, dataset_label=dataset_label)
+
     logging.info(
         "\nRUN: Visualising PRC for model with ideal class weights on TEST set..."
     )
-    viz(X_test, y_test, label="TEST")
+    dataset_label = "TEST"
+    metrics, model_precision_recall_auprc = compute(
+        X_test, y_test, label=dataset_label, metrics=metrics
+    )
+    viz(model_precision_recall_auprc, dataset_label=dataset_label)
+
+    pd.DataFrame(metrics).to_csv(
+        RESULT_DIR / f"result_auprc_{FLAG.transaction_type}.csv", index=False
+    )
 
 
 if __name__ == "__main__":
