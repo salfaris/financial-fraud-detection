@@ -2578,8 +2578,18 @@ vertical-align: -.125em;
 <h1>Introduction</h1>
 <p><em>Fraud Detection using Machine Learning (Oza, 2018)</em> proposed a class weight strategy to tackle the problem of imbalanced classes in payments fraud detection. The author showed that choosing a suitable class weight in a classifier can be sufficient to flag fraud detections with a reasonably low false positive rate whilst maintaining high accuracy.</p>
 </section>
+<section id="method" class="level1">
+<h1>Method</h1>
+<p>We replicate the results of (Oza, 2018) using the same data and the same preprocessing steps, some of which were not specified in their paper but rather in their code (which has been a common occurrence in our experience replicating machine learning papers).</p>
+</section>
 <section id="experimental-evaluation" class="level1">
 <h1>Experimental evaluation</h1>
+<p>We run our experiments on a MacBook Pro M1 Pro with 8 CPU cores and 4 GPU cores. Unfortunately, (Oza, 2018) did not specify the machine they used to train their models.</p>
+<p>Some holes in the paper:</p>
+<ul>
+<li>Did not specify hyperparameters where used for each model.</li>
+<li>Did not specify standard scaling step for SVM + RBF. Found only in code.</li>
+</ul>
 <div id="tbl-panel" class="tbl-parent quarto-layout-panel anchored">
 <div class="panel-caption table-caption">
 <p>Table 1: <span style="color:blue"><strong>TRANSFER</strong></span> dataset evaluation on validation set</p>
@@ -2600,31 +2610,31 @@ vertical-align: -.125em;
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">Logistic Regression</td>
-<td style="text-align: left;">12</td>
-<td style="text-align: left;">12</td>
-<td style="text-align: left;">12</td>
-<td style="text-align: left;">12</td>
+<td style="text-align: left;">0.9935</td>
+<td style="text-align: left;">0.8243</td>
+<td style="text-align: left;">0.9010</td>
+<td style="text-align: left;">0.9606</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Linear SVM</td>
-<td style="text-align: left;">123</td>
-<td style="text-align: left;">123</td>
-<td style="text-align: left;">123</td>
-<td style="text-align: left;">123</td>
+<td style="text-align: left;">0.9935</td>
+<td style="text-align: left;">0.7421</td>
+<td style="text-align: left;">0.8500</td>
+<td style="text-align: left;">0.9496</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">SVM with RBF kernel</td>
-<td style="text-align: left;">1</td>
-<td style="text-align: left;">1</td>
-<td style="text-align: left;">1</td>
-<td style="text-align: left;">1</td>
+<td style="text-align: left;">0.9870</td>
+<td style="text-align: left;">0.7172</td>
+<td style="text-align: left;">0.8307</td>
+<td style="text-align: left;">0.9717</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Decision Tree</td>
-<td style="text-align: left;">1</td>
-<td style="text-align: left;">1</td>
-<td style="text-align: left;">1</td>
-<td style="text-align: left;">1</td>
+<td style="text-align: left;">Decision Tree (<em>new</em>)</td>
+<td style="text-align: left;">0.9935</td>
+<td style="text-align: left;">0.6308</td>
+<td style="text-align: left;">0.7717</td>
+<td style="text-align: left;">0.9896</td>
 </tr>
 </tbody>
 </table>
@@ -2664,7 +2674,7 @@ vertical-align: -.125em;
 <td style="text-align: left;">0.9855</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Decision Tree</td>
+<td style="text-align: left;">Decision Tree (<em>new</em>)</td>
 <td style="text-align: left;">N/A</td>
 <td style="text-align: left;">N/A</td>
 <td style="text-align: left;">N/A</td>
@@ -2695,31 +2705,31 @@ vertical-align: -.125em;
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">Logistic Regression</td>
-<td style="text-align: left;">12</td>
-<td style="text-align: left;">12</td>
-<td style="text-align: left;">12</td>
-<td style="text-align: left;">12</td>
+<td style="text-align: left;">0.9870</td>
+<td style="text-align: left;">0.1565</td>
+<td style="text-align: left;">0.2702</td>
+<td style="text-align: left;">0.7620</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Linear SVM</td>
-<td style="text-align: left;">123</td>
-<td style="text-align: left;">123</td>
-<td style="text-align: left;">123</td>
-<td style="text-align: left;">123</td>
+<td style="text-align: left;">0.9011</td>
+<td style="text-align: left;">0.1440</td>
+<td style="text-align: left;">0.2483</td>
+<td style="text-align: left;">0.7027</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">SVM with RBF kernel</td>
-<td style="text-align: left;">1</td>
-<td style="text-align: left;">1</td>
-<td style="text-align: left;">1</td>
-<td style="text-align: left;">1</td>
+<td style="text-align: left;">0.9011</td>
+<td style="text-align: left;">0.1483</td>
+<td style="text-align: left;">0.2546</td>
+<td style="text-align: left;">0.7674</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Decision Tree</td>
-<td style="text-align: left;">1</td>
-<td style="text-align: left;">1</td>
-<td style="text-align: left;">1</td>
-<td style="text-align: left;">1</td>
+<td style="text-align: left;">Decision Tree (<em>new</em>)</td>
+<td style="text-align: left;">0.6742</td>
+<td style="text-align: left;">0.1906</td>
+<td style="text-align: left;">0.2971</td>
+<td style="text-align: left;">0.5838</td>
 </tr>
 </tbody>
 </table>
@@ -2759,7 +2769,7 @@ vertical-align: -.125em;
 <td style="text-align: left;">0.7598</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Decision Tree</td>
+<td style="text-align: left;">Decision Tree (<em>new</em>)</td>
 <td style="text-align: left;">N/A</td>
 <td style="text-align: left;">N/A</td>
 <td style="text-align: left;">N/A</td>
@@ -2795,10 +2805,10 @@ vertical-align: -.125em;
 </tr>
 <tr class="odd">
 <td style="text-align: left;">SVM with RBF kernel</td>
-<td style="text-align: center;">11</td>
+<td style="text-align: center;">13</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Decision Tree</td>
+<td style="text-align: left;">Decision Tree (<em>new</em>)</td>
 <td style="text-align: center;">305</td>
 </tr>
 </tbody>
@@ -2827,7 +2837,7 @@ vertical-align: -.125em;
 <td style="text-align: center;">16</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Decision Tree</td>
+<td style="text-align: left;">Decision Tree (<em>new</em>)</td>
 <td style="text-align: center;">N/A</td>
 </tr>
 </tbody>
@@ -2860,10 +2870,10 @@ vertical-align: -.125em;
 </tr>
 <tr class="odd">
 <td style="text-align: left;">SVM with RBF kernel</td>
-<td style="text-align: center;">?</td>
+<td style="text-align: center;">81</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Decision Tree</td>
+<td style="text-align: left;">Decision Tree (<em>new</em>)</td>
 <td style="text-align: center;">30</td>
 </tr>
 </tbody>
@@ -2892,7 +2902,7 @@ vertical-align: -.125em;
 <td style="text-align: center;">128</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Decision Tree</td>
+<td style="text-align: left;">Decision Tree (<em>new</em>)</td>
 <td style="text-align: center;">N/A</td>
 </tr>
 </tbody>
