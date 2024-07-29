@@ -4,7 +4,13 @@ import matplotlib.pyplot as plt
 import matplotlib as mpl
 import numpy as np
 import pandas as pd
-from sklearn.metrics import precision_recall_curve, auc
+from sklearn.metrics import (
+    precision_recall_curve,
+    auc,
+    precision_score,
+    recall_score,
+    f1_score,
+)
 
 from absl import app, flags, logging
 
@@ -121,9 +127,13 @@ def main(_):
                 "model_name": [],
                 "transaction_type": [],
                 "class_weight": [],
+                "precision": [],
+                "recall": [],
+                "f1-score": [],
                 "AUPRC": [],
             }
         for model_name, fitted_model in fitted_models.items():
+            logging.info(f"Computing {label} metrics - {model_name}...")
             if fitted_model is None:
                 continue
 
@@ -154,6 +164,16 @@ def main(_):
 
             precision, recall, _ = precision_recall_curve(y, y_score, pos_label=1)
             auc_precision_recall = auc(recall, precision)
+
+            # Use the 0.5 threshold
+            y_pred = np.array(
+                list(map(lambda score: 1 if score >= 0.5 else 0, y_score))
+            )
+
+            precision_single = precision_score(y, y_pred)
+            recall_single = recall_score(y, y_pred)
+            f1_score_single = f1_score(y, y_pred)
+
             model_precision_recall_auprc.append(
                 (model_name, precision, recall, auc_precision_recall)
             )
@@ -166,6 +186,9 @@ def main(_):
             metrics["class_weight"].append(
                 fitted_model.get_params()["class_weight"][1]
             )  # class_weight is a dict {0: 1, 1: `fraud_weight`}
+            metrics["precision"].append(precision_single)
+            metrics["recall"].append(recall_single)
+            metrics["f1-score"].append(f1_score_single)
             metrics["AUPRC"].append(auc_precision_recall)
 
         return metrics, model_precision_recall_auprc
