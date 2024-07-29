@@ -62,6 +62,8 @@ We also trained a decision tree classifier on both the datasets, considering tha
 
 The results of our replication is given in the following table and graphs.
 
+### Finding the ideal class weight
+
 ::: {#fig-CV-curves-CASH_OUT layout-ncol=2 layout-nrow=2}
 
 ![Logistic regression](../../experimentation/reproduce_oza_2018/output/figures/result_class_weight/result_CASH_OUT_logreg.png){#fig-log}
@@ -94,7 +96,7 @@ We were also able to replicate the reduced effect in performance metrics with in
 Performance metrics - Precision, Recall, FPR (False Positive Rate) – versus fraudulent class weights on the TRANSFER validation set, marked with the chosen ideal class weight.
 :::
 
-The ideal class weights for all trained models are captured in @tbl-ideal-class-weight. We were surprised to not be able to replicate the ideal class weights in the original paper which makes us wonder if there were additional manual steps involved in chosing their ideal class weight – for example, they mentioned about choosing "higher weights for fraud samples to avoid over-fitting on CV set". That being said, our choice of ideal class weight is better in that we attain similar recall values for all models whilst also attaining high precision values relative to the ones attained in the original paper. This difference is captured in @tbl-metrics-and-auprc-VALIDATION.
+The ideal class weights for all trained models are captured in @tbl-ideal-class-weight. We were surprised to not be able to replicate the ideal class weights in the original paper which makes us wonder if there were additional manual steps involved in choosing their ideal class weight – for example, they mentioned about choosing "higher weights for fraud samples to avoid over-fitting on CV set". That being said, our choice of ideal class weight is better in that we attain similar recall values for all models whilst also attaining high precision values relative to the ones attained in the original paper. This difference is captured in @tbl-metrics-and-auprc-VALIDATION.
 
 ::: {#tbl-ideal-class-weight layout-ncol=2 layout-nrow=2}
 | Algorithm             | Ideal class weight |
@@ -136,32 +138,6 @@ The ideal class weights for all trained models are captured in @tbl-ideal-class-
 Ideal class weights for **TRANSFER** and **CASH OUT**.
 :::
 
-To compare between-model performance, we now plot the precision-recall curves for all the trained models on the training, validation and test sets and compare the AUPRC (Area Under the Precision-Recall Curve) values. We agree with the paper of using the Precision-Recall curve as opposed to an ROC curve due to the imbalanced nature of the data.
-
-
-::: {#fig-model-comparison-TRANSFER layout-ncol=3}
-
-![Train](../../experimentation/reproduce_oza_2018/output/figures/result_model_comparison/model_comparison_TRANSFER_train.png){#fig-metric-1}
-
-![Validation](../../experimentation/reproduce_oza_2018/output/figures/result_model_comparison/model_comparison_TRANSFER_validation.png){#fig-metric-1}
-
-![Test](../../experimentation/reproduce_oza_2018/output/figures/result_model_comparison/model_comparison_TRANSFER_test.png){#fig-metric-1}
-
-Precision-Recall Curve and computed AUPRC for the TRANSFER dataset.
-:::
-
-::: {#fig-model-comparison-CASH_OUT layout-ncol=3}
-
-![Train](../../experimentation/reproduce_oza_2018/output/figures/result_model_comparison/model_comparison_CASH_OUT_train.png){#fig-metric-1}
-
-![Validation](../../experimentation/reproduce_oza_2018/output/figures/result_model_comparison/model_comparison_CASH_OUT_validation.png){#fig-metric-1}
-
-![Test](../../experimentation/reproduce_oza_2018/output/figures/result_model_comparison/model_comparison_CASH_OUT_test.png){#fig-metric-1}
-
-Precision-Recall Curve and computed AUPRC for the CASH OUT dataset.
-:::
-
-
 ::: {#tbl-metrics-and-auprc-VALIDATION layout-ncol=2 layout-nrow=2}
 | Algorithm             | Recall | Precision | F1     | AUPRC  |
 | --------------------- | ------ | --------- | ------ | ------ |
@@ -202,5 +178,33 @@ Precision-Recall Curve and computed AUPRC for the CASH OUT dataset.
 
 Recall, Precision, F1-score and AUPRC for the chosen model (with ideal class weights) on the validation set.
 :::
+
+### Comparing performance between ideal models
+
+To compare between-model performance, we now plot the precision-recall curves for all the trained models on the training, validation and test sets and compare the AUPRC (Area Under the Precision-Recall Curve) values. The choice of using the Precision-Recall curve as opposed to an ROC curve when the target binary class is imbalanced is quite well known in the literature so we will not go into details here.
+
+
+::: {#fig-model-comparison-TRANSFER layout-ncol=3}
+
+![Train](../../experimentation/reproduce_oza_2018/output/figures/result_model_comparison/model_comparison_TRANSFER_train.png){#fig-metric-1}
+
+![Validation](../../experimentation/reproduce_oza_2018/output/figures/result_model_comparison/model_comparison_TRANSFER_validation.png){#fig-metric-1}
+
+![Test](../../experimentation/reproduce_oza_2018/output/figures/result_model_comparison/model_comparison_TRANSFER_test.png){#fig-metric-1}
+
+Precision-Recall Curve and computed AUPRC for the TRANSFER dataset.
+:::
+
+::: {#fig-model-comparison-CASH_OUT layout-ncol=3}
+
+![Train](../../experimentation/reproduce_oza_2018/output/figures/result_model_comparison/model_comparison_CASH_OUT_train.png){#fig-metric-1}
+
+![Validation](../../experimentation/reproduce_oza_2018/output/figures/result_model_comparison/model_comparison_CASH_OUT_validation.png){#fig-metric-1}
+
+![Test](../../experimentation/reproduce_oza_2018/output/figures/result_model_comparison/model_comparison_CASH_OUT_test.png){#fig-metric-1}
+
+Precision-Recall Curve and computed AUPRC for the CASH OUT dataset.
+:::
+
 
 # Conclusion
