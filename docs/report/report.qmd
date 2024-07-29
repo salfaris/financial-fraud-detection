@@ -62,7 +62,7 @@ We also trained a decision tree classifier on both the datasets, considering tha
 
 The results of our replication is given in the following table and graphs.
 
-::: {#fig-training-curves-CASH_OUT layout-ncol=2 layout-nrow=2}
+::: {#fig-CV-curves-CASH_OUT layout-ncol=2 layout-nrow=2}
 
 ![Logistic regression](../../experimentation/reproduce_oza_2018/output/figures/result_class_weight/result_CASH_OUT_logreg.png){#fig-log}
 
@@ -75,7 +75,13 @@ The results of our replication is given in the following table and graphs.
 Performance metrics - Precision, Recall, FPR (False Positive Rate) – versus fraudulent class weights on the CASH OUT validation set, marked with the chosen ideal class weight.
 :::
 
-::: {#fig-training-curves-TRANSFER layout-ncol=2 layout-nrow=2}
+The false positive rate metric is new and were not present in [@oza2018], but it was still used implicitly for determining the ideal class weight so here we make it obvious. Again, we recall that the ideal class weight is chosen to be the one that bounds the FPR to less than 1% to ensure a good user experience while simulatenously maximizing the recall. We also have added the decision tree performance metrics here which were not present in [@oza2018].
+
+In both the CASH OUT and TRANSFER validation splits (see Figure @fig-CV-curves-CASH_OUT and @fig-CV-curves-TRANSFER respectively), we capture the same trend as found in [@oza2018] where increasing the fraudulent class weight leads to a higher recall at the cost of lower precision. This means that the model has a higher tendency of marking actual fraudulent transactions at the cost of marking non-fraudulent transactions as fraudulent. So you would reduce monetary cost due to fraud but risk losing customers due to a terrible user experience.
+
+We were also able to replicate the reduced effect in performance metrics with increasing class weights in the TRANSFER validation set where a high recall of ~1.0 is attained for even very low class weights. As seen in @fig-CV-curves-TRANSFER-decision-tree, this same trend is also observed for the newly added decision tree although this model performs much better with precision not dropping below 60% unlike the other models.
+
+::: {#fig-CV-curves-TRANSFER layout-ncol=2 layout-nrow=2}
 
 ![Logistic regression](../../experimentation/reproduce_oza_2018/output/figures/result_class_weight/result_TRANSFER_logreg.png){#fig-log}
 
@@ -83,23 +89,37 @@ Performance metrics - Precision, Recall, FPR (False Positive Rate) – versus fr
 
 ![SVM + RBF kernel](../../experimentation/reproduce_oza_2018/output/figures/result_class_weight/result_TRANSFER_svc_rbf.png){#fig-svm-rbf}
 
-![Decision tree](../../experimentation/reproduce_oza_2018/output/figures/result_class_weight/result_TRANSFER_decision_tree.png){#fig-decision-tree}
+![Decision tree](../../experimentation/reproduce_oza_2018/output/figures/result_class_weight/result_TRANSFER_decision_tree.png){#fig-CV-curves-TRANSFER-decision-tree}
 
 Performance metrics - Precision, Recall, FPR (False Positive Rate) – versus fraudulent class weights on the TRANSFER validation set, marked with the chosen ideal class weight.
 :::
 
-In both the TRANSFER and CASH OUT validation splits, we capture the same trend as found in [@oza2018] where increasing the fraudulent class weight leads to a higher recall at the cost of lower precision. This means that the model has a higher tendency of marking actual fraudulent transactions at the cost of marking non-fraudulent transactions as fraudulent. So you would reduce monetary cost due to fraud but risk losing customers due to a terrible user experience.
+To compare between-model performance, we now consider the performance metrics of the models on the training, validation and test sets and compare the AUPRC (Area Under the Precision-Recall Curve) values. We agree with the paper of using the Precision-Recall curve as opposed to an ROC curve due to the imbalanced nature of the data.
 
-The false positive rate metric is new and were not present in [@oza2018], but it was still used implicitly for determining the ideal class weight so here we make it obvious. Again, we recall that the ideal class weight is chosen to be the one that bounds the FPR to less than 1% to ensure a good user experience while simulatenously maximizing the recall.
 
-::: {#fig-model-comparison-validation-set layout-ncol=2}
+::: {#fig-model-comparison-TRANSFER layout-ncol=3}
 
-![TRANSFER](../../experimentation/reproduce_oza_2018/output/figures/result_model_comparison/model_comparison_TRANSFER_validation.png){#fig-metric-1}
+![Train](../../experimentation/reproduce_oza_2018/output/figures/result_model_comparison/model_comparison_TRANSFER_train.png){#fig-metric-1}
 
-![CASH OUT](../../experimentation/reproduce_oza_2018/output/figures/result_model_comparison/model_comparison_CASH_OUT_validation.png){#fig-metric-2}
+![Validation](../../experimentation/reproduce_oza_2018/output/figures/result_model_comparison/model_comparison_TRANSFER_validation.png){#fig-metric-1}
 
-Precision-Recall Curve for the TRANSFER and CASH OUT validation sets.
+![Test](../../experimentation/reproduce_oza_2018/output/figures/result_model_comparison/model_comparison_TRANSFER_test.png){#fig-metric-1}
+
+Precision-Recall Curve and computed AUPRC for the TRANSFER dataset
 :::
+
+::: {#fig-model-comparison-CASH_OUT layout-ncol=3}
+
+![Train](../../experimentation/reproduce_oza_2018/output/figures/result_model_comparison/model_comparison_CASH_OUT_train.png){#fig-metric-1}
+
+![Validation](../../experimentation/reproduce_oza_2018/output/figures/result_model_comparison/model_comparison_CASH_OUT_validation.png){#fig-metric-1}
+
+![Test](../../experimentation/reproduce_oza_2018/output/figures/result_model_comparison/model_comparison_CASH_OUT_test.png){#fig-metric-1}
+
+Precision-Recall Curve and computed AUPRC for the CASH OUT dataset
+:::
+
+
 
 In both the TRANFER 
 
