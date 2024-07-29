@@ -75,7 +75,7 @@ To visualize this process, I built a web app using Streamlit. The app is Dockeri
 ### Deployed web app
 ![app-landing-page](./docs/app.png)
 
-The deployed web app can be found here: https://fraud-web-app-qmjqqzknzq-ew.a.run.app/.
+The deployed web app can be found here (please use Google Chrome!): https://fraud-web-app-qmjqqzknzq-ew.a.run.app/.
 
 Open the app in Google Chrome v126.0 and above for best experience. For some reason, the app does not work in Safari ~16.0. I have not tested other browsers.
 
