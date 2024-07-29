@@ -178,7 +178,48 @@ Ideal class weights for **TRANSFER** and **CASH OUT**.
 
 : Original results – **CASH OUT** {#tbl-original-metrics-CASH_OUT}
 
-Recall, Precision, F1-score and AUPRC for the chosen model (with ideal class weights) on the validation set.
+Recall, Precision, F1-score and AUPRC for the chosen model (with ideal class weights) on the **validation** set.
+:::
+
+::: {#tbl-metrics-and-auprc-TEST layout-ncol=2 layout-nrow=2}
+| Algorithm             | Recall | Precision | F1     | AUPRC  |
+| --------------------- | ------ | --------- | ------ | ------ |
+| Logistic Regression   | 0.9967 | 0.8351    | 0.9088 | 0.9705 |
+| Linear SVM            | 0.9983 | 0.7488    | 0.8557 | 0.9585 |
+| SVM with RBF kernel   | 0.9870 | 0.7009    | 0.8197 | 0.9747 |
+| Decision Tree (_new_) | 0.9935 | 0.6513    | 0.7869 | 0.9898 |
+
+: Replication (ours) – **TRANSFER** {#tbl-replication-metrics-TEST-TRANSFER}
+
+| Algorithm             | Recall | Precision | F1     | AUPRC  |
+| --------------------- | ------ | --------- | ------ | ------ |
+| Logistic Regression   | 0.9951 | 0.4444    | 0.6144 | 0.9063 |
+| Linear SVM            | 0.9951 | 0.4516    | 0.6213 | 0.8949 |
+| SVM with RBF kernel   | 0.9886 | 0.5823    | 0.7329 | 0.9873 |
+| Decision Tree (_new_) | N/A    | N/A       | N/A    | N/A    |
+
+: Original results – **TRANSFER** {#tbl-original-metrics-TEST-TRANSFER}
+
+
+| Algorithm             | Recall | Precision | F1     | AUPRC  |
+| --------------------- | ------ | --------- | ------ | ------ |
+| Logistic Regression   | 0.9806 | 0.1548    | 0.2673 | 0.7466 |
+| Linear SVM            | 0.8849 | 0.1436    | 0.2471 | 0.6827 |
+| SVM with RBF kernel   | 0.8930 | 0.1461    | 0.2511 | 0.7462 |
+| Decision Tree (_new_) | 0.6370 | 0.1829    | 0.2843 | 0.5521 |
+
+: Replication (ours) – **CASH OUT** {#tbl-replication-metrics-TEST-CASH_OUT}
+
+| Algorithm             | Recall | Precision | F1     | AUPRC  |
+| --------------------- | ------ | --------- | ------ | ------ |
+| Logistic Regression   | 0.9886 | 0.1521    | 0.2636 | 0.7403 |
+| Linear SVM            | 0.9411 | 0.1246    | 0.2201 | 0.6893 |
+| SVM with RBF kernel   | 0.9789 | 0.1321    | 0.2327 | 0.7271 |
+| Decision Tree (_new_) | N/A    | N/A       | N/A    | N/A    |
+
+: Original results – **CASH OUT** {#tbl-original-metrics-TEST-CASH_OUT}
+
+Recall, Precision, F1-score and AUPRC for the chosen model (with ideal class weights) on the **test** set.
 :::
 
 ### Comparing performance between ideal models
