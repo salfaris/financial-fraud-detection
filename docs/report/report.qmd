@@ -253,3 +253,15 @@ When comparing the models between logistic regression, SVM with linear kernel an
 We were also able to replicate the drop in precision when performing inference using the three models on CASH OUT transactions, relative to the TRANSFER transactions. This can be attributed due to the non-linear separability of the transactions (ref. PCA plot). We did not, however, obtain the same recall performance when using the SVM with RBF kernel but this is explained by our additional step of stratified downsampling the CASH OUT training set for model training due to our machine limitation. Despite that, we still saw a higher AUPRC in SVM with RBF kernel as compared to logistic regression and the SVM with linear kernel. Unlike detecting fraud in TRANSFER transactions, the decision tree does not perform as well in the CASH OUT transactions with significantly lower recall and AUPRC when compared even to the worst of the three original models. However, we saw that the decision tree have a higher precision albeit only slightly suggesting that it can contribute to better user experience.
 
 # Conclusion
+
+Overall, we are able to confirm that the class weight strategy proposed by @oza2018 does work. However, as we have discussed in this report, the ideal class weight difference between the replication and the original warrants more attention.
+
+Some of our key contributions are as follows:
+
+- Modularity.
+- Replication.
+- Clarity. Machine
+- Deployment in mind.
+- Inference time analysis for all models.
+
+One clear next direction to take is to make use of the time series component of the dataset as these transactions are time-dependent.
