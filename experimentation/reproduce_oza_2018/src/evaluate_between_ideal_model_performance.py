@@ -165,10 +165,11 @@ def main(_):
             precision, recall, _ = precision_recall_curve(y, y_score, pos_label=1)
             auc_precision_recall = auc(recall, precision)
 
-            # Use the 0.5 threshold
-            y_pred = np.array(
-                list(map(lambda score: 1 if score >= 0.5 else 0, y_score))
-            )
+            # # Use the 0.5 threshold
+            # y_pred = np.array(
+            #     list(map(lambda score: 1 if score >= 0.5 else 0, y_score))
+            # )
+            y_pred = fitted_model.predict(X_transformed)
 
             precision_single = precision_score(y, y_pred)
             recall_single = recall_score(y, y_pred)
