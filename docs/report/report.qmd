@@ -94,7 +94,49 @@ We were also able to replicate the reduced effect in performance metrics with in
 Performance metrics - Precision, Recall, FPR (False Positive Rate) – versus fraudulent class weights on the TRANSFER validation set, marked with the chosen ideal class weight.
 :::
 
-To compare between-model performance, we now consider the performance metrics of the models on the training, validation and test sets and compare the AUPRC (Area Under the Precision-Recall Curve) values. We agree with the paper of using the Precision-Recall curve as opposed to an ROC curve due to the imbalanced nature of the data.
+The ideal class weights for all trained models are captured in @tbl-ideal-class-weight. We were surprised to not be able to replicate the ideal class weights in the original paper which makes us wonder if there were additional manual steps involved in chosing their ideal class weight – for example, they mentioned about choosing "higher weights for fraud samples to avoid over-fitting on CV set". That being said, our choice of ideal class weight is better in that we attain similar recall values for all models whilst also attaining high precision values relative to the ones attained in the original paper. This difference is captured in @tbl-metrics-and-auprc-VALIDATION.
+
+::: {#tbl-ideal-class-weight layout-ncol=2 layout-nrow=2}
+| Algorithm             | Ideal class weight |
+| --------------------- | :----------------: |
+| Logistic Regression   |         14         |
+| Linear SVM            |         12         |
+| SVM with RBF kernel   |         13         |
+| Decision Tree (_new_) |        305         |
+
+: Replication (ours) – **TRANSFER** {#tbl-replication-icw-TRANSFER}
+
+| Algorithm             | Ideal class weight |
+| --------------------- | :----------------: |
+| Logistic Regression   |         70         |
+| Linear SVM            |         39         |
+| SVM with RBF kernel   |         16         |
+| Decision Tree (_new_) |        N/A         |
+
+: Original results – **TRANSFER** {#tbl-original-icw-TRANSFER}
+
+| Algorithm             | Ideal class weight |
+| --------------------- | :----------------: |
+| Logistic Regression   |        124         |
+| Linear SVM            |        112         |
+| SVM with RBF kernel   |         81         |
+| Decision Tree (_new_) |         30         |
+
+: Replication (ours) – **CASH OUT** {#tbl-replication-icw-CASH_OUT}
+
+| Algorithm             | Ideal class weight |
+| --------------------- | :----------------: |
+| Logistic Regression   |        145         |
+| Linear SVM            |        132         |
+| SVM with RBF kernel   |        128         |
+| Decision Tree (_new_) |        N/A         |
+
+: Original results – **CASH OUT** {#tbl-original-icw-CASH_OUT}
+
+Ideal class weights for **TRANSFER** and **CASH OUT**.
+:::
+
+To compare between-model performance, we now plot the precision-recall curves for all the trained models on the training, validation and test sets and compare the AUPRC (Area Under the Precision-Recall Curve) values. We agree with the paper of using the Precision-Recall curve as opposed to an ROC curve due to the imbalanced nature of the data.
 
 
 ::: {#fig-model-comparison-TRANSFER layout-ncol=3}
@@ -105,7 +147,7 @@ To compare between-model performance, we now consider the performance metrics of
 
 ![Test](../../experimentation/reproduce_oza_2018/output/figures/result_model_comparison/model_comparison_TRANSFER_test.png){#fig-metric-1}
 
-Precision-Recall Curve and computed AUPRC for the TRANSFER dataset
+Precision-Recall Curve and computed AUPRC for the TRANSFER dataset.
 :::
 
 ::: {#fig-model-comparison-CASH_OUT layout-ncol=3}
@@ -116,14 +158,11 @@ Precision-Recall Curve and computed AUPRC for the TRANSFER dataset
 
 ![Test](../../experimentation/reproduce_oza_2018/output/figures/result_model_comparison/model_comparison_CASH_OUT_test.png){#fig-metric-1}
 
-Precision-Recall Curve and computed AUPRC for the CASH OUT dataset
+Precision-Recall Curve and computed AUPRC for the CASH OUT dataset.
 :::
 
 
-
-In both the TRANFER 
-
-::: {#tbl-panel layout-ncol=2}
+::: {#tbl-metrics-and-auprc-VALIDATION layout-ncol=2 layout-nrow=2}
 | Algorithm             | Recall | Precision | F1     | AUPRC  |
 | --------------------- | ------ | --------- | ------ | ------ |
 | Logistic Regression   | 0.9935 | 0.8243    | 0.9010 | 0.9606 |
@@ -131,7 +170,7 @@ In both the TRANFER
 | SVM with RBF kernel   | 0.9870 | 0.7172    | 0.8307 | 0.9717 |
 | Decision Tree (_new_) | 0.9935 | 0.6308    | 0.7717 | 0.9896 |
 
-: Replication results (ours) {#tbl-first}
+: Replication (ours) – **TRANSFER** {#tbl-replication-metrics-TRANSFER}
 
 | Algorithm             | Recall | Precision | F1     | AUPRC  |
 | --------------------- | ------ | --------- | ------ | ------ |
@@ -140,12 +179,9 @@ In both the TRANFER
 | SVM with RBF kernel   | 0.9934 | 0.5871    | 0.7381 | 0.9855 |
 | Decision Tree (_new_) | N/A    | N/A       | N/A    | N/A    |
 
-: Original results {#tbl-second}
+: Original results – **TRANSFER** {#tbl-original-metrics-TRANSFER}
 
-<span style="color:blue">**TRANSFER**</span> dataset evaluation on validation set
-:::
 
-::: {#tbl-panel layout-ncol=2}
 | Algorithm             | Recall | Precision | F1     | AUPRC  |
 | --------------------- | ------ | --------- | ------ | ------ |
 | Logistic Regression   | 0.9870 | 0.1565    | 0.2702 | 0.7620 |
@@ -153,7 +189,7 @@ In both the TRANFER
 | SVM with RBF kernel   | 0.9011 | 0.1483    | 0.2546 | 0.7674 |
 | Decision Tree (_new_) | 0.6742 | 0.1906    | 0.2971 | 0.5838 |
 
-: Replication results (ours) {#tbl-first}
+: Replication (ours) – **CASH OUT** {#tbl-replication-metrics-CASH_OUT}
 
 | Algorithm             | Recall | Precision | F1     | AUPRC  |
 | --------------------- | ------ | --------- | ------ | ------ |
@@ -162,53 +198,9 @@ In both the TRANFER
 | SVM with RBF kernel   | 0.9773 | 0.1315    | 0.2318 | 0.7598 |
 | Decision Tree (_new_) | N/A    | N/A       | N/A    | N/A    |
 
-: Original results {#tbl-second}
+: Original results – **CASH OUT** {#tbl-original-metrics-CASH_OUT}
 
-<span style="color:red">**CASH OUT**</span> dataset evaluation on validation set
-:::
-
-::: {#tbl-panel layout-ncol=2}
-| Algorithm             | Ideal class weight |
-| --------------------- | :----------------: |
-| Logistic Regression   |         14         |
-| Linear SVM            |         12         |
-| SVM with RBF kernel   |         13         |
-| Decision Tree (_new_) |        305         |
-
-: Replication results (ours) {#tbl-first}
-
-| Algorithm             | Ideal class weight |
-| --------------------- | :----------------: |
-| Logistic Regression   |         70         |
-| Linear SVM            |         39         |
-| SVM with RBF kernel   |         16         |
-| Decision Tree (_new_) |        N/A         |
-
-: Original results {#tbl-second}
-
-<span style="color:blue">**TRANSFER**</span> dataset ideal class weights
-:::
-
-::: {#tbl-panel layout-ncol=2}
-| Algorithm             | Ideal class weight |
-| --------------------- | :----------------: |
-| Logistic Regression   |        124         |
-| Linear SVM            |        112         |
-| SVM with RBF kernel   |         81         |
-| Decision Tree (_new_) |         30         |
-
-: Replication results (ours) {#tbl-first}
-
-| Algorithm             | Ideal class weight |
-| --------------------- | :----------------: |
-| Logistic Regression   |        145         |
-| Linear SVM            |        132         |
-| SVM with RBF kernel   |        128         |
-| Decision Tree (_new_) |        N/A         |
-
-: Original results {#tbl-second}
-
-<span style="color:red">**CASH OUT**</span> dataset ideal class weights
+Recall, Precision, F1-score and AUPRC for the chosen model (with ideal class weights) on the validation set.
 :::
 
 # Conclusion
