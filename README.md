@@ -73,7 +73,7 @@ The idea is that I will be simulating streaming financial transactions using the
 To visualize this process, I built a web app using Streamlit. The app is Dockerize with a Dockerfile and the image is pushed to the Google Artifact Registry. We then grabbed the pushed Docker image and deploy it using Google Cloud Platform (GCP) Cloud Run.
 
 ### Deployed web app
-![app-landing-page](./docs/app.png)
+![app-landing-page](./docs/app.gif)
 
 The deployed web app can be found here (please use Google Chrome!): https://fraud-web-app-qmjqqzknzq-ew.a.run.app/.
 
@@ -121,5 +121,5 @@ Data onboarding was unfortunately not covered. I love data onboarding but unfort
 - [X] Draw diagram for inference pipeline
 - [X] Write README
 - [X] Add Streamlit landing page as static image to README
-- [ ] Add Streamlit landing page as GIF to README
+- [X] Add Streamlit landing page as GIF to README
 - [ ] Do a blog writeup?
