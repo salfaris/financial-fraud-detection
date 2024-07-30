@@ -77,6 +77,8 @@ PCA decomposition of the transaction covariates for the TRANSFER and CASH OUT da
 
 ### Finding the ideal class weight
 
+Next, we look at evaluating the precision and recall metrics on the validation set to find the ideal class weight.
+
 ::: {#fig-CV-curves-CASH_OUT layout-ncol=2 layout-nrow=2}
 
 ![Logistic regression](../../experimentation/reproduce_oza_2018/output/figures/result_class_weight/result_CASH_OUT_logreg.png){#fig-log}
@@ -117,7 +119,7 @@ The ideal class weights for all trained models are captured in @tbl-ideal-class-
 | Logistic Regression   |         14         |
 | Linear SVM            |         12         |
 | SVM with RBF kernel   |         13         |
-| Decision Tree (_new_) |        305         |
+| Decision Tree |        305         |
 
 : Replication (ours) – **TRANSFER** {#tbl-replication-icw-TRANSFER}
 
@@ -126,7 +128,7 @@ The ideal class weights for all trained models are captured in @tbl-ideal-class-
 | Logistic Regression   |         70         |
 | Linear SVM            |         39         |
 | SVM with RBF kernel   |         16         |
-| Decision Tree (_new_) |        N/A         |
+| Decision Tree |        N/A         |
 
 : Original results – **TRANSFER** {#tbl-original-icw-TRANSFER}
 
@@ -135,7 +137,7 @@ The ideal class weights for all trained models are captured in @tbl-ideal-class-
 | Logistic Regression   |        124         |
 | Linear SVM            |        112         |
 | SVM with RBF kernel   |         81         |
-| Decision Tree (_new_) |         30         |
+| Decision Tree |         30         |
 
 : Replication (ours) – **CASH OUT** {#tbl-replication-icw-CASH_OUT}
 
@@ -144,7 +146,7 @@ The ideal class weights for all trained models are captured in @tbl-ideal-class-
 | Logistic Regression   |        145         |
 | Linear SVM            |        132         |
 | SVM with RBF kernel   |        128         |
-| Decision Tree (_new_) |        N/A         |
+| Decision Tree |        N/A         |
 
 : Original results – **CASH OUT** {#tbl-original-icw-CASH_OUT}
 
@@ -157,7 +159,7 @@ Ideal class weights for **TRANSFER** and **CASH OUT**.
 | Logistic Regression   | 0.9935 | 0.8243    | 0.9010 | 0.9606 |
 | Linear SVM            | 0.9935 | 0.7421    | 0.8500 | 0.9496 |
 | SVM with RBF kernel   | 0.9870 | 0.7172    | 0.8307 | 0.9717 |
-| Decision Tree (_new_) | 0.9935 | 0.6308    | 0.7717 | 0.9896 |
+| Decision Tree | 0.9935 | 0.6308    | 0.7717 | 0.9896 |
 
 : Replication (ours) – **TRANSFER** {#tbl-replication-metrics-TRANSFER}
 
@@ -166,7 +168,7 @@ Ideal class weights for **TRANSFER** and **CASH OUT**.
 | Logistic Regression   | 0.9983 | 0.4416    | 0.6123 | 0.9248 |
 | Linear SVM            | 0.9983 | 0.4432    | 0.6139 | 0.9161 |
 | SVM with RBF kernel   | 0.9934 | 0.5871    | 0.7381 | 0.9855 |
-| Decision Tree (_new_) | N/A    | N/A       | N/A    | N/A    |
+| Decision Tree | N/A    | N/A       | N/A    | N/A    |
 
 : Original results – **TRANSFER** {#tbl-original-metrics-TRANSFER}
 
@@ -176,7 +178,7 @@ Ideal class weights for **TRANSFER** and **CASH OUT**.
 | Logistic Regression   | 0.9870 | 0.1565    | 0.2702 | 0.7620 |
 | Linear SVM            | 0.9011 | 0.1440    | 0.2483 | 0.7027 |
 | SVM with RBF kernel   | 0.9011 | 0.1483    | 0.2546 | 0.7674 |
-| Decision Tree (_new_) | 0.6742 | 0.1906    | 0.2971 | 0.5838 |
+| Decision Tree | 0.6742 | 0.1906    | 0.2971 | 0.5838 |
 
 : Replication (ours) – **CASH OUT** {#tbl-replication-metrics-CASH_OUT}
 
@@ -185,7 +187,7 @@ Ideal class weights for **TRANSFER** and **CASH OUT**.
 | Logistic Regression   | 0.9822 | 0.1561    | 0.2692 | 0.7235 |
 | Linear SVM            | 0.9352 | 0.1263    | 0.2226 | 0.6727 |
 | SVM with RBF kernel   | 0.9773 | 0.1315    | 0.2318 | 0.7598 |
-| Decision Tree (_new_) | N/A    | N/A       | N/A    | N/A    |
+| Decision Tree | N/A    | N/A       | N/A    | N/A    |
 
 : Original results – **CASH OUT** {#tbl-original-metrics-CASH_OUT}
 
@@ -198,7 +200,7 @@ Recall, Precision, F1-score and AUPRC for the chosen model (with ideal class wei
 | Logistic Regression   | 0.9967 | 0.8351    | 0.9088 | 0.9705 |
 | Linear SVM            | 0.9983 | 0.7488    | 0.8557 | 0.9585 |
 | SVM with RBF kernel   | 0.9870 | 0.7009    | 0.8197 | 0.9747 |
-| Decision Tree (_new_) | 0.9935 | 0.6513    | 0.7869 | 0.9898 |
+| Decision Tree | 0.9935 | 0.6513    | 0.7869 | 0.9898 |
 
 : Replication (ours) – **TRANSFER** {#tbl-replication-metrics-TEST-TRANSFER}
 
@@ -207,7 +209,7 @@ Recall, Precision, F1-score and AUPRC for the chosen model (with ideal class wei
 | Logistic Regression   | 0.9951 | 0.4444    | 0.6144 | 0.9063 |
 | Linear SVM            | 0.9951 | 0.4516    | 0.6213 | 0.8949 |
 | SVM with RBF kernel   | 0.9886 | 0.5823    | 0.7329 | 0.9873 |
-| Decision Tree (_new_) | N/A    | N/A       | N/A    | N/A    |
+| Decision Tree | N/A    | N/A       | N/A    | N/A    |
 
 : Original results – **TRANSFER** {#tbl-original-metrics-TEST-TRANSFER}
 
@@ -217,7 +219,7 @@ Recall, Precision, F1-score and AUPRC for the chosen model (with ideal class wei
 | Logistic Regression   | 0.9806 | 0.1548    | 0.2673 | 0.7466 |
 | Linear SVM            | 0.8849 | 0.1436    | 0.2471 | 0.6827 |
 | SVM with RBF kernel   | 0.8930 | 0.1461    | 0.2511 | 0.7462 |
-| Decision Tree (_new_) | 0.6370 | 0.1829    | 0.2843 | 0.5521 |
+| Decision Tree | 0.6370 | 0.1829    | 0.2843 | 0.5521 |
 
 : Replication (ours) – **CASH OUT** {#tbl-replication-metrics-TEST-CASH_OUT}
 
@@ -226,7 +228,7 @@ Recall, Precision, F1-score and AUPRC for the chosen model (with ideal class wei
 | Logistic Regression   | 0.9886 | 0.1521    | 0.2636 | 0.7403 |
 | Linear SVM            | 0.9411 | 0.1246    | 0.2201 | 0.6893 |
 | SVM with RBF kernel   | 0.9789 | 0.1321    | 0.2327 | 0.7271 |
-| Decision Tree (_new_) | N/A    | N/A       | N/A    | N/A    |
+| Decision Tree | N/A    | N/A       | N/A    | N/A    |
 
 : Original results – **CASH OUT** {#tbl-original-metrics-TEST-CASH_OUT}
 
@@ -261,7 +263,7 @@ Precision-Recall Curve and computed AUPRC for the CASH OUT dataset.
 
 When comparing the models between logistic regression, SVM with linear kernel and the SVM with the RBF kernel, we were able to replicate the original results on the TRANSFER transactions in both the train and test sets. We observe recall scores attaining close to 99% for all three models and the SVM with RBF kernel yielding the highest AUPRC score similar to [@oza2018]. With the added decision tree, we also attain a recall score of around 99% but with a lower precision relative to the other three models. However, we observe decision tree to have the highest AUPRC score beating the SVM with RBF kernel suggesting that the decision tree might be a better fraud detector in TRANSFER transactions.
 
-We were also able to replicate the drop in precision when performing inference using the three models on CASH OUT transactions, relative to the TRANSFER transactions. This can be attributed due to the non-linear separability of the transactions (ref. PCA plot). We did not, however, obtain the same recall performance when using the SVM with RBF kernel but this is explained by our additional step of stratified downsampling the CASH OUT training set for model training due to our machine limitation. Despite that, we still saw a higher AUPRC in SVM with RBF kernel as compared to logistic regression and the SVM with linear kernel. Unlike detecting fraud in TRANSFER transactions, the decision tree does not perform as well in the CASH OUT transactions with significantly lower recall and AUPRC when compared even to the worst of the three original models. However, we saw that the decision tree have a higher precision albeit only slightly suggesting that it can contribute to better user experience.
+We were also able to replicate the drop in precision when performing inference using the three models on CASH OUT transactions, relative to the TRANSFER transactions. This can be attributed due to the non-linear separability of the transactions (ref. @fig-pca). We did not, however, obtain the same recall performance when using the SVM with RBF kernel but this is explained by our additional step of stratified downsampling the CASH OUT training set for model training due to our compute limitation. Despite that, we still saw a higher AUPRC in SVM with RBF kernel as compared to logistic regression and the SVM with linear kernel, similar to the paper. Unlike detecting fraud in TRANSFER transactions, the decision tree does not perform as well in the CASH OUT transactions with significantly lower recall and AUPRC when compared even to the worst of the three original models. However, we saw that the decision tree have a higher precision albeit only slightly suggesting that it can contribute to better user experience.
 
 # Conclusion
 

@@ -2663,6 +2663,7 @@ vertical-align: -.125em;
 </section>
 <section id="finding-the-ideal-class-weight" class="level3">
 <h3 class="anchored" data-anchor-id="finding-the-ideal-class-weight">Finding the ideal class weight</h3>
+<p>Next, we look at evaluating the precision and recall metrics on the validation set to find the ideal class weight.</p>
 <div id="fig-CV-curves-CASH_OUT" class="quarto-layout-panel">
 <figure class="figure">
 <div class="quarto-layout-row quarto-layout-valign-top">
@@ -2777,7 +2778,7 @@ vertical-align: -.125em;
 <td style="text-align: center;">13</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Decision Tree (<em>new</em>)</td>
+<td style="text-align: left;">Decision Tree</td>
 <td style="text-align: center;">305</td>
 </tr>
 </tbody>
@@ -2806,7 +2807,7 @@ vertical-align: -.125em;
 <td style="text-align: center;">16</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Decision Tree (<em>new</em>)</td>
+<td style="text-align: left;">Decision Tree</td>
 <td style="text-align: center;">N/A</td>
 </tr>
 </tbody>
@@ -2837,7 +2838,7 @@ vertical-align: -.125em;
 <td style="text-align: center;">81</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Decision Tree (<em>new</em>)</td>
+<td style="text-align: left;">Decision Tree</td>
 <td style="text-align: center;">30</td>
 </tr>
 </tbody>
@@ -2866,7 +2867,7 @@ vertical-align: -.125em;
 <td style="text-align: center;">128</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Decision Tree (<em>new</em>)</td>
+<td style="text-align: left;">Decision Tree</td>
 <td style="text-align: center;">N/A</td>
 </tr>
 </tbody>
@@ -2914,7 +2915,7 @@ vertical-align: -.125em;
 <td style="text-align: left;">0.9717</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Decision Tree (<em>new</em>)</td>
+<td style="text-align: left;">Decision Tree</td>
 <td style="text-align: left;">0.9935</td>
 <td style="text-align: left;">0.6308</td>
 <td style="text-align: left;">0.7717</td>
@@ -2958,7 +2959,7 @@ vertical-align: -.125em;
 <td style="text-align: left;">0.9855</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Decision Tree (<em>new</em>)</td>
+<td style="text-align: left;">Decision Tree</td>
 <td style="text-align: left;">N/A</td>
 <td style="text-align: left;">N/A</td>
 <td style="text-align: left;">N/A</td>
@@ -3004,7 +3005,7 @@ vertical-align: -.125em;
 <td style="text-align: left;">0.7674</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Decision Tree (<em>new</em>)</td>
+<td style="text-align: left;">Decision Tree</td>
 <td style="text-align: left;">0.6742</td>
 <td style="text-align: left;">0.1906</td>
 <td style="text-align: left;">0.2971</td>
@@ -3048,7 +3049,7 @@ vertical-align: -.125em;
 <td style="text-align: left;">0.7598</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Decision Tree (<em>new</em>)</td>
+<td style="text-align: left;">Decision Tree</td>
 <td style="text-align: left;">N/A</td>
 <td style="text-align: left;">N/A</td>
 <td style="text-align: left;">N/A</td>
@@ -3099,7 +3100,7 @@ vertical-align: -.125em;
 <td style="text-align: left;">0.9747</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Decision Tree (<em>new</em>)</td>
+<td style="text-align: left;">Decision Tree</td>
 <td style="text-align: left;">0.9935</td>
 <td style="text-align: left;">0.6513</td>
 <td style="text-align: left;">0.7869</td>
@@ -3143,7 +3144,7 @@ vertical-align: -.125em;
 <td style="text-align: left;">0.9873</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Decision Tree (<em>new</em>)</td>
+<td style="text-align: left;">Decision Tree</td>
 <td style="text-align: left;">N/A</td>
 <td style="text-align: left;">N/A</td>
 <td style="text-align: left;">N/A</td>
@@ -3189,7 +3190,7 @@ vertical-align: -.125em;
 <td style="text-align: left;">0.7462</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Decision Tree (<em>new</em>)</td>
+<td style="text-align: left;">Decision Tree</td>
 <td style="text-align: left;">0.6370</td>
 <td style="text-align: left;">0.1829</td>
 <td style="text-align: left;">0.2843</td>
@@ -3233,7 +3234,7 @@ vertical-align: -.125em;
 <td style="text-align: left;">0.7271</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Decision Tree (<em>new</em>)</td>
+<td style="text-align: left;">Decision Tree</td>
 <td style="text-align: left;">N/A</td>
 <td style="text-align: left;">N/A</td>
 <td style="text-align: left;">N/A</td>
@@ -3311,7 +3312,7 @@ vertical-align: -.125em;
 </figure>
 </div>
 <p>When comparing the models between logistic regression, SVM with linear kernel and the SVM with the RBF kernel, we were able to replicate the original results on the TRANSFER transactions in both the train and test sets. We observe recall scores attaining close to 99% for all three models and the SVM with RBF kernel yielding the highest AUPRC score similar to <span class="citation" data-cites="oza2018">(<a href="#ref-oza2018" role="doc-biblioref">Oza 2018</a>)</span>. With the added decision tree, we also attain a recall score of around 99% but with a lower precision relative to the other three models. However, we observe decision tree to have the highest AUPRC score beating the SVM with RBF kernel suggesting that the decision tree might be a better fraud detector in TRANSFER transactions.</p>
-<p>We were also able to replicate the drop in precision when performing inference using the three models on CASH OUT transactions, relative to the TRANSFER transactions. This can be attributed due to the non-linear separability of the transactions (ref. PCA plot). We did not, however, obtain the same recall performance when using the SVM with RBF kernel but this is explained by our additional step of stratified downsampling the CASH OUT training set for model training due to our machine limitation. Despite that, we still saw a higher AUPRC in SVM with RBF kernel as compared to logistic regression and the SVM with linear kernel. Unlike detecting fraud in TRANSFER transactions, the decision tree does not perform as well in the CASH OUT transactions with significantly lower recall and AUPRC when compared even to the worst of the three original models. However, we saw that the decision tree have a higher precision albeit only slightly suggesting that it can contribute to better user experience.</p>
+<p>We were also able to replicate the drop in precision when performing inference using the three models on CASH OUT transactions, relative to the TRANSFER transactions. This can be attributed due to the non-linear separability of the transactions (ref. <a href="#fig-pca">Figure 1</a>). We did not, however, obtain the same recall performance when using the SVM with RBF kernel but this is explained by our additional step of stratified downsampling the CASH OUT training set for model training due to our compute limitation. Despite that, we still saw a higher AUPRC in SVM with RBF kernel as compared to logistic regression and the SVM with linear kernel, similar to the paper. Unlike detecting fraud in TRANSFER transactions, the decision tree does not perform as well in the CASH OUT transactions with significantly lower recall and AUPRC when compared even to the worst of the three original models. However, we saw that the decision tree have a higher precision albeit only slightly suggesting that it can contribute to better user experience.</p>
 </section>
 </section>
 </section>
