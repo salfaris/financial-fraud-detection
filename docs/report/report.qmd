@@ -13,7 +13,7 @@ format:
 execute:
   echo: fenced
 reference-location: margin
-citation-location: margin
+# citation-location: margin
 bibliography: references.bib
 ---
 
@@ -23,7 +23,7 @@ _Fraud Detection using Machine Learning_ [@oza2018] proposed a class weight stra
 
 # Method
 
-We replicate the results of [@oza2018] using the same PaySim dataset and preprocessing steps, some of which were not specified in their paper but rather in their code (which unfortunately has been a common occurrence in our experience replicating machine learning papers).
+We replicate the results of [@oza2018] using the same PaySim dataset [@paysim2016] and preprocessing steps, some of which were not specified in their paper but rather in their code (which unfortunately has been a common occurrence in our experience replicating machine learning papers).
 
 We found replicating the paper has been challenging due to several incomplete information which include:
 
@@ -42,7 +42,7 @@ We use our favorite number 10062930 for the RNG seed in all our experiments wher
 
 ## Dataset
 
-We use the same PaySim dataset referred by the paper, although the original link is found broken. The dataset can now be found on Kaggle here https://www.kaggle.com/datasets/ealaxi/paysim1 with the original methodology of the dataset described in [@paysim2016].
+We use the same PaySim dataset referred by the paper, although the original link is found broken. The dataset can now be found on Kaggle at this [link](https://www.kaggle.com/datasets/ealaxi/paysim1) with the original methodology of the dataset described in [@paysim2016].
 
 We follow the exact same initial dataset preparation as in the paper, having the same train-val-test stratified split for both the TRANSFER and CASH OUT transactions. That means we obtain the exact same number of rowsets in each split as in [@oza2018]. The only difference is in the RNG seed that was used which means that the samples in each split may not be the same as in the paper.
 
@@ -81,7 +81,7 @@ Performance metrics - Precision, Recall, FPR (False Positive Rate) – versus fr
 
 The false positive rate metric is new and were not present in [@oza2018], but it was still used implicitly for determining the ideal class weight so here we make it obvious. Again, we recall that the ideal class weight is chosen to be the one that bounds the FPR to less than 1% to ensure a good user experience while simulatenously maximizing the recall. We also have added the decision tree performance metrics here which were not present in [@oza2018].
 
-In both the CASH OUT and TRANSFER validation splits (see Figure @fig-CV-curves-CASH_OUT and @fig-CV-curves-TRANSFER respectively), we capture the same trend as found in [@oza2018] where increasing the fraudulent class weight leads to a higher recall at the cost of lower precision. This means that the model has a higher tendency of marking actual fraudulent transactions at the cost of marking non-fraudulent transactions as fraudulent. So you would reduce monetary cost due to fraud but risk losing customers due to a terrible user experience.
+In both the CASH OUT and TRANSFER validation splits (see @fig-CV-curves-CASH_OUT and @fig-CV-curves-TRANSFER respectively), we capture the same trend as found in [@oza2018] where increasing the fraudulent class weight leads to a higher recall at the cost of lower precision. This means that the model has a higher tendency of marking actual fraudulent transactions at the cost of marking non-fraudulent transactions as fraudulent. So you would reduce monetary cost due to fraud but risk losing customers due to a terrible user experience.
 
 We were also able to replicate the reduced effect in performance metrics with increasing class weights in the TRANSFER validation set where a high recall of ~1.0 is attained for even very low class weights. As seen in @fig-CV-curves-TRANSFER-decision-tree, this same trend is also observed for the newly added decision tree although this model performs much better with precision not dropping below 60% unlike the other models.
 
@@ -265,3 +265,8 @@ Some of our key contributions are as follows:
 - Inference time analysis for all models.
 
 One clear next direction to take is to make use of the time series component of the dataset as these transactions are time-dependent.
+
+# References
+
+::: {#refs}
+:::

@@ -2557,12 +2557,11 @@ vertical-align: -.125em;
 
 </head>
 
-<body>
+<body class="fullcontent">
 
 <div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
-<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-</div>
-<main class="content page-columns page-full" id="quarto-document-content">
+
+<main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
@@ -2594,14 +2593,14 @@ vertical-align: -.125em;
 
 </header>
 
-<section id="introduction" class="level1 page-columns page-full">
+<section id="introduction" class="level1">
 <h1>Introduction</h1>
 <p><em>Fraud Detection using Machine Learning</em> <span class="citation" data-cites="oza2018">(<a href="#ref-oza2018" role="doc-biblioref">Oza 2018</a>)</span> proposed a class weight strategy to tackle the problem of imbalanced classes in payments fraud detection. The author showed that choosing a suitable class weight in a classifier can be sufficient to flag fraud detections with a reasonably low false positive rate whilst maintaining high accuracy.</p>
-<div class="no-row-height column-margin column-container"></div></section>
-<section id="method" class="level1 page-columns page-full">
+</section>
+<section id="method" class="level1">
 <h1>Method</h1>
-<p>We replicate the results of <span class="citation" data-cites="oza2018">(<a href="#ref-oza2018" role="doc-biblioref">Oza 2018</a>)</span> using the same PaySim dataset and preprocessing steps, some of which were not specified in their paper but rather in their code (which unfortunately has been a common occurrence in our experience replicating machine learning papers).</p>
-<div class="no-row-height column-margin column-container"></div><p>We found replicating the paper has been challenging due to several incomplete information which include:</p>
+<p>We replicate the results of <span class="citation" data-cites="oza2018">(<a href="#ref-oza2018" role="doc-biblioref">Oza 2018</a>)</span> using the same PaySim dataset <span class="citation" data-cites="paysim2016">(<a href="#ref-paysim2016" role="doc-biblioref">Lopez-Rojas, Elmir, and Axelsson 2016</a>)</span> and preprocessing steps, some of which were not specified in their paper but rather in their code (which unfortunately has been a common occurrence in our experience replicating machine learning papers).</p>
+<p>We found replicating the paper has been challenging due to several incomplete information which include:</p>
 <ul>
 <li>Not specifying the RNG seed that was used.</li>
 <li>Not specifying the hyperparameters used for each model.</li>
@@ -2609,19 +2608,17 @@ vertical-align: -.125em;
 <li>Not specifying the machine that was used for training despite mentioning an approximate time range for running the experiments collectively on their Github repo. Due to this, we were not able to gauge whether our training time should be lower or higher relative to their experiment.</li>
 </ul>
 </section>
-<section id="experimental-evaluation" class="level1 page-columns page-full">
+<section id="experimental-evaluation" class="level1">
 <h1>Experimental evaluation</h1>
-<section id="setup" class="level2 page-columns page-full">
+<section id="setup" class="level2">
 <h2 class="anchored" data-anchor-id="setup">Setup</h2>
 <p>We run our experiments on a MacBook Pro (2021) with the Apple M1 Pro chip - 16GB unified memory, 8-core CPU and 14-core GPU. Unfortunately, <span class="citation" data-cites="oza2018">(<a href="#ref-oza2018" role="doc-biblioref">Oza 2018</a>)</span> did not specify the machine they used to train their models.</p>
-<div class="no-row-height column-margin column-container"></div><p>We use our favorite number 10062930 for the RNG seed in all our experiments where randomness is required.</p>
+<p>We use our favorite number 10062930 for the RNG seed in all our experiments where randomness is required.</p>
 </section>
-<section id="dataset" class="level2 page-columns page-full">
+<section id="dataset" class="level2">
 <h2 class="anchored" data-anchor-id="dataset">Dataset</h2>
-<p>We use the same PaySim dataset referred by the paper, although the original link is found broken. The dataset can now be found on Kaggle here https://www.kaggle.com/datasets/ealaxi/paysim1 with the original methodology of the dataset described in <span class="citation" data-cites="paysim2016">(<a href="#ref-paysim2016" role="doc-biblioref">Lopez-Rojas, Elmir, and Axelsson 2016</a>)</span>.</p>
-<div class="no-row-height column-margin column-container"><div id="ref-paysim2016" class="csl-entry" role="doc-biblioentry">
-Lopez-Rojas, Edgar Alonso, Ahmad Elmir, and Stefan Axelsson. 2016. <span>“PaySim: A Financial Mobile Money Simulator for Fraud Detection.”</span> In <em>The 28th European Modeling and Simulation Symposium-EMSS</em>.
-</div></div><p>We follow the exact same initial dataset preparation as in the paper, having the same train-val-test stratified split for both the TRANSFER and CASH OUT transactions. That means we obtain the exact same number of rowsets in each split as in <span class="citation" data-cites="oza2018">(<a href="#ref-oza2018" role="doc-biblioref">Oza 2018</a>)</span>. The only difference is in the RNG seed that was used which means that the samples in each split may not be the same as in the paper.</p>
+<p>We use the same PaySim dataset referred by the paper, although the original link is found broken. The dataset can now be found on Kaggle at this <a href="https://www.kaggle.com/datasets/ealaxi/paysim1">link</a> with the original methodology of the dataset described in <span class="citation" data-cites="paysim2016">(<a href="#ref-paysim2016" role="doc-biblioref">Lopez-Rojas, Elmir, and Axelsson 2016</a>)</span>.</p>
+<p>We follow the exact same initial dataset preparation as in the paper, having the same train-val-test stratified split for both the TRANSFER and CASH OUT transactions. That means we obtain the exact same number of rowsets in each split as in <span class="citation" data-cites="oza2018">(<a href="#ref-oza2018" role="doc-biblioref">Oza 2018</a>)</span>. The only difference is in the RNG seed that was used which means that the samples in each split may not be the same as in the paper.</p>
 </section>
 <section id="model-training" class="level2">
 <h2 class="anchored" data-anchor-id="model-training">Model training</h2>
@@ -2634,13 +2631,13 @@ Lopez-Rojas, Edgar Alonso, Ahmad Elmir, and Stefan Axelsson. 2016. <span>“PayS
 </ol>
 <p>We also trained a decision tree classifier on both the datasets, considering that it is also a popular choice on tabular datasets. We found that the training and inference time for the decision tree rivals that of logistic regression, but performs even better than the SVMs as we shal see in the next section.</p>
 </section>
-<section id="results" class="level2 page-columns page-full">
+<section id="results" class="level2">
 <h2 class="anchored" data-anchor-id="results">Results</h2>
 <p>The results of our replication is given in the following table and graphs.</p>
 <section id="pca-analysis-on-transaction-covariates" class="level3">
 <h3 class="anchored" data-anchor-id="pca-analysis-on-transaction-covariates">PCA analysis on transaction covariates</h3>
 </section>
-<section id="finding-the-ideal-class-weight" class="level3 page-columns page-full">
+<section id="finding-the-ideal-class-weight" class="level3">
 <h3 class="anchored" data-anchor-id="finding-the-ideal-class-weight">Finding the ideal class weight</h3>
 <div id="fig-CV-curves-CASH_OUT" class="quarto-layout-panel">
 <figure class="figure">
@@ -2684,7 +2681,7 @@ Lopez-Rojas, Edgar Alonso, Ahmad Elmir, and Stefan Axelsson. 2016. <span>“PayS
 </figure>
 </div>
 <p>The false positive rate metric is new and were not present in <span class="citation" data-cites="oza2018">(<a href="#ref-oza2018" role="doc-biblioref">Oza 2018</a>)</span>, but it was still used implicitly for determining the ideal class weight so here we make it obvious. Again, we recall that the ideal class weight is chosen to be the one that bounds the FPR to less than 1% to ensure a good user experience while simulatenously maximizing the recall. We also have added the decision tree performance metrics here which were not present in <span class="citation" data-cites="oza2018">(<a href="#ref-oza2018" role="doc-biblioref">Oza 2018</a>)</span>.</p>
-<div class="no-row-height column-margin column-container"></div><p>In both the CASH OUT and TRANSFER validation splits (see Figure <a href="#fig-CV-curves-CASH_OUT">Figure 1</a> and <a href="#fig-CV-curves-TRANSFER">Figure 2</a> respectively), we capture the same trend as found in <span class="citation" data-cites="oza2018">(<a href="#ref-oza2018" role="doc-biblioref">Oza 2018</a>)</span> where increasing the fraudulent class weight leads to a higher recall at the cost of lower precision. This means that the model has a higher tendency of marking actual fraudulent transactions at the cost of marking non-fraudulent transactions as fraudulent. So you would reduce monetary cost due to fraud but risk losing customers due to a terrible user experience.</p>
+<p>In both the CASH OUT and TRANSFER validation splits (see <a href="#fig-CV-curves-CASH_OUT">Figure 1</a> and <a href="#fig-CV-curves-TRANSFER">Figure 2</a> respectively), we capture the same trend as found in <span class="citation" data-cites="oza2018">(<a href="#ref-oza2018" role="doc-biblioref">Oza 2018</a>)</span> where increasing the fraudulent class weight leads to a higher recall at the cost of lower precision. This means that the model has a higher tendency of marking actual fraudulent transactions at the cost of marking non-fraudulent transactions as fraudulent. So you would reduce monetary cost due to fraud but risk losing customers due to a terrible user experience.</p>
 <p>We were also able to replicate the reduced effect in performance metrics with increasing class weights in the TRANSFER validation set where a high recall of ~1.0 is attained for even very low class weights. As seen in <a href="#fig-CV-curves-TRANSFER-decision-tree">Figure 2 (d)</a>, this same trend is also observed for the newly added decision tree although this model performs much better with precision not dropping below 60% unlike the other models.</p>
 <div id="fig-CV-curves-TRANSFER" class="quarto-layout-panel">
 <figure class="figure">
@@ -3224,7 +3221,7 @@ Lopez-Rojas, Edgar Alonso, Ahmad Elmir, and Stefan Axelsson. 2016. <span>“PayS
 </div>
 </div>
 </section>
-<section id="comparing-performance-between-ideal-models" class="level3 page-columns page-full">
+<section id="comparing-performance-between-ideal-models" class="level3">
 <h3 class="anchored" data-anchor-id="comparing-performance-between-ideal-models">Comparing performance between ideal models</h3>
 <p>To compare between-model performance, we now plot the precision-recall curves for all the models on the training, validation and test sets and compare the AUPRC (Area Under the Precision-Recall Curve) values. The choice of using the Precision-Recall curve as opposed to an ROC curve when the target binary class is imbalanced is quite well known in the literature so we will not go into details here.</p>
 <div id="fig-model-comparison-TRANSFER" class="quarto-layout-panel">
@@ -3290,15 +3287,33 @@ Lopez-Rojas, Edgar Alonso, Ahmad Elmir, and Stefan Axelsson. 2016. <span>“PayS
 </figure>
 </div>
 <p>When comparing the models between logistic regression, SVM with linear kernel and the SVM with the RBF kernel, we were able to replicate the original results on the TRANSFER transactions in both the train and test sets. We observe recall scores attaining close to 99% for all three models and the SVM with RBF kernel yielding the highest AUPRC score similar to <span class="citation" data-cites="oza2018">(<a href="#ref-oza2018" role="doc-biblioref">Oza 2018</a>)</span>. With the added decision tree, we also attain a recall score of around 99% but with a lower precision relative to the other three models. However, we observe decision tree to have the highest AUPRC score beating the SVM with RBF kernel suggesting that the decision tree might be a better fraud detector in TRANSFER transactions.</p>
-<div class="no-row-height column-margin column-container"><div id="ref-oza2018" class="csl-entry" role="doc-biblioentry">
+<p>We were also able to replicate the drop in precision when performing inference using the three models on CASH OUT transactions, relative to the TRANSFER transactions. This can be attributed due to the non-linear separability of the transactions (ref. PCA plot). We did not, however, obtain the same recall performance when using the SVM with RBF kernel but this is explained by our additional step of stratified downsampling the CASH OUT training set for model training due to our machine limitation. Despite that, we still saw a higher AUPRC in SVM with RBF kernel as compared to logistic regression and the SVM with linear kernel. Unlike detecting fraud in TRANSFER transactions, the decision tree does not perform as well in the CASH OUT transactions with significantly lower recall and AUPRC when compared even to the worst of the three original models. However, we saw that the decision tree have a higher precision albeit only slightly suggesting that it can contribute to better user experience.</p>
+</section>
+</section>
+</section>
+<section id="conclusion" class="level1">
+<h1>Conclusion</h1>
+<p>Overall, we are able to confirm that the class weight strategy proposed by <span class="citation" data-cites="oza2018">Oza (<a href="#ref-oza2018" role="doc-biblioref">2018</a>)</span> does work. However, as we have discussed in this report, the ideal class weight difference between the replication and the original warrants more attention.</p>
+<p>Some of our key contributions are as follows:</p>
+<ul>
+<li>Modularity.</li>
+<li>Replication.</li>
+<li>Clarity. Machine</li>
+<li>Deployment in mind.</li>
+<li>Inference time analysis for all models.</li>
+</ul>
+<p>One clear next direction to take is to make use of the time series component of the dataset as these transactions are time-dependent.</p>
+</section>
+<section id="references" class="level1">
+<h1>References</h1>
+<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="ref-paysim2016" class="csl-entry" role="doc-biblioentry">
+Lopez-Rojas, Edgar Alonso, Ahmad Elmir, and Stefan Axelsson. 2016. <span>“PaySim: A Financial Mobile Money Simulator for Fraud Detection.”</span> In <em>The 28th European Modeling and Simulation Symposium-EMSS</em>.
+</div>
+<div id="ref-oza2018" class="csl-entry" role="doc-biblioentry">
 Oza, Aditya. 2018. <span>“Fraud Detection Using Machine Learning.”</span> In. <a href="https://api.semanticscholar.org/CorpusID:202618514">https://api.semanticscholar.org/CorpusID:202618514</a>.
-</div></div><p>We were also able to replicate the drop in precision when performing inference using the three models on CASH OUT transactions, relative to the TRANSFER transactions. This can be attributed due to the non-linear separability of the transactions (ref. PCA plot). We did not, however, obtain the same recall performance when using the SVM with RBF kernel but this is explained by our additional step of stratified downsampling the CASH OUT training set for model training due to our machine limitation. Despite that, we still saw a higher AUPRC in SVM with RBF kernel as compared to logistic regression and the SVM with linear kernel. Unlike detecting fraud in TRANSFER transactions, the decision tree does not perform as well in the CASH OUT transactions with significantly lower recall and AUPRC when compared even to the worst of the three original models. However, we saw that the decision tree have a higher precision albeit only slightly suggesting that it can contribute to better user experience.</p>
-</section>
-</section>
-</section>
-<section id="conclusion" class="level1 unnumbered">
-<h1 class="unnumbered">Conclusion</h1>
-
+</div>
+</div>
 </section>
 
 </main>
