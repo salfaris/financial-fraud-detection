@@ -111,7 +111,9 @@ We were also able to replicate the reduced effect in performance metrics with in
 Performance metrics - Precision, Recall, FPR (False Positive Rate) – versus fraudulent class weights on the TRANSFER validation set, marked with the chosen ideal class weight.
 :::
 
-The ideal class weights for all trained models are captured in @tbl-ideal-class-weight. We were surprised to not be able to replicate the ideal class weights in the original paper which makes us wonder if there were additional manual steps involved in choosing their ideal class weight – for example, they mentioned about choosing "higher weights for fraud samples to avoid over-fitting on CV set". That being said, our choice of ideal class weight is better in that we attain similar recall values for all models whilst also attaining high precision values relative to the ones attained in the original paper. This difference is captured in @tbl-metrics-and-auprc-VALIDATION.
+The ideal class weights for all trained models are captured in @tbl-ideal-class-weight. We were surprised to not be able to replicate the ideal class weights in the original paper which makes us wonder if there were additional manual steps involved in choosing their ideal class weight – for example, they mentioned about choosing "higher weights for fraud samples to avoid over-fitting on CV set". If there were no additional steps involved in the original paper, we argue that the difference in ideal class weight may arise due to the possibly different rowsets in the training and validation sets as we used a different RNG seed compared to the author. This can imply a different probability distribution in the covariates which may lead to lower/higher class weights required to filter the fraudulent transactions optimally given the covariates.
+
+That being said, our choice of ideal class weight is better in that we attain similar recall values for all models whilst also attaining high precision values relative to the ones attained in the original paper. This difference is captured in @tbl-metrics-and-auprc-VALIDATION.
 
 ::: {#tbl-ideal-class-weight layout-ncol=2 layout-nrow=2}
 | Algorithm             | Ideal class weight |
@@ -237,7 +239,7 @@ Recall, Precision, F1-score and AUPRC for the chosen model (with ideal class wei
 
 ### Comparing performance between ideal models
 
-To compare between-model performance, we now plot the precision-recall curves for all the models on the training, validation and test sets and compare the AUPRC (Area Under the Precision-Recall Curve) values. The choice of using the Precision-Recall curve as opposed to an ROC curve when the target binary class is imbalanced is quite well known in the literature so we will not go into details here.
+To compare between-model performance, we now plot the precision-recall curves for all the models on the training, validation and test sets and compare the AUPRC (Area Under the Precision-Recall Curve) values. The choice of using the precision-recall curve as opposed to an ROC curve when the target binary class is imbalanced is quite well known in the literature so we will not go into details here and we agree with the author. In general, we were able to replicate the shape of the precision-recall curve for both transaction types. However, we observe sharper precision hiccup drops as compared to the author when training the SVM with RBF kernel, possibly owing to the fact that we have different validation rowsets.
 
 ::: {#fig-model-comparison-TRANSFER layout-ncol=3}
 
