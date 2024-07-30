@@ -265,6 +265,26 @@ When comparing the models between logistic regression, SVM with linear kernel an
 
 We were also able to replicate the drop in precision when performing inference using the three models on CASH OUT transactions, relative to the TRANSFER transactions. This can be attributed due to the non-linear separability of the transactions (ref. @fig-pca). We did not, however, obtain the same recall performance when using the SVM with RBF kernel but this is explained by our additional step of stratified downsampling the CASH OUT training set for model training due to our compute limitation. Despite that, we still saw a higher AUPRC in SVM with RBF kernel as compared to logistic regression and the SVM with linear kernel, similar to the paper. Unlike detecting fraud in TRANSFER transactions, the decision tree does not perform as well in the CASH OUT transactions with significantly lower recall and AUPRC when compared even to the worst of the three original models. However, we saw that the decision tree have a higher precision albeit only slightly suggesting that it can contribute to better user experience.
 
+### New: comparing inference time between ideal models
+
+Core to our exploration is to deploy the trained models for live fraudulent transaction detection. We will now compare the inference time of the four models on both the TRANSFER and CASH OUT transactions.
+
+To measure the inference time, we use the `timeit.repeat` funtion from the `timeit` built-in Python package. Here we run inference for a 1000 times and record the average time taken. We repeat this procedure for 100 times to obtain 100 average inference times and plot this using a boxplot below.
+
+::: {#fig-inference-time-nsample layout-nrow=3}
+
+![Inference on 10 sample points](../../experimentation/reproduce_oza_2018/output/figures/result_inference_speed/hist_TRANSFER_10.png){#fig-inference-time-nsample-10}
+
+![Inference on 100 sample points](../../experimentation/reproduce_oza_2018/output/figures/result_inference_speed/hist_TRANSFER_100.png){#fig-inference-time-nsample-100}
+
+![Inference on 1000 sample points](../../experimentation/reproduce_oza_2018/output/figures/result_inference_speed/hist_TRANSFER_1000.png){#fig-inference-time-nsample-1000}
+
+
+Model inference times the TRANSFER dataset for different number of sample points (n = 10, 100, 1000).
+:::
+
+Considering both performance and inference time, we opt the simple logistic regression for both the TRANSFER and CASH OUT transactions. The logistic regression model is the fastest model with the lowest inference time, whilst still having good performance.
+
 # Conclusion
 
 Overall, we are able to confirm that the class weight strategy proposed by @oza2018 does work. However, as we have discussed in this report, the ideal class weight difference between the replication and the original warrants more attention.
