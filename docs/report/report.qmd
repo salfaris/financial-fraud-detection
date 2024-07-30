@@ -56,13 +56,24 @@ For training the SVM with RBF kernel, we employ the same standard scaling step a
 2. Rent a Compute Engine with a lot of CPU cores and higher RAM size, and train in parallel there.
 3. Train via the GCP Vertex AI service, which for our purpose, is just a more expensive way to do [2] above.
 
-We also trained a decision tree classifier on both the datasets, considering that it is also a popular choice on tabular datasets. We found that the training and inference time for the decision tree rivals that of logistic regression, but performs even better than the SVMs as we shal see in the next section.
+We also trained a decision tree classifier on both the datasets, considering that it is also a popular choice on tabular datasets. We found that the training and inference time for the decision tree rivals that of logistic regression, but performs even better than the SVMs as we shals see in the next section.
 
 ## Results
 
 The results of our replication is given in the following table and graphs.
 
 ### PCA analysis on transaction covariates
+
+We were able to replicate the two-dimensional PCA decomposition very well as can be seen in @fig-pca. In particular, we recover the observation that there is higher variability in TRANSFER transactions when comparing the fraudulent and non-fraudulent transactions, suggesting that the dataset may be linearly separable.
+
+::: {#fig-pca layout-ncol=2}
+
+![TRANSFER](../../experimentation/reproduce_oza_2018/output/figures/pca/pca_TRANSFER.png){#fig-pca-TRANSFER}
+
+![CASH OUT](../../experimentation/reproduce_oza_2018/output/figures/pca/pca_CASH_OUT.png){#fig-pca-CASH_OUT}
+
+PCA decomposition of the transaction covariates for the TRANSFER and CASH OUT datasets.
+:::
 
 ### Finding the ideal class weight
 
