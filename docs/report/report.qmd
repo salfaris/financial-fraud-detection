@@ -133,39 +133,39 @@ The ideal class weights for all trained models are captured in @tbl-ideal-class-
 This difference in ideal class weight warrants some attention and should be investigated further. That being said, our choice of ideal class weight is better in that we attain similar recall values for all models whilst also attaining high precision values relative to the ones attained in the original paper. This difference is captured in @tbl-metrics-and-auprc-VALIDATION.
 
 ::: {#tbl-ideal-class-weight layout-ncol=2 layout-nrow=2}
-| Algorithm             | Ideal class weight |
-| --------------------- | :----------------: |
-| Logistic Regression   |         14         |
-| Linear SVM            |         12         |
-| SVM with RBF kernel   |         13         |
-| Decision Tree |        305         |
+| Algorithm           | Ideal class weight |
+| ------------------- | :----------------: |
+| Logistic Regression |         14         |
+| Linear SVM          |         12         |
+| SVM with RBF kernel |         13         |
+| Decision Tree       |        305         |
 
 : Replication (ours) – **TRANSFER** {#tbl-replication-icw-TRANSFER}
 
-| Algorithm             | Ideal class weight |
-| --------------------- | :----------------: |
-| Logistic Regression   |         70         |
-| Linear SVM            |         39         |
-| SVM with RBF kernel   |         16         |
-| Decision Tree |        N/A         |
+| Algorithm           | Ideal class weight |
+| ------------------- | :----------------: |
+| Logistic Regression |         70         |
+| Linear SVM          |         39         |
+| SVM with RBF kernel |         16         |
+| Decision Tree       |        N/A         |
 
 : Original results – **TRANSFER** {#tbl-original-icw-TRANSFER}
 
-| Algorithm             | Ideal class weight |
-| --------------------- | :----------------: |
-| Logistic Regression   |        124         |
-| Linear SVM            |        112         |
-| SVM with RBF kernel   |         81         |
-| Decision Tree |         30         |
+| Algorithm           | Ideal class weight |
+| ------------------- | :----------------: |
+| Logistic Regression |        124         |
+| Linear SVM          |        112         |
+| SVM with RBF kernel |         81         |
+| Decision Tree       |         30         |
 
 : Replication (ours) – **CASH OUT** {#tbl-replication-icw-CASH_OUT}
 
-| Algorithm             | Ideal class weight |
-| --------------------- | :----------------: |
-| Logistic Regression   |        145         |
-| Linear SVM            |        132         |
-| SVM with RBF kernel   |        128         |
-| Decision Tree |        N/A         |
+| Algorithm           | Ideal class weight |
+| ------------------- | :----------------: |
+| Logistic Regression |        145         |
+| Linear SVM          |        132         |
+| SVM with RBF kernel |        128         |
+| Decision Tree       |        N/A         |
 
 : Original results – **CASH OUT** {#tbl-original-icw-CASH_OUT}
 
@@ -201,40 +201,40 @@ Precision-Recall Curve and computed AUPRC for the CASH OUT dataset.
 We summarize all our metrics in the following tables.
 
 ::: {#tbl-metrics-and-auprc-VALIDATION layout-ncol=2 layout-nrow=2}
-| Algorithm             | Recall | Precision | F1     | AUPRC  |
-| --------------------- | ------ | --------- | ------ | ------ |
-| Logistic Regression   | 0.9935 | 0.8243    | 0.9010 | 0.9606 |
-| Linear SVM            | 0.9935 | 0.7421    | 0.8500 | 0.9496 |
-| SVM with RBF kernel   | 0.9870 | 0.7172    | 0.8307 | 0.9717 |
-| Decision Tree | 0.9935 | 0.6308    | 0.7717 | 0.9896 |
+| Algorithm           | Recall | Precision | F1     | AUPRC  |
+| ------------------- | ------ | --------- | ------ | ------ |
+| Logistic Regression | 0.9935 | 0.8243    | 0.9010 | 0.9606 |
+| Linear SVM          | 0.9935 | 0.7421    | 0.8500 | 0.9496 |
+| SVM with RBF kernel | 0.9870 | 0.7172    | 0.8307 | 0.9717 |
+| Decision Tree       | 0.9935 | 0.6308    | 0.7717 | 0.9896 |
 
 : Replication (ours) – **TRANSFER** {#tbl-replication-metrics-TRANSFER}
 
-| Algorithm             | Recall | Precision | F1     | AUPRC  |
-| --------------------- | ------ | --------- | ------ | ------ |
-| Logistic Regression   | 0.9983 | 0.4416    | 0.6123 | 0.9248 |
-| Linear SVM            | 0.9983 | 0.4432    | 0.6139 | 0.9161 |
-| SVM with RBF kernel   | 0.9934 | 0.5871    | 0.7381 | 0.9855 |
-| Decision Tree | N/A    | N/A       | N/A    | N/A    |
+| Algorithm           | Recall | Precision | F1     | AUPRC  |
+| ------------------- | ------ | --------- | ------ | ------ |
+| Logistic Regression | 0.9983 | 0.4416    | 0.6123 | 0.9248 |
+| Linear SVM          | 0.9983 | 0.4432    | 0.6139 | 0.9161 |
+| SVM with RBF kernel | 0.9934 | 0.5871    | 0.7381 | 0.9855 |
+| Decision Tree       | N/A    | N/A       | N/A    | N/A    |
 
 : Original results – **TRANSFER** {#tbl-original-metrics-TRANSFER}
 
 
-| Algorithm             | Recall | Precision | F1     | AUPRC  |
-| --------------------- | ------ | --------- | ------ | ------ |
-| Logistic Regression   | 0.9870 | 0.1565    | 0.2702 | 0.7620 |
-| Linear SVM            | 0.9011 | 0.1440    | 0.2483 | 0.7027 |
-| SVM with RBF kernel   | 0.9011 | 0.1483    | 0.2546 | 0.7674 |
-| Decision Tree | 0.6742 | 0.1906    | 0.2971 | 0.5838 |
+| Algorithm           | Recall | Precision | F1     | AUPRC  |
+| ------------------- | ------ | --------- | ------ | ------ |
+| Logistic Regression | 0.9870 | 0.1565    | 0.2702 | 0.7620 |
+| Linear SVM          | 0.9011 | 0.1440    | 0.2483 | 0.7027 |
+| SVM with RBF kernel | 0.9011 | 0.1483    | 0.2546 | 0.7674 |
+| Decision Tree       | 0.6742 | 0.1906    | 0.2971 | 0.5838 |
 
 : Replication (ours) – **CASH OUT** {#tbl-replication-metrics-CASH_OUT}
 
-| Algorithm             | Recall | Precision | F1     | AUPRC  |
-| --------------------- | ------ | --------- | ------ | ------ |
-| Logistic Regression   | 0.9822 | 0.1561    | 0.2692 | 0.7235 |
-| Linear SVM            | 0.9352 | 0.1263    | 0.2226 | 0.6727 |
-| SVM with RBF kernel   | 0.9773 | 0.1315    | 0.2318 | 0.7598 |
-| Decision Tree | N/A    | N/A       | N/A    | N/A    |
+| Algorithm           | Recall | Precision | F1     | AUPRC  |
+| ------------------- | ------ | --------- | ------ | ------ |
+| Logistic Regression | 0.9822 | 0.1561    | 0.2692 | 0.7235 |
+| Linear SVM          | 0.9352 | 0.1263    | 0.2226 | 0.6727 |
+| SVM with RBF kernel | 0.9773 | 0.1315    | 0.2318 | 0.7598 |
+| Decision Tree       | N/A    | N/A       | N/A    | N/A    |
 
 : Original results – **CASH OUT** {#tbl-original-metrics-CASH_OUT}
 
@@ -242,40 +242,40 @@ Recall, Precision, F1-score and AUPRC for the chosen model (with ideal class wei
 :::
 
 ::: {#tbl-metrics-and-auprc-TEST layout-ncol=2 layout-nrow=2}
-| Algorithm             | Recall | Precision | F1     | AUPRC  |
-| --------------------- | ------ | --------- | ------ | ------ |
-| Logistic Regression   | 0.9967 | 0.8351    | 0.9088 | 0.9705 |
-| Linear SVM            | 0.9983 | 0.7488    | 0.8557 | 0.9585 |
-| SVM with RBF kernel   | 0.9870 | 0.7009    | 0.8197 | 0.9747 |
-| Decision Tree | 0.9935 | 0.6513    | 0.7869 | 0.9898 |
+| Algorithm           | Recall | Precision | F1     | AUPRC  |
+| ------------------- | ------ | --------- | ------ | ------ |
+| Logistic Regression | 0.9967 | 0.8351    | 0.9088 | 0.9705 |
+| Linear SVM          | 0.9983 | 0.7488    | 0.8557 | 0.9585 |
+| SVM with RBF kernel | 0.9870 | 0.7009    | 0.8197 | 0.9747 |
+| Decision Tree       | 0.9935 | 0.6513    | 0.7869 | 0.9898 |
 
 : Replication (ours) – **TRANSFER** {#tbl-replication-metrics-TEST-TRANSFER}
 
-| Algorithm             | Recall | Precision | F1     | AUPRC  |
-| --------------------- | ------ | --------- | ------ | ------ |
-| Logistic Regression   | 0.9951 | 0.4444    | 0.6144 | 0.9063 |
-| Linear SVM            | 0.9951 | 0.4516    | 0.6213 | 0.8949 |
-| SVM with RBF kernel   | 0.9886 | 0.5823    | 0.7329 | 0.9873 |
-| Decision Tree | N/A    | N/A       | N/A    | N/A    |
+| Algorithm           | Recall | Precision | F1     | AUPRC  |
+| ------------------- | ------ | --------- | ------ | ------ |
+| Logistic Regression | 0.9951 | 0.4444    | 0.6144 | 0.9063 |
+| Linear SVM          | 0.9951 | 0.4516    | 0.6213 | 0.8949 |
+| SVM with RBF kernel | 0.9886 | 0.5823    | 0.7329 | 0.9873 |
+| Decision Tree       | N/A    | N/A       | N/A    | N/A    |
 
 : Original results – **TRANSFER** {#tbl-original-metrics-TEST-TRANSFER}
 
 
-| Algorithm             | Recall | Precision | F1     | AUPRC  |
-| --------------------- | ------ | --------- | ------ | ------ |
-| Logistic Regression   | 0.9806 | 0.1548    | 0.2673 | 0.7466 |
-| Linear SVM            | 0.8849 | 0.1436    | 0.2471 | 0.6827 |
-| SVM with RBF kernel   | 0.8930 | 0.1461    | 0.2511 | 0.7462 |
-| Decision Tree | 0.6370 | 0.1829    | 0.2843 | 0.5521 |
+| Algorithm           | Recall | Precision | F1     | AUPRC  |
+| ------------------- | ------ | --------- | ------ | ------ |
+| Logistic Regression | 0.9806 | 0.1548    | 0.2673 | 0.7466 |
+| Linear SVM          | 0.8849 | 0.1436    | 0.2471 | 0.6827 |
+| SVM with RBF kernel | 0.8930 | 0.1461    | 0.2511 | 0.7462 |
+| Decision Tree       | 0.6370 | 0.1829    | 0.2843 | 0.5521 |
 
 : Replication (ours) – **CASH OUT** {#tbl-replication-metrics-TEST-CASH_OUT}
 
-| Algorithm             | Recall | Precision | F1     | AUPRC  |
-| --------------------- | ------ | --------- | ------ | ------ |
-| Logistic Regression   | 0.9886 | 0.1521    | 0.2636 | 0.7403 |
-| Linear SVM            | 0.9411 | 0.1246    | 0.2201 | 0.6893 |
-| SVM with RBF kernel   | 0.9789 | 0.1321    | 0.2327 | 0.7271 |
-| Decision Tree | N/A    | N/A       | N/A    | N/A    |
+| Algorithm           | Recall | Precision | F1     | AUPRC  |
+| ------------------- | ------ | --------- | ------ | ------ |
+| Logistic Regression | 0.9886 | 0.1521    | 0.2636 | 0.7403 |
+| Linear SVM          | 0.9411 | 0.1246    | 0.2201 | 0.6893 |
+| SVM with RBF kernel | 0.9789 | 0.1321    | 0.2327 | 0.7271 |
+| Decision Tree       | N/A    | N/A       | N/A    | N/A    |
 
 : Original results – **CASH OUT** {#tbl-original-metrics-TEST-CASH_OUT}
 
@@ -290,24 +290,82 @@ We were also able to replicate the drop in precision when performing inference u
 
 Core to our exploration is to deploy the trained models for live fraudulent transaction detection. We will now compare the inference time of the four models on both the TRANSFER and CASH OUT transactions.
 
-To measure the inference time, we use the `timeit.repeat` funtion from the `timeit` built-in Python package. Here we run inference for a 1000 times and record the average time taken. We repeat this procedure for 100 times to obtain 100 average inference times and plot this in a boxplot below.
+To measure the inference time, we use the `timeit.repeat` funtion from the `timeit` built-in Python package. Here we run inference for a 1000 times and record the average time taken. We repeat this procedure for 100 times to obtain 100 average inference times. Our results are captured in @tbl-inference-time and @fig-inference-time-nsample.
 
 ::: {#fig-inference-time-nsample layout-ncol=2 layout-nrow=3}
 
-![n=1 point sampled from TRANSFER](../../experimentation/reproduce_oza_2018/output/figures/result_inference_speed/hist_TRANSFER_1.png){#fig-inference-time-TRANSFER-nsample-1}
+![n=1 point sampled from **TRANSFER**](../../experimentation/reproduce_oza_2018/output/figures/result_inference_speed/hist_TRANSFER_1.png){#fig-inference-time-TRANSFER-nsample-1}
 
-![n=1 point sampled from CASH OUT](../../experimentation/reproduce_oza_2018/output/figures/result_inference_speed/hist_CASH_OUT_1.png){#fig-inference-time-CASH_OUT-nsample-1}
+![n=1 point sampled from **CASH OUT**](../../experimentation/reproduce_oza_2018/output/figures/result_inference_speed/hist_CASH_OUT_1.png){#fig-inference-time-CASH_OUT-nsample-1}
 
-![n=10 points sampled from TRANSFER](../../experimentation/reproduce_oza_2018/output/figures/result_inference_speed/hist_TRANSFER_10.png){#fig-inference-time-TRANSFER-nsample-10}
+![n=10 points sampled from **TRANSFER**](../../experimentation/reproduce_oza_2018/output/figures/result_inference_speed/hist_TRANSFER_10.png){#fig-inference-time-TRANSFER-nsample-10}
 
-![n=10 points sampled from CASH OUT](../../experimentation/reproduce_oza_2018/output/figures/result_inference_speed/hist_CASH_OUT_10.png){#fig-inference-time-CASH_OUT-nsample-10}
+![n=10 points sampled from **CASH OUT**](../../experimentation/reproduce_oza_2018/output/figures/result_inference_speed/hist_CASH_OUT_10.png){#fig-inference-time-CASH_OUT-nsample-10}
 
-![n=100 points sampled from TRANSFER](../../experimentation/reproduce_oza_2018/output/figures/result_inference_speed/hist_TRANSFER_100.png){#fig-inference-time-TRANSFER-nsample-100}
+![n=100 points sampled from **TRANSFER**](../../experimentation/reproduce_oza_2018/output/figures/result_inference_speed/hist_TRANSFER_100.png){#fig-inference-time-TRANSFER-nsample-100}
 
-![n=100 points sampled from CASH OUT](../../experimentation/reproduce_oza_2018/output/figures/result_inference_speed/hist_CASH_OUT_100.png){#fig-inference-time-CASH_OUT-nsample-100}
+![n=100 points sampled from **CASH OUT**](../../experimentation/reproduce_oza_2018/output/figures/result_inference_speed/hist_CASH_OUT_100.png){#fig-inference-time-CASH_OUT-nsample-100}
 
 
-Model inference times for different number of sample points (n = 1, 10, 100).
+Model inference time (seconds) for different number of sample points (n = 1, 10, 100).
+:::
+
+::: {#tbl-inference-time layout-ncol=2 layout-nrow=3}
+| Algorithm           | Sample size | Inference time |
+| ------------------- | ----------- | -------------- |
+| Logistic Regression | 1           | 0.27 ± 0.02    |
+| Linear SVM          | 1           | 0.26 ± 0.02    |
+| SVM with RBF kernel | 1           | 0.34 ± 0.03    |
+| Decision Tree       | 1           | 0.30 ± 0.07    |
+
+: Inference time on **TRANSFER** transactions with n=1 sample point {#tbl-inference-time-TRANSFER-nsample-1}
+
+| Algorithm           | Sample size | Inference time |
+| ------------------- | ----------- | -------------- |
+| Logistic Regression | 1           | 0.28 ± 0.06    |
+| Linear SVM          | 1           | 0.27 ± 0.01    |
+| SVM with RBF kernel | 1           | 0.52 ± 0.07    |
+| Decision Tree       | 1           | 0.28 ± 0.01    |
+
+: Inference time on **CASH OUT** transactions with n=1 sample point {#tbl-inference-time-CASH_OUT-nsample-1}
+
+| Algorithm           | Sample size | Inference time |
+| ------------------- | ----------- | -------------- |
+| Logistic Regression | 10           | 0.29 ± 0.08    |
+| Linear SVM          | 10           | 0.27 ± 0.03    |
+| SVM with RBF kernel | 10           | 2.95 ± 0.18    |
+| Decision Tree       | 10           | 0.26 ± 0.01    |
+
+: Inference time on **TRANSFER** transactions with n=10 sample points {#tbl-inference-time-TRANSFER-nsample-10}
+
+| Algorithm           | Sample size | Inference time |
+| ------------------- | ----------- | -------------- |
+| Logistic Regression | 10           | 0.27 ± 0.02    |
+| Linear SVM          | 10           | 0.28 ± 0.06    |
+| SVM with RBF kernel | 10           | 4.56 ± 0.05    |
+| Decision Tree       | 10           | 0.28 ± 0.01    |
+
+: Inference time on **CASH OUT** transactions with n=10 sample points {#tbl-inference-time-CASH_OUT-nsample-10}
+
+| Algorithm           | Sample size | Inference time |
+| ------------------- | ----------- | -------------- |
+| Logistic Regression | 100           |  0.26 ± 0.01    |
+| Linear SVM          | 100           |  0.26 ± 0.02    |
+| SVM with RBF kernel | 100           | 28.12 ± 0.48    |
+| Decision Tree       | 100           |  0.28 ± 0.02    |
+
+: Inference time on **TRANSFER** transactions with n=100 sample points {#tbl-inference-time-TRANSFER-nsample-100}
+
+| Algorithm           | Sample size | Inference time |
+| ------------------- | ----------- | -------------- |
+| Logistic Regression | 100           |  0.27 ± 0.01    |
+| Linear SVM          | 100           |  0.26 ±  0.00    |
+| SVM with RBF kernel | 100           | 44.43 ± 0.52    |
+| Decision Tree       | 100           |  0.27 ± 0.01    |
+
+: Inference time on **CASH OUT** transactions with n=100 sample points {#tbl-inference-time-CASH_OUT-nsample-100}
+
+Inference time (seconds) for different number of sample points (n = 1, 10, 100).
 :::
 
 Considering both performance and inference time, we opt the simple logistic regression for both the TRANSFER and CASH OUT transactions. The logistic regression model is the fastest model with the lowest inference time, whilst still having good performance.
