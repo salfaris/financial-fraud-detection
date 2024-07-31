@@ -10,20 +10,10 @@ import seaborn as sns
 from absl import app, flags, logging
 
 from model_config import FEATURE_NAMES, TARGET_NAME, MODEL_FUNCTIONS
+from plot_config import confplot
 import utils
 
-mpl.rcParams["font.family"] = "serif"
-mpl.rcParams["font.serif"] = "Ubuntu"
-mpl.rcParams["font.monospace"] = "Ubuntu Mono"
-mpl.rcParams["font.size"] = 10
-mpl.rcParams["axes.labelsize"] = 10
-mpl.rcParams["axes.labelweight"] = "bold"
-mpl.rcParams["xtick.labelsize"] = 8
-mpl.rcParams["ytick.labelsize"] = 8
-mpl.rcParams["legend.fontsize"] = 10
-mpl.rcParams["figure.titlesize"] = 12
-
-plt.style.use("bmh")
+confplot()
 
 flags.DEFINE_enum(
     "transaction_type", "TRANSFER", ["TRANSFER", "CASH_OUT"], "Transaction type."

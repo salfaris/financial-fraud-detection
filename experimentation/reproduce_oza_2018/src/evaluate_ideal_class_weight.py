@@ -7,8 +7,9 @@ import pandas as pd
 from absl import app, flags, logging
 
 from model_config import MODEL_FUNCTIONS
+from plot_config import confplot
 
-plt.style.use("bmh")
+confplot()
 
 flags.DEFINE_enum(
     "model_name",

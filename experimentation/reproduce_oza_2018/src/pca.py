@@ -8,11 +8,14 @@ from pathlib import Path
 
 from absl import app, logging
 
-plt.style.use("bmh")
+from plot_config import confplot
 
-SRC_DIR = Path(__file__).parents[1]
-DATASET_DIR = SRC_DIR / "datasets"
-PCA_FIGURE_DIR = SRC_DIR / "output" / "figures" / "pca"
+confplot()
+
+EXPERIMENTATION_DIR = Path(__file__).parents[2]
+REPRODUCE_DIR = Path(__file__).parents[1]
+DATASET_DIR = EXPERIMENTATION_DIR / "datasets"
+PCA_FIGURE_DIR = REPRODUCE_DIR / "output" / "figures" / "pca"
 PCA_FIGURE_DIR.mkdir(parents=True, exist_ok=True)
 
 
@@ -51,7 +54,7 @@ def main(_):
             sns.scatterplot(
                 data=pca_df, x="PC 1", y="PC 2", hue="label", ax=ax, alpha=0.5
             )
-            ax.set_title(f"PCA for {transfer_type} transactions")
+            ax.set_title(f"PCA for {' '.join(transfer_type.split('_'))} transactions")
             fig.tight_layout()
             fig.savefig(PCA_FIGURE_DIR / f"pca_{transfer_type}.png")
 
