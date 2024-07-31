@@ -73,7 +73,7 @@ For training the SVM with RBF kernel, we employ the same standard scaling step a
 2. Rent a Compute Engine with a lot of CPU cores and higher RAM size, and train in parallel there.
 3. Train via the GCP Vertex AI service, which for our purpose, is just a more expensive way to do [2] above.
 
-We also trained a decision tree classifier on both the datasets, considering that it is also a popular choice on tabular datasets. We found that the training and inference time for the decision tree rivals that of logistic regression, but performs even better than the SVMs as we shals see in the next section.
+We also trained a decision tree classifier on both the datasets, considering that it is also a popular choice on tabular datasets. We found that the training and inference time for the decision tree rivals that of logistic regression, but can perform even better than the SVMs as we shall see in the next section.
 
 ## Results
 
