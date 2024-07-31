@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 import matplotlib as mpl
 import numpy as np
 import pandas as pd
+import seaborn as sns
 
 from absl import app, flags, logging
 
@@ -105,8 +106,10 @@ def main(_):
             raise ModelNotFoundError(f"TERMINATE: Model {model_name} not fitted.")
         fitted_models[model_name] = model
 
+    sample_size_space = [1, 5, 10, 25, 50, 100]
     RESULT = {
-        model_name: {10: None, 100: None, 1000: None} for model_name in MODEL_FUNCTIONS
+        model_name: {i: None for i in sample_size_space}
+        for model_name in MODEL_FUNCTIONS
     }
 
     def compute(X, y, sample_size: int):
@@ -184,21 +187,29 @@ def main(_):
             "svc_rbf_sampler": "SVM + RBF sampler kernel",
             "decision_tree": "Decision Tree",
         }
-        ax.boxplot(
-            sample_size_runs,
-            tick_labels=list(map(lambda x: model_tick_label_map[x], model_names)),
-        )
-        ax.set_ylabel("Inference time (seconds)")
+
+        for run, model_name in zip(sample_size_runs, model_names):
+            sns.kdeplot(
+                run,
+                label=model_tick_label_map[model_name],
+                fill=True,
+                bw_adjust=2.0,
+                log_scale=True,
+                gridsize=500,
+            )
+        ax.set_xlim(-10, 100)
+        ax.legend()
+        ax.set_xlabel("Inference time (seconds)")
+        ttype = " ".join(str(FLAG.transaction_type).split("_"))
         ax.set_title(
             "Inference time comparison between models on"
-            f" n={sample_size} {FLAG.transaction_type} transactions"
+            f" n={sample_size} {ttype} transactions"
         )
-        ax.set_ylim(0.2, 0.5)
 
         fig.tight_layout()
         fig.savefig(RESULT_FIG_DIR / f"hist_{FLAG.transaction_type}_{sample_size}.png")
 
-    for sample_size in [10, 100, 1000]:
+    for sample_size in sample_size_space:
         logging.info(f"Evaluating {sample_size = }")
         idx = RNG.randint(0, X_val.shape[0], sample_size)
         compute(X_val.iloc[idx], y_val[idx], sample_size=sample_size)
