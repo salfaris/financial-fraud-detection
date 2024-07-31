@@ -23,7 +23,7 @@ This project consists of two key sections:
 
 In the experimentation phase, my first focus is to reproduce and verify the class weight strategy by Aditya Oza in his preprint ["Fraud Detection using Machine Learning" (Oza, 2018)](https://www.semanticscholar.org/paper/Fraud-Detection-using-Machine-Learning-Oza-aditya/9f2c08d9efaa53cfabdd0ec47afa8015c7ff5bb9).
 
-I wrote a full report on this strategy validation which can be found here: [Replication & extension of "_Fraud Detection using Machine Learning_" (Oza, 2018)](./docs/report/report.html). 
+I wrote a full report on this strategy validation which can be found here: [Replication & extension of "_Fraud Detection using Machine Learning_" (Oza, 2018)](./docs/report/report.html).
 
 The top level findings include:
 
@@ -34,6 +34,8 @@ The top level findings include:
   - Furthermore, the ideal class weight obtained in the paper is done only via a single run (which can already take several hours; actually days for SVM with RBF kernel). I would argue we need to perform multiple runs and consider the uncertainty bands around this ideal class weight for experiment reporting.
 - We obtained and and can draw the same conclusion from the precision-recall curves when comparing between models; with logistic regression being a superior lightweight choice and with SVM + RBF kernel only overperforming by a small margin. ✅
 - We introduce a new experiment to measure the inference time on out-of-sample data. We found that while the SVM + RBF kernel performs relatively well, the inference time introduces a huge latency especially for production usage.
+
+![sample-inference-time](./experimentation/reproduce_oza_2018/output/figures/result_inference_speed/hist_TRANSFER_10.png)
 
 Considering the performance-latency tradeoff, we opted for the more lightweight logistic regression model to be used for deployment.
 
