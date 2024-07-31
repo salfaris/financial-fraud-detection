@@ -23,16 +23,19 @@ This project consists of two key sections:
 
 In the experimentation phase, my first focus is to reproduce and verify the class weight strategy by Aditya Oza in his preprint ["Fraud Detection using Machine Learning" (Oza, 2018)](https://www.semanticscholar.org/paper/Fraud-Detection-using-Machine-Learning-Oza-aditya/9f2c08d9efaa53cfabdd0ec47afa8015c7ff5bb9).
 
-We can dive deeper into my findings for this reproduction, but the main ones include:
+I wrote a full report on this strategy validation which can be found here: [Replication & extension of "_Fraud Detection using Machine Learning_" (Oza, 2018)](./docs/report/report.html). 
 
-- The class weight strategy does work ✅ – one can attain a model that minimizes false positive rate such that recall is reasonably controllable.
+The top level findings include:
+
+- The class weight strategy does work ✅ – one can attain a model that minimizes false positive rate such that recall is reasonably controlled.
 - We did get precision and recall curve with shapes similar to that of the paper. ✅
 - However, we did NOT get the exact same ideal class weights as the author. ❌ 
-  - I suspect that this is related to multiple factors including unshared hyperparameters and random seeds. 
+  - I suspect that this is strongly related to the choice of random seed. The random seed dictates the training samples seen by the algorithm; considering the super low rate of fraudulent transactions, the probability distribution of the covariates can change dramatically with different training samples.
   - Furthermore, the ideal class weight obtained in the paper is done only via a single run (which can already take several hours; actually days for SVM with RBF kernel). I would argue we need to perform multiple runs and consider the uncertainty bands around this ideal class weight for experiment reporting.
 - We obtained and and can draw the same conclusion from the precision-recall curves when comparing between models; with logistic regression being a superior lightweight choice and with SVM + RBF kernel only overperforming by a small margin. ✅
+- We introduce a new experiment to measure the inference time on out-of-sample data. We found that while the SVM + RBF kernel performs relatively well, the inference time introduces a huge latency especially for production usage.
 
-Considering the tradeoffs, we opted for the more lightweight logistic regression model to be used for deployment.
+Considering the performance-latency tradeoff, we opted for the more lightweight logistic regression model to be used for deployment.
 
 ### 1.2. From research to a production model
 
