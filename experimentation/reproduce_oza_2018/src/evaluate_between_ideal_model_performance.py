@@ -9,6 +9,7 @@ from sklearn.metrics import (
     precision_score,
     recall_score,
     f1_score,
+    confusion_matrix,
 )
 
 from absl import app, flags, logging
@@ -120,6 +121,7 @@ def main(_):
                 "recall": [],
                 "f1-score": [],
                 "AUPRC": [],
+                "confusion_matrix": [],
             }
         for model_name, fitted_model in fitted_models.items():
             logging.info(f"Computing {label} metrics - {model_name}...")
@@ -168,7 +170,7 @@ def main(_):
                 (model_name, precision, recall, auc_precision_recall)
             )
 
-            # model | transaction_type | class_weight | AUPRC
+            conf_matrix = confusion_matrix(y, y_pred)  # can ravel because binary
 
             metrics["data_set"].append(label)
             metrics["model_name"].append(model_name)
@@ -180,6 +182,7 @@ def main(_):
             metrics["recall"].append(recall_single)
             metrics["f1-score"].append(f1_score_single)
             metrics["AUPRC"].append(auc_precision_recall)
+            metrics["confusion_matrix"].append(conf_matrix)
 
         return metrics, model_precision_recall_auprc
 
