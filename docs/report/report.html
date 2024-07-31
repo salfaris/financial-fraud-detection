@@ -4042,7 +4042,7 @@ Table 3: Recall, Precision, F1-score and AUPRC for the chosen model (with ideal
 <section id="new-comparing-inference-time-between-ideal-models" class="level3">
 <h3 class="anchored" data-anchor-id="new-comparing-inference-time-between-ideal-models">New: comparing inference time between ideal models</h3>
 <p>Core to our exploration is to deploy the trained models for live fraudulent transaction detection. We will now compare the inference time of the four models on both the TRANSFER and CASH OUT transactions.</p>
-<p>To measure the inference time, we use the <code>timeit.repeat</code> funtion from the <code>timeit</code> built-in Python package. Here we run inference for a 1000 times and record the average time taken. We repeat this procedure for 100 times to obtain 100 average inference times. Our results are captured in <a href="#tbl-inference-time" class="quarto-xref">Table 4</a> and <a href="#fig-inference-time-nsample" class="quarto-xref">Figure 6</a>.</p>
+<p>To measure the inference time, we use the <code>timeit.repeat</code> funtion from the <code>timeit</code> built-in Python package. Here we run inference for a 1000 times and record the average time taken. We repeat this procedure for 100 times to obtain 100 average inference times. Our results are captured in <a href="#tbl-inference-time" class="quarto-xref">Table 4</a> and KDE plots in <a href="#fig-inference-time-nsample" class="quarto-xref">Figure 6</a>.</p>
 <div id="fig-inference-time-nsample" class="quarto-layout-panel">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-inference-time-nsample-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -4126,7 +4126,7 @@ Table 3: Recall, Precision, F1-score and AUPRC for the chosen model (with ideal
 </div>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-inference-time-nsample-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure 6: Model inference time (seconds) for different number of sample points (n = 1, 10, 100).
+Figure 6: KDE plot of model inference time (seconds) for different number of sample points (n = 1, 10, 100).
 </figcaption>
 </figure>
 </div>
@@ -4397,7 +4397,10 @@ Table 4: Inference time (seconds) for different number of sample points (n = 1,
 </figcaption>
 </figure>
 </div>
-<p>Considering both performance and inference time, we opt the simple logistic regression for both the TRANSFER and CASH OUT transactions. The logistic regression model is the fastest model with the lowest inference time, whilst still having good performance.</p>
+<p>For TRANSFER transactions, we observe that inference time with n=1 sample point is relatively comparable for all models with the decision tree having a bigger variance. However, as n gets larger to 10 and 100, there is a stark difference in inference time for SVM with RBF kernel as compared to the other three models. In particular, we observe that the inference time for SVM with RBF kernel scales linearly with the number of sample points which is terrible.</p>
+<p>In the CASH OUT transactions, we observe poor inference time speeds in the SVM with RBF kernel even for n=1 sample point, with problem aggrevating for larger n as we have seen in TRANSFER transactions.</p>
+<p>Considering both classification performance and inference time, it is thus unfavourable to choose the SVM with RBF kernel due to the massive latency it introduce despite its performance. For production, latency is key and does not only affect user experience, but also would increase the hidden cloud provider cost for actually running the inference.</p>
+<p>To this end, we opt for the simple logistic regression for inference on both TRANSFER and CASH OUT transactions. For the CASH OUT transactions, it is straightforward now to opt for the simple logistic regression given its superior performance and inference time. For the TRANSFER transactions, while the decision tree have the highest AUPRC, it has a much lower precision as compared to logistic regression, and in terms of recall these two models perform very similarly. In our case, recall and precision are more important and translates directly into business values so it is important to have a model that can perform well on both.</p>
 </section>
 </section>
 </section>
