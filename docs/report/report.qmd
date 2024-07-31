@@ -289,66 +289,68 @@ We were also able to replicate the drop in precision when performing inference u
 ::: {#tbl-confusion-matrix-TRANSFER layout-ncol=2 layout-nrow=2}
 | Actual ⬇️ / Predicted ➡️ | Fraud | Not fraud |
 | ---------------------- | ----- | --------- |
-| **Fraud**              | 79,201 | 121       |
+| **Fraud**              | 79201 | 121       |
 | **Not fraud**          | 2     | 613       |
 
 : Logistic Regression {#tbl-confusion-matrix-TRANSFER-logreg}
 
 | Actual ⬇️ / Predicted ➡️ | Fraud | Not fraud |
 | ---------------------- | ----- | --------- |
-| **Fraud**              | 79,116 | 206       |
+| **Fraud**              | 79116 | 206       |
 | **Not fraud**          | 4     | 611       |
 
 : SVM with Linear kernel {#tbl-confusion-matrix-TRANSFER-svm-linear}
 
 | Actual ⬇️ / Predicted ➡️ | Fraud | Not fraud |
 | ---------------------- | ----- | --------- |
-| **Fraud**              | 79,063 | 259       |
+| **Fraud**              | 79063 | 259       |
 | **Not fraud**          | 8     | 607       |
 
 : SVM with RBF kernel {#tbl-confusion-matrix-TRANSFER-svm-rbf}
 
 | Actual ⬇️ / Predicted ➡️ | Fraud | Not fraud |
 | ---------------------- | ----- | --------- |
-| **Fraud**              | 78,995 | 327       |
+| **Fraud**              | 78995 | 327       |
 | **Not fraud**          | 4     | 611       |
 
 : Decision Tree {#tbl-confusion-matrix-TRANSFER-decision-tree}
 
-Confusion matrix evaluation on **TRANSFER** transactions
+Confusion matrix evaluation on **TRANSFER** test set transactions
 :::
 
 ::: {#tbl-confusion-matrix-CASH_OUT layout-ncol=2 layout-nrow=2}
 | Actual ⬇️ / Predicted ➡️ | Fraud  | Not fraud |
 | ---------------------- | ------ | --------- |
-| **Fraud**              | 331,704 | 3,304      |
+| **Fraud**              | 331704 | 3304      |
 | **Not fraud**          | 12     | 605       |
 
 : Logistic Regression {#tbl-confusion-matrix-CASH_OUT-logreg}
 
 | Actual ⬇️ / Predicted ➡️ | Fraud  | Not fraud |
 | ---------------------- | ------ | --------- |
-| **Fraud**              | 331,752 | 3,256      |
+| **Fraud**              | 331752 | 3256      |
 | **Not fraud**          | 71     | 546       |
 
 : SVM with Linear kernel {#tbl-confusion-matrix-CASH_OUT-svm-linear}
 
 | Actual ⬇️ / Predicted ➡️ | Fraud  | Not fraud |
 | ---------------------- | ------ | --------- |
-| **Fraud**              | 331,788 | 3,220      |
+| **Fraud**              | 331788 | 3220      |
 | **Not fraud**          | 66     | 551       |
 
 : SVM with RBF kernel {#tbl-confusion-matrix-CASH_OUT-svm-rbf}
 
 | Actual ⬇️ / Predicted ➡️ | Fraud  | Not fraud |
 | ---------------------- | ------ | --------- |
-| **Fraud**              | 333,253 | 1,755      |
+| **Fraud**              | 333253 | 1755      |
 | **Not fraud**          | 224    | 393       |
 
 : Decision Tree {#tbl-confusion-matrix-CASH_OUT-decision-tree}
 
-Confusion matrix evaluation on **CASH OUT** transactions
+Confusion matrix evaluation on **CASH OUT** test set transactions
 :::
+
+We were able to replicate the confusion matrices on the TRANSFER test set transactions (see @tbl-confusion-matrix-TRANSFER), detecting more than 600 fraudulent transactions for all the models and falsely predicting a non-fraudulent transaction as fraud for less than 1 percent. In fact, the false positive rate is at most 0.01% with the highest attained by the SVM with RBF kernel. Unlike the paper, we also display the confusion matrices on the CASH OUT test set transactions (see @tbl-confusion-matrix-CASH_OUT) which saw a less impressive performance. That being said, the key objective of maintaining a low false positive rate is attained with the worst model (decision tree) having only about 0.07% false positive rate.
 
 ### New: comparing inference time between ideal models
 
