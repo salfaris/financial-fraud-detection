@@ -4407,15 +4407,19 @@ Table 4: Inference time (seconds) for different number of sample points (n = 1,
 <section id="conclusion" class="level1">
 <h1>Conclusion</h1>
 <p>Overall, we are able to confirm that the class weight strategy proposed by <span class="citation" data-cites="oza2018">Oza (<a href="#ref-oza2018" role="doc-biblioref">2018</a>)</span> does work. However, as we have discussed in this report, the ideal class weight difference between the replication and the original warrants more attention.</p>
-<p>Some of our key contributions are as follows:</p>
+<p>To summarize, our key contributions in this replication are as follows:</p>
 <ul>
-<li>Modularity.</li>
-<li>Replication.</li>
-<li>Clarity. Machine</li>
-<li>Deployment in mind.</li>
-<li>Inference time analysis for all models.</li>
+<li><strong>Replication</strong> – We replicate the original paper and provide a detailed analysis of the results. We show that the class weight strategy indeed work.</li>
+<li><strong>Modularity</strong> – We provide a modular implementation of all the models, metrics and evaluation so that it is plug-and-play if we were to add a new experiment.</li>
+<li><strong>Efficiency</strong> – We introduce parallelism to train the models and perform metric evaluation across all considered class weights.</li>
+<li><strong>Deployment in mind</strong> – We introduce a new experiment to measure inference time for all models to account for the performance-latency tradeoff.</li>
 </ul>
-<p>One clear next direction to take is to make use of the time series component of the dataset as these transactions are time-dependent.</p>
+<p>There are several directions to go from here:</p>
+<ul>
+<li>One direction that we are particularly keen is to see how the ideal class weight strategy with varying random seeds to see if there is any impact.</li>
+<li>One clear next direction to take is to make use of the time series component of the PaySim dataset as these transactions are time-dependent and there can be something useful there.</li>
+<li>Another direction is to run the same set of experiments on another financial transactions dataset (please hit me up if you have an interesting dataset!).</li>
+</ul>
 </section>
 <section id="references" class="level1">
 <h1>References</h1>
