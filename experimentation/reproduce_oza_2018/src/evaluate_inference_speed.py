@@ -107,7 +107,7 @@ def main(_):
         fitted_models[model_name] = model
 
     sample_size_space = [1, 5, 10, 25, 50, 100]
-    RESULT = {
+    repeats_result: dict[str, dict[int, np.ndarray | None]] = {
         model_name: {i: None for i in sample_size_space}
         for model_name in MODEL_FUNCTIONS
     }
@@ -163,14 +163,14 @@ def main(_):
                 f"{model_name}: {repeats.mean():.4f} ± {repeats.std(ddof=1):.4f}"
             )
 
-            RESULT[model_name][sample_size] = repeats
+            repeats_result[model_name][sample_size] = repeats
 
     def viz(sample_size: int):
         fig, ax = plt.subplots(figsize=(10, 5))
 
         model_names = []
         sample_size_runs = []
-        for model_name, runs in RESULT.items():
+        for model_name, runs in repeats_result.items():
             run = runs[sample_size]
             if run is None:
                 logging.info(
@@ -214,6 +214,40 @@ def main(_):
         idx = RNG.randint(0, X_val.shape[0], sample_size)
         compute(X_val.iloc[idx], y_val[idx], sample_size=sample_size)
         viz(sample_size)
+
+    stat_data = []
+    for model_name, runs in repeats_result.items():
+        for sample_size in sample_size_space:
+            # for sample_size in [1, 10, 100]:
+            run = runs[sample_size]
+            if run is None:
+                logging.info(
+                    f"SKIP: statistics for '{model_name}' because no data found."
+                )
+                continue
+            mean = np.round(run.mean(), 2)
+            stddev = np.round(run.std(ddof=1), 2)
+            stat_data.append(
+                (model_name, sample_size, FLAG.transaction_type, mean, stddev)
+            )
+
+    stat_data = pd.DataFrame(
+        stat_data,
+        columns=[
+            "model_name",
+            "sample_size",
+            "transaction_type",
+            "inf_time_mean",
+            "inf_time_std",
+        ],
+    )
+    stat_data.sort_values(by=["sample_size", "model_name"], inplace=True)
+    print(stat_data)
+
+    stat_data.to_csv(
+        RESULT_DATA_DIR / f"inference_time_stats_{FLAG.transaction_type}.csv",
+        index=False,
+    )
 
 
 if __name__ == "__main__":
