@@ -286,6 +286,70 @@ When comparing the models between logistic regression, SVM with linear kernel an
 
 We were also able to replicate the drop in precision when performing inference using the three models on CASH OUT transactions, relative to the TRANSFER transactions. This can be attributed due to the non-linear separability of the transactions (ref. @fig-pca). We did not, however, obtain the same recall performance when using the SVM with RBF kernel but this is explained by our additional step of stratified downsampling the CASH OUT training set for model training due to our compute limitation. Despite that, we still saw a higher AUPRC in SVM with RBF kernel as compared to logistic regression and the SVM with linear kernel, similar to the paper. Unlike detecting fraud in TRANSFER transactions, the decision tree does not perform as well in the CASH OUT transactions with significantly lower recall and AUPRC when compared even to the worst of the three original models. However, we saw that the decision tree have a higher precision albeit only slightly suggesting that it can contribute to better user experience.
 
+::: {#tbl-confusion-matrix-TRANSFER layout-ncol=2 layout-nrow=2}
+| Actual ⬇️ / Predicted ➡️ | Fraud | Not fraud |
+| ---------------------- | ----- | --------- |
+| **Fraud**              | 79,201 | 121       |
+| **Not fraud**          | 2     | 613       |
+
+: Logistic Regression {#tbl-confusion-matrix-TRANSFER-logreg}
+
+| Actual ⬇️ / Predicted ➡️ | Fraud | Not fraud |
+| ---------------------- | ----- | --------- |
+| **Fraud**              | 79,116 | 206       |
+| **Not fraud**          | 4     | 611       |
+
+: SVM with Linear kernel {#tbl-confusion-matrix-TRANSFER-svm-linear}
+
+| Actual ⬇️ / Predicted ➡️ | Fraud | Not fraud |
+| ---------------------- | ----- | --------- |
+| **Fraud**              | 79,063 | 259       |
+| **Not fraud**          | 8     | 607       |
+
+: SVM with RBF kernel {#tbl-confusion-matrix-TRANSFER-svm-rbf}
+
+| Actual ⬇️ / Predicted ➡️ | Fraud | Not fraud |
+| ---------------------- | ----- | --------- |
+| **Fraud**              | 78,995 | 327       |
+| **Not fraud**          | 4     | 611       |
+
+: Decision Tree {#tbl-confusion-matrix-TRANSFER-decision-tree}
+
+Confusion matrix evaluation on **TRANSFER** transactions
+:::
+
+::: {#tbl-confusion-matrix-CASH_OUT layout-ncol=2 layout-nrow=2}
+| Actual ⬇️ / Predicted ➡️ | Fraud  | Not fraud |
+| ---------------------- | ------ | --------- |
+| **Fraud**              | 331,704 | 3,304      |
+| **Not fraud**          | 12     | 605       |
+
+: Logistic Regression {#tbl-confusion-matrix-CASH_OUT-logreg}
+
+| Actual ⬇️ / Predicted ➡️ | Fraud  | Not fraud |
+| ---------------------- | ------ | --------- |
+| **Fraud**              | 331,752 | 3,256      |
+| **Not fraud**          | 71     | 546       |
+
+: SVM with Linear kernel {#tbl-confusion-matrix-CASH_OUT-svm-linear}
+
+| Actual ⬇️ / Predicted ➡️ | Fraud  | Not fraud |
+| ---------------------- | ------ | --------- |
+| **Fraud**              | 331,788 | 3,220      |
+| **Not fraud**          | 66     | 551       |
+
+: SVM with RBF kernel {#tbl-confusion-matrix-CASH_OUT-svm-rbf}
+
+| Actual ⬇️ / Predicted ➡️ | Fraud  | Not fraud |
+| ---------------------- | ------ | --------- |
+| **Fraud**              | 333,253 | 1,755      |
+| **Not fraud**          | 224    | 393       |
+
+: Decision Tree {#tbl-confusion-matrix-CASH_OUT-decision-tree}
+
+Confusion matrix evaluation on **CASH OUT** transactions
+:::
+
 ### New: comparing inference time between ideal models
 
 Core to our exploration is to deploy the trained models for live fraudulent transaction detection. We will now compare the inference time of the four models on both the TRANSFER and CASH OUT transactions.
