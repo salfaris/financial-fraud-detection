@@ -112,7 +112,8 @@ def main(_):
             "decision_tree": "Decision Tree",
         }
         ax.set_title(
-            f"Metrics on validation set for {FLAG.transaction_type} transactions "
+            "Metrics on validation set for "
+            f"{' '.join(str(FLAG.transaction_type).split('_'))} transactions "
             f"- {title_name_map[model_name]}",
             # fontweight="bold",
         )
