@@ -33,7 +33,7 @@ bibliography: references.bib
     - [New: comparing inference time between ideal models](#new-comparing-inference-time-between-ideal-models)
 - [Conclusion](#conclusion)
 - [References](#references)
-  
+
 # Introduction
 
 _Fraud Detection using Machine Learning_ [@oza2018] proposed a class weight strategy to tackle the problem of imbalanced classes in payments fraud detection. The author showed that choosing a suitable class weight in a classifier can be sufficient to flag fraud detections with a reasonably low false positive rate whilst maintaining high accuracy.
@@ -44,8 +44,8 @@ We replicate the results of [@oza2018] using the same PaySim dataset [@paysim201
 
 We found replicating the paper has been challenging due to several incomplete information which include:
 
-- Not specifying the RNG seed that was used.
-- Not specifying the hyperparameters used for each model.
+- Not specifying the RNG seed that was used in the paper. Only found in the GitHub repo.
+- Not specifying the hyperparameters used for each model. Only found in the GitHub repo.
 - Not specifying that a standard scaling step was used for training SVM with RBF kernel. This is an important step to make training SVM with RBF feasible and it was only discovered in the Github repo.
 - Not specifying the machine that was used for training despite mentioning an approximate time range for running the experiments collectively on their Github repo. Due to this, we were not able to gauge whether our training time should be lower or higher relative to their experiment.
 
@@ -55,7 +55,7 @@ We found replicating the paper has been challenging due to several incomplete in
 
 We run our experiments on a MacBook Pro (2021) with the Apple M1 Pro chip - 16GB unified memory, 8-core CPU and 14-core GPU. Unfortunately, [@oza2018] did not specify the machine they used to train their models.
 
-We use our favorite number 10062930 for the RNG seed in all our experiments where randomness is required.
+We use our favorite number 10062930 for the RNG seed in all our experiments where randomness is required. Most particularly, we wanted the RNG seed to be different to that used by the original paper (seed=44) to ensure that the strategy they experimented on does not work purely due to random chance.
 
 ## Dataset
 
@@ -77,7 +77,7 @@ We also trained a decision tree classifier on both the datasets, considering tha
 
 ## Results
 
-The results of our replication is given in the following table and graphs.
+We now discuss the results of our replication to validate the class weight strategy in [@oza2018].
 
 ### PCA analysis on transaction covariates
 
@@ -396,37 +396,37 @@ KDE plot of model inference time (seconds) for different number of sample points
 
 | Algorithm           | Sample size | Inference time |
 | ------------------- | ----------- | -------------- |
-| Logistic Regression | 10           | 0.29 ± 0.08    |
-| Linear SVM          | 10           | 0.27 ± 0.03    |
-| SVM with RBF kernel | 10           | 2.95 ± 0.18    |
-| Decision Tree       | 10           | 0.26 ± 0.01    |
+| Logistic Regression | 10          | 0.29 ± 0.08    |
+| Linear SVM          | 10          | 0.27 ± 0.03    |
+| SVM with RBF kernel | 10          | 2.95 ± 0.18    |
+| Decision Tree       | 10          | 0.26 ± 0.01    |
 
 : Inference time on **TRANSFER** transactions with n=10 sample points {#tbl-inference-time-TRANSFER-nsample-10}
 
 | Algorithm           | Sample size | Inference time |
 | ------------------- | ----------- | -------------- |
-| Logistic Regression | 10           | 0.27 ± 0.02    |
-| Linear SVM          | 10           | 0.28 ± 0.06    |
-| SVM with RBF kernel | 10           | 4.56 ± 0.05    |
-| Decision Tree       | 10           | 0.28 ± 0.01    |
+| Logistic Regression | 10          | 0.27 ± 0.02    |
+| Linear SVM          | 10          | 0.28 ± 0.06    |
+| SVM with RBF kernel | 10          | 4.56 ± 0.05    |
+| Decision Tree       | 10          | 0.28 ± 0.01    |
 
 : Inference time on **CASH OUT** transactions with n=10 sample points {#tbl-inference-time-CASH_OUT-nsample-10}
 
 | Algorithm           | Sample size | Inference time |
 | ------------------- | ----------- | -------------- |
-| Logistic Regression | 100           |  0.26 ± 0.01    |
-| Linear SVM          | 100           |  0.26 ± 0.02    |
-| SVM with RBF kernel | 100           | 28.12 ± 0.48    |
-| Decision Tree       | 100           |  0.28 ± 0.02    |
+| Logistic Regression | 100         | 0.26 ± 0.01    |
+| Linear SVM          | 100         | 0.26 ± 0.02    |
+| SVM with RBF kernel | 100         | 28.12 ± 0.48   |
+| Decision Tree       | 100         | 0.28 ± 0.02    |
 
 : Inference time on **TRANSFER** transactions with n=100 sample points {#tbl-inference-time-TRANSFER-nsample-100}
 
 | Algorithm           | Sample size | Inference time |
 | ------------------- | ----------- | -------------- |
-| Logistic Regression | 100           |  0.27 ± 0.01    |
-| Linear SVM          | 100           |  0.26 ±  0.00    |
-| SVM with RBF kernel | 100           | 44.43 ± 0.52    |
-| Decision Tree       | 100           |  0.27 ± 0.01    |
+| Logistic Regression | 100         | 0.27 ± 0.01    |
+| Linear SVM          | 100         | 0.26 ±  0.00   |
+| SVM with RBF kernel | 100         | 44.43 ± 0.52   |
+| Decision Tree       | 100         | 0.27 ± 0.01    |
 
 : Inference time on **CASH OUT** transactions with n=100 sample points {#tbl-inference-time-CASH_OUT-nsample-100}
 

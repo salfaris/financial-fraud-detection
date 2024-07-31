@@ -3133,8 +3133,8 @@ vertical-align: -.125em;
 <p>We replicate the results of <span class="citation" data-cites="oza2018">(<a href="#ref-oza2018" role="doc-biblioref">Oza 2018</a>)</span> using the same PaySim dataset <span class="citation" data-cites="paysim2016">(<a href="#ref-paysim2016" role="doc-biblioref">Lopez-Rojas, Elmir, and Axelsson 2016</a>)</span> and preprocessing steps, some of which were not specified in their paper but rather in their code (which unfortunately has been a common occurrence in our experience replicating machine learning papers).</p>
 <p>We found replicating the paper has been challenging due to several incomplete information which include:</p>
 <ul>
-<li>Not specifying the RNG seed that was used.</li>
-<li>Not specifying the hyperparameters used for each model.</li>
+<li>Not specifying the RNG seed that was used in the paper. Only found in the GitHub repo.</li>
+<li>Not specifying the hyperparameters used for each model. Only found in the GitHub repo.</li>
 <li>Not specifying that a standard scaling step was used for training SVM with RBF kernel. This is an important step to make training SVM with RBF feasible and it was only discovered in the Github repo.</li>
 <li>Not specifying the machine that was used for training despite mentioning an approximate time range for running the experiments collectively on their Github repo. Due to this, we were not able to gauge whether our training time should be lower or higher relative to their experiment.</li>
 </ul>
@@ -3144,7 +3144,7 @@ vertical-align: -.125em;
 <section id="setup" class="level2">
 <h2 class="anchored" data-anchor-id="setup">Setup</h2>
 <p>We run our experiments on a MacBook Pro (2021) with the Apple M1 Pro chip - 16GB unified memory, 8-core CPU and 14-core GPU. Unfortunately, <span class="citation" data-cites="oza2018">(<a href="#ref-oza2018" role="doc-biblioref">Oza 2018</a>)</span> did not specify the machine they used to train their models.</p>
-<p>We use our favorite number 10062930 for the RNG seed in all our experiments where randomness is required.</p>
+<p>We use our favorite number 10062930 for the RNG seed in all our experiments where randomness is required. Most particularly, we wanted the RNG seed to be different to that used by the original paper (seed=44) to ensure that the strategy they experimented on does not work purely due to random chance.</p>
 </section>
 <section id="dataset" class="level2">
 <h2 class="anchored" data-anchor-id="dataset">Dataset</h2>
@@ -3164,7 +3164,7 @@ vertical-align: -.125em;
 </section>
 <section id="results" class="level2">
 <h2 class="anchored" data-anchor-id="results">Results</h2>
-<p>The results of our replication is given in the following table and graphs.</p>
+<p>We now discuss the results of our replication to validate the class weight strategy in <span class="citation" data-cites="oza2018">(<a href="#ref-oza2018" role="doc-biblioref">Oza 2018</a>)</span>.</p>
 <section id="pca-analysis-on-transaction-covariates" class="level3">
 <h3 class="anchored" data-anchor-id="pca-analysis-on-transaction-covariates">PCA analysis on transaction covariates</h3>
 <p>We were able to replicate the two-dimensional PCA decomposition very well as can be seen in <a href="#fig-pca" class="quarto-xref">Figure 1</a>. In particular, we recover the observation that there is higher variability in TRANSFER transactions when comparing the fraudulent and non-fraudulent transactions, suggesting that the dataset may be linearly separable.</p>
