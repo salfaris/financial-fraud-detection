@@ -1,6 +1,6 @@
-#!/bin/sh
+#!/bin/bash
 eval "$(conda shell.bash hook)"
 conda activate dev
 
 echo "Running PCA for all models..."
-python src/pca.py
+python $(dirname "$0")/src/pca.py
