@@ -17,6 +17,22 @@ reference-location: margin
 tbl-cap-location: bottom
 bibliography: references.bib
 ---
+
+### Table of contents
+
+- [Introduction](#introduction)
+- [Method](#method)
+- [Experimental evaluation](#experimental-evaluation)
+  - [Setup](#setup)
+  - [Dataset](#dataset)
+  - [Model training](#model-training)
+  - [Results](#results)
+    - [PCA analysis on transaction covariates](#pca-analysis-on-transaction-covariates)
+    - [Finding the ideal class weight](#finding-the-ideal-class-weight)
+    - [Comparing performance between ideal models](#comparing-performance-between-ideal-models)
+    - [New: comparing inference time between ideal models](#new-comparing-inference-time-between-ideal-models)
+- [Conclusion](#conclusion)
+- [References](#references)
   
 # Introduction
 
