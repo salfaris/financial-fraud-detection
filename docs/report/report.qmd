@@ -17,7 +17,7 @@ reference-location: margin
 tbl-cap-location: bottom
 bibliography: references.bib
 ---
-
+  
 # Introduction
 
 _Fraud Detection using Machine Learning_ [@oza2018] proposed a class weight strategy to tackle the problem of imbalanced classes in payments fraud detection. The author showed that choosing a suitable class weight in a classifier can be sufficient to flag fraud detections with a reasonably low false positive rate whilst maintaining high accuracy.
@@ -276,16 +276,22 @@ Core to our exploration is to deploy the trained models for live fraudulent tran
 
 To measure the inference time, we use the `timeit.repeat` funtion from the `timeit` built-in Python package. Here we run inference for a 1000 times and record the average time taken. We repeat this procedure for 100 times to obtain 100 average inference times and plot this in a boxplot below.
 
-::: {#fig-inference-time-nsample layout-nrow=3}
+::: {#fig-inference-time-nsample layout-ncol=2 layout-nrow=3}
 
-![Inference on 10 sample points](../../experimentation/reproduce_oza_2018/output/figures/result_inference_speed/hist_TRANSFER_10.png){#fig-inference-time-nsample-10}
+![n=1 point sampled from TRANSFER](../../experimentation/reproduce_oza_2018/output/figures/result_inference_speed/hist_TRANSFER_1.png){#fig-inference-time-TRANSFER-nsample-1}
 
-![Inference on 100 sample points](../../experimentation/reproduce_oza_2018/output/figures/result_inference_speed/hist_TRANSFER_100.png){#fig-inference-time-nsample-100}
+![n=1 point sampled from CASH OUT](../../experimentation/reproduce_oza_2018/output/figures/result_inference_speed/hist_CASH_OUT_1.png){#fig-inference-time-CASH_OUT-nsample-1}
 
-![Inference on 1000 sample points](../../experimentation/reproduce_oza_2018/output/figures/result_inference_speed/hist_TRANSFER_1000.png){#fig-inference-time-nsample-1000}
+![n=10 points sampled from TRANSFER](../../experimentation/reproduce_oza_2018/output/figures/result_inference_speed/hist_TRANSFER_10.png){#fig-inference-time-TRANSFER-nsample-10}
+
+![n=10 points sampled from CASH OUT](../../experimentation/reproduce_oza_2018/output/figures/result_inference_speed/hist_CASH_OUT_10.png){#fig-inference-time-CASH_OUT-nsample-10}
+
+![n=100 points sampled from TRANSFER](../../experimentation/reproduce_oza_2018/output/figures/result_inference_speed/hist_TRANSFER_100.png){#fig-inference-time-TRANSFER-nsample-100}
+
+![n=100 points sampled from CASH OUT](../../experimentation/reproduce_oza_2018/output/figures/result_inference_speed/hist_CASH_OUT_100.png){#fig-inference-time-CASH_OUT-nsample-100}
 
 
-Model inference times the TRANSFER dataset for different number of sample points (n = 10, 100, 1000).
+Model inference times for different number of sample points (n = 1, 10, 100).
 :::
 
 Considering both performance and inference time, we opt the simple logistic regression for both the TRANSFER and CASH OUT transactions. The logistic regression model is the fastest model with the lowest inference time, whilst still having good performance.
