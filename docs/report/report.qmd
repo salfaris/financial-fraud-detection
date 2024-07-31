@@ -1,8 +1,8 @@
 ---
-title: "ML Strategy Validation"
-subtitle: 'Replication & extension of "_Fraud Detection using Machine Learning (Oza, 2018)_"'
+title: 'Replication & extension of "_Fraud Detection using Machine Learning_" (Oza, 2018)'
+subtitle: "Machine learning strategy validation"
 author: "Salman Faris"
-date: "20 July 2024"
+date: "31 July 2024"
 format:
   # pdf: default
   html:
