@@ -15,28 +15,15 @@ execute:
 reference-location: margin
 # citation-location: margin
 tbl-cap-location: bottom
+toc: true
 bibliography: references.bib
 ---
-
-### Table of contents
-
-- [Introduction](#introduction)
-- [Method](#method)
-- [Experimental evaluation](#experimental-evaluation)
-  - [Setup](#setup)
-  - [Dataset](#dataset)
-  - [Model training](#model-training)
-  - [Results](#results)
-    - [PCA analysis on transaction covariates](#pca-analysis-on-transaction-covariates)
-    - [Finding the ideal class weight](#finding-the-ideal-class-weight)
-    - [Comparing performance between ideal models](#comparing-performance-between-ideal-models)
-    - [New: comparing inference time between ideal models](#new-comparing-inference-time-between-ideal-models)
-- [Conclusion](#conclusion)
-- [References](#references)
 
 # Introduction
 
 _Fraud Detection using Machine Learning_ [@oza2018] proposed a class weight strategy to tackle the problem of imbalanced classes in payments fraud detection. The author showed that choosing a suitable class weight in a classifier can be sufficient to flag fraud detections with a reasonably low false positive rate whilst maintaining high accuracy.
+
+We replicate all the experiments in the paper to validate this strategy. We further extend the paper by considering a rule-based machine learning algorithm and see if the results hold. We also introduce an additional metric to quantitatively measure the inference time of all the models to choose a suitable model to be used in a production setting.
 
 # Method
 
@@ -46,6 +33,7 @@ We found replicating the paper has been challenging due to several incomplete in
 
 - Not specifying the RNG seed that was used in the paper. Only found in the GitHub repo.
 - Not specifying the hyperparameters used for each model. Only found in the GitHub repo.
+- Not specifying the range of class weights that was searched on. Only found in the GitHub repo.
 - Not specifying that a standard scaling step was used for training SVM with RBF kernel. This is an important step to make training SVM with RBF feasible and it was only discovered in the Github repo.
 - Not specifying the machine that was used for training despite mentioning an approximate time range for running the experiments collectively on their Github repo. Due to this, we were not able to gauge whether our training time should be lower or higher relative to their experiment.
 

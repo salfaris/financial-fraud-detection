@@ -3067,8 +3067,32 @@ vertical-align: -.125em;
 <body>
 
 <div id="quarto-content" class="page-columns page-rows-contents page-layout-full">
-
-<main class="content column-page" id="quarto-document-content">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#method" id="toc-method" class="nav-link" data-scroll-target="#method">Method</a></li>
+  <li><a href="#experimental-evaluation" id="toc-experimental-evaluation" class="nav-link" data-scroll-target="#experimental-evaluation">Experimental evaluation</a>
+  <ul class="collapse">
+  <li><a href="#setup" id="toc-setup" class="nav-link" data-scroll-target="#setup">Setup</a></li>
+  <li><a href="#dataset" id="toc-dataset" class="nav-link" data-scroll-target="#dataset">Dataset</a></li>
+  <li><a href="#model-training" id="toc-model-training" class="nav-link" data-scroll-target="#model-training">Model training</a></li>
+  <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results">Results</a>
+  <ul class="collapse">
+  <li><a href="#pca-analysis-on-transaction-covariates" id="toc-pca-analysis-on-transaction-covariates" class="nav-link" data-scroll-target="#pca-analysis-on-transaction-covariates">PCA analysis on transaction covariates</a></li>
+  <li><a href="#finding-the-ideal-class-weight" id="toc-finding-the-ideal-class-weight" class="nav-link" data-scroll-target="#finding-the-ideal-class-weight">Finding the ideal class weight</a></li>
+  <li><a href="#comparing-performance-between-ideal-models" id="toc-comparing-performance-between-ideal-models" class="nav-link" data-scroll-target="#comparing-performance-between-ideal-models">Comparing performance between ideal models</a></li>
+  <li><a href="#new-comparing-inference-time-between-ideal-models" id="toc-new-comparing-inference-time-between-ideal-models" class="nav-link" data-scroll-target="#new-comparing-inference-time-between-ideal-models">New: comparing inference time between ideal models</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
+  </ul>
+</nav>
+</div>
+<main class="content column-page-left" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
@@ -3078,7 +3102,7 @@ vertical-align: -.125em;
 
 
 
-<div class="quarto-title-meta column-page">
+<div class="quarto-title-meta column-page-left">
 
     <div>
     <div class="quarto-title-meta-heading">Author</div>
@@ -3102,31 +3126,10 @@ vertical-align: -.125em;
 </header>
 
 
-<section id="table-of-contents" class="level3">
-<h3 class="anchored" data-anchor-id="table-of-contents">Table of contents</h3>
-<ul>
-<li><a href="#introduction">Introduction</a></li>
-<li><a href="#method">Method</a></li>
-<li><a href="#experimental-evaluation">Experimental evaluation</a>
-<ul>
-<li><a href="#setup">Setup</a></li>
-<li><a href="#dataset">Dataset</a></li>
-<li><a href="#model-training">Model training</a></li>
-<li><a href="#results">Results</a>
-<ul>
-<li><a href="#pca-analysis-on-transaction-covariates">PCA analysis on transaction covariates</a></li>
-<li><a href="#finding-the-ideal-class-weight">Finding the ideal class weight</a></li>
-<li><a href="#comparing-performance-between-ideal-models">Comparing performance between ideal models</a></li>
-<li><a href="#new-comparing-inference-time-between-ideal-models">New: comparing inference time between ideal models</a></li>
-</ul></li>
-</ul></li>
-<li><a href="#conclusion">Conclusion</a></li>
-<li><a href="#references">References</a></li>
-</ul>
-</section>
 <section id="introduction" class="level1">
 <h1>Introduction</h1>
 <p><em>Fraud Detection using Machine Learning</em> <span class="citation" data-cites="oza2018">(<a href="#ref-oza2018" role="doc-biblioref">Oza 2018</a>)</span> proposed a class weight strategy to tackle the problem of imbalanced classes in payments fraud detection. The author showed that choosing a suitable class weight in a classifier can be sufficient to flag fraud detections with a reasonably low false positive rate whilst maintaining high accuracy.</p>
+<p>We replicate all the experiments in the paper to validate this strategy. We further extend the paper by considering a rule-based machine learning algorithm and see if the results hold. We also introduce an additional metric to quantitatively measure the inference time of all the models to choose a suitable model to be used in a production setting.</p>
 </section>
 <section id="method" class="level1">
 <h1>Method</h1>
@@ -3135,6 +3138,7 @@ vertical-align: -.125em;
 <ul>
 <li>Not specifying the RNG seed that was used in the paper. Only found in the GitHub repo.</li>
 <li>Not specifying the hyperparameters used for each model. Only found in the GitHub repo.</li>
+<li>Not specifying the range of class weights that was searched on. Only found in the GitHub repo.</li>
 <li>Not specifying that a standard scaling step was used for training SVM with RBF kernel. This is an important step to make training SVM with RBF feasible and it was only discovered in the Github repo.</li>
 <li>Not specifying the machine that was used for training despite mentioning an approximate time range for running the experiments collectively on their Github repo. Due to this, we were not able to gauge whether our training time should be lower or higher relative to their experiment.</li>
 </ul>
