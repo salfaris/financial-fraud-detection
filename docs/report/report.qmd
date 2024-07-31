@@ -6,7 +6,7 @@ date: "20 July 2024"
 format:
   # pdf: default
   html:
-    # page-layout: full
+    page-layout: full
     self-contained: true
     grid:
       margin-width: 350px
@@ -14,6 +14,7 @@ execute:
   echo: fenced
 reference-location: margin
 # citation-location: margin
+tbl-cap-location: bottom
 bibliography: references.bib
 ---
 
@@ -113,7 +114,7 @@ Performance metrics - Precision, Recall, FPR (False Positive Rate) – versus fr
 
 The ideal class weights for all trained models are captured in @tbl-ideal-class-weight. We were surprised to not be able to replicate the ideal class weights in the original paper which makes us wonder if there were additional manual steps involved in choosing their ideal class weight – for example, they mentioned about choosing "higher weights for fraud samples to avoid over-fitting on CV set". If there were no additional steps involved in the original paper, we argue that the difference in ideal class weight may arise due to the possibly different rowsets in the training and validation sets as we used a different RNG seed compared to the author. This can imply a different probability distribution in the covariates which may lead to lower/higher class weights required to filter the fraudulent transactions optimally given the covariates.
 
-That being said, our choice of ideal class weight is better in that we attain similar recall values for all models whilst also attaining high precision values relative to the ones attained in the original paper. This difference is captured in @tbl-metrics-and-auprc-VALIDATION.
+This difference in ideal class weight warrants some attention and should be investigated further. That being said, our choice of ideal class weight is better in that we attain similar recall values for all models whilst also attaining high precision values relative to the ones attained in the original paper. This difference is captured in @tbl-metrics-and-auprc-VALIDATION.
 
 ::: {#tbl-ideal-class-weight layout-ncol=2 layout-nrow=2}
 | Algorithm             | Ideal class weight |
@@ -154,6 +155,34 @@ That being said, our choice of ideal class weight is better in that we attain si
 
 Ideal class weights for **TRANSFER** and **CASH OUT**.
 :::
+
+### Comparing performance between ideal models
+
+To compare between-model performance, we now plot the precision-recall curves for all the models on the training, validation and test sets and compare the AUPRC (Area Under the Precision-Recall Curve) values. The choice of using the precision-recall curve as opposed to an ROC curve when the target binary class is imbalanced is quite well known in the literature so we will not go into details here and we agree with the author. In general, we were able to replicate the shape of the precision-recall curve for both transaction types. However, we observe sharper precision hiccup drops as compared to the author when training the SVM with RBF kernel, possibly owing to the fact that we have different validation rowsets.
+
+::: {#fig-model-comparison-TRANSFER layout-ncol=3}
+
+![Train](../../experimentation/reproduce_oza_2018/output/figures/result_model_comparison/model_comparison_TRANSFER_train.png){#fig-metric-1}
+
+![Validation](../../experimentation/reproduce_oza_2018/output/figures/result_model_comparison/model_comparison_TRANSFER_validation.png){#fig-metric-1}
+
+![Test](../../experimentation/reproduce_oza_2018/output/figures/result_model_comparison/model_comparison_TRANSFER_test.png){#fig-metric-1}
+
+Precision-Recall Curve and computed AUPRC for the TRANSFER dataset.
+:::
+
+::: {#fig-model-comparison-CASH_OUT layout-ncol=3}
+
+![Train](../../experimentation/reproduce_oza_2018/output/figures/result_model_comparison/model_comparison_CASH_OUT_train.png){#fig-metric-1}
+
+![Validation](../../experimentation/reproduce_oza_2018/output/figures/result_model_comparison/model_comparison_CASH_OUT_validation.png){#fig-metric-1}
+
+![Test](../../experimentation/reproduce_oza_2018/output/figures/result_model_comparison/model_comparison_CASH_OUT_test.png){#fig-metric-1}
+
+Precision-Recall Curve and computed AUPRC for the CASH OUT dataset.
+:::
+
+We summarize all our metrics in the following tables.
 
 ::: {#tbl-metrics-and-auprc-VALIDATION layout-ncol=2 layout-nrow=2}
 | Algorithm             | Recall | Precision | F1     | AUPRC  |
@@ -237,32 +266,6 @@ Recall, Precision, F1-score and AUPRC for the chosen model (with ideal class wei
 Recall, Precision, F1-score and AUPRC for the chosen model (with ideal class weights) on the **test** set.
 :::
 
-### Comparing performance between ideal models
-
-To compare between-model performance, we now plot the precision-recall curves for all the models on the training, validation and test sets and compare the AUPRC (Area Under the Precision-Recall Curve) values. The choice of using the precision-recall curve as opposed to an ROC curve when the target binary class is imbalanced is quite well known in the literature so we will not go into details here and we agree with the author. In general, we were able to replicate the shape of the precision-recall curve for both transaction types. However, we observe sharper precision hiccup drops as compared to the author when training the SVM with RBF kernel, possibly owing to the fact that we have different validation rowsets.
-
-::: {#fig-model-comparison-TRANSFER layout-ncol=3}
-
-![Train](../../experimentation/reproduce_oza_2018/output/figures/result_model_comparison/model_comparison_TRANSFER_train.png){#fig-metric-1}
-
-![Validation](../../experimentation/reproduce_oza_2018/output/figures/result_model_comparison/model_comparison_TRANSFER_validation.png){#fig-metric-1}
-
-![Test](../../experimentation/reproduce_oza_2018/output/figures/result_model_comparison/model_comparison_TRANSFER_test.png){#fig-metric-1}
-
-Precision-Recall Curve and computed AUPRC for the TRANSFER dataset.
-:::
-
-::: {#fig-model-comparison-CASH_OUT layout-ncol=3}
-
-![Train](../../experimentation/reproduce_oza_2018/output/figures/result_model_comparison/model_comparison_CASH_OUT_train.png){#fig-metric-1}
-
-![Validation](../../experimentation/reproduce_oza_2018/output/figures/result_model_comparison/model_comparison_CASH_OUT_validation.png){#fig-metric-1}
-
-![Test](../../experimentation/reproduce_oza_2018/output/figures/result_model_comparison/model_comparison_CASH_OUT_test.png){#fig-metric-1}
-
-Precision-Recall Curve and computed AUPRC for the CASH OUT dataset.
-:::
-
 When comparing the models between logistic regression, SVM with linear kernel and the SVM with the RBF kernel, we were able to replicate the original results on the TRANSFER transactions in both the train and test sets. We observe recall scores attaining close to 99% for all three models and the SVM with RBF kernel yielding the highest AUPRC score similar to [@oza2018]. With the added decision tree, we also attain a recall score of around 99% but with a lower precision relative to the other three models. However, we observe decision tree to have the highest AUPRC score beating the SVM with RBF kernel suggesting that the decision tree might be a better fraud detector in TRANSFER transactions.
 
 We were also able to replicate the drop in precision when performing inference using the three models on CASH OUT transactions, relative to the TRANSFER transactions. This can be attributed due to the non-linear separability of the transactions (ref. @fig-pca). We did not, however, obtain the same recall performance when using the SVM with RBF kernel but this is explained by our additional step of stratified downsampling the CASH OUT training set for model training due to our compute limitation. Despite that, we still saw a higher AUPRC in SVM with RBF kernel as compared to logistic regression and the SVM with linear kernel, similar to the paper. Unlike detecting fraud in TRANSFER transactions, the decision tree does not perform as well in the CASH OUT transactions with significantly lower recall and AUPRC when compared even to the worst of the three original models. However, we saw that the decision tree have a higher precision albeit only slightly suggesting that it can contribute to better user experience.
@@ -271,7 +274,7 @@ We were also able to replicate the drop in precision when performing inference u
 
 Core to our exploration is to deploy the trained models for live fraudulent transaction detection. We will now compare the inference time of the four models on both the TRANSFER and CASH OUT transactions.
 
-To measure the inference time, we use the `timeit.repeat` funtion from the `timeit` built-in Python package. Here we run inference for a 1000 times and record the average time taken. We repeat this procedure for 100 times to obtain 100 average inference times and plot this using a boxplot below.
+To measure the inference time, we use the `timeit.repeat` funtion from the `timeit` built-in Python package. Here we run inference for a 1000 times and record the average time taken. We repeat this procedure for 100 times to obtain 100 average inference times and plot this in a boxplot below.
 
 ::: {#fig-inference-time-nsample layout-nrow=3}
 
