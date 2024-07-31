@@ -23,7 +23,7 @@ This project consists of two key sections:
 
 In the experimentation phase, my first focus is to reproduce and verify the class weight strategy by Aditya Oza in his preprint ["Fraud Detection using Machine Learning" (Oza, 2018)](https://www.semanticscholar.org/paper/Fraud-Detection-using-Machine-Learning-Oza-aditya/9f2c08d9efaa53cfabdd0ec47afa8015c7ff5bb9).
 
-I wrote a full report on this strategy validation which can be found here: [Replication & extension of "_Fraud Detection using Machine Learning_" (Oza, 2018)](./docs/report/report.html).
+I wrote a full report on this strategy validation which can be found here: [Replication & extension of "_Fraud Detection using Machine Learning_" (Oza, 2018)](https://storage.cloud.google.com/financial-fraud-experiment-docs/replication_oza_2018_report.html).
 
 The top level findings include:
 
